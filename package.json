@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "aphrodite": "^1.2.0",
+    "draft-js": "^0.10.0",
+    "prettier": "^1.1.0",
     "react": "^15.5.3",
     "react-dom": "^15.5.3"
   },
@@ -13,6 +16,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pretty": "find src -type f -name '*.js' | xargs ./node_modules/.bin/prettier --write --print-width=120 --trailing-comma=all"
   }
 }

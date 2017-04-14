@@ -1,0 +1,2 @@
+ - investigate whether we need es6-shim ( https://draftjs.org/docs/overview.html#content )
+
