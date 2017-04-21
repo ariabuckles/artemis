@@ -9,10 +9,10 @@ class App extends Component {
     return (
       <div className="App">
         <div style={{ height: 100 }}>
-          <ArtemisToolbar />
+          <ArtemisToolbar onAction={(a) => this._editor.triggerAction(a)}/>
         </div>
         <div style={{ overflow: "scroll", height: "100%" }}>
-          <ArtemisEditor />
+          <ArtemisEditor ref={(editor) => this._editor = editor} />
         </div>
       </div>
     );
