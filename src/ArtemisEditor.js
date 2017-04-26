@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Editor, EditorState, Modifier, SelectionState } from "draft-js";
 import { View, Text, StyleSheet } from "./base-components";
+import ArtemisDecorator from './ArtemisDecorator';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +14,7 @@ export default class ArtemisEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createEmpty(),
+      editorState: EditorState.createEmpty(ArtemisDecorator),
     };
 
     this._handleDraftChange = this._handleDraftChange.bind(this);
