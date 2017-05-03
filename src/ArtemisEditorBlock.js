@@ -64,11 +64,8 @@ export default class ArtemisEditorBlock extends Component {
       <View contentEditable={false} style={styles.overlayThing}>
         {this.state.pos && entities.map(e => {
           const entityElement = document.querySelector(`[data-artemis-id="${e.key}"]`);
-
           if (entityElement && this._ref) {
-
             const pos = entityElement.getBoundingClientRect();
-            //debugger;
             return <span key={e.key} style={{position: 'absolute', top: pos.top - this.state.pos.top, width: pos.width, left: pos.left - this.state.pos.left, height: pos.height, backgroundColor: 'rgba(255, 0, 0, 0.4)'}}>{e.key}</span>
           }
           return null;

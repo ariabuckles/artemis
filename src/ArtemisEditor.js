@@ -32,13 +32,20 @@ export default class ArtemisEditor extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Editor editorState={this.state.editorState} onChange={this._handleDraftChange} blockRendererFn={blockRendererFn} />
+        <Editor spellCheck={true} editorState={this.state.editorState} onChange={this._handleDraftChange} blockRendererFn={blockRendererFn} />
       </View>
     );
   }
 
   _handleDraftChange(newEditorState) {
-    this.setState({ editorState: newEditorState });
+    // NOTE: This disables native optimizations so we can remeasure
+    // equation/widget overlays on every keystroke
+    // NOTE: We're also doing this on every cursor change. SORRY.
+    return this.setState({
+      editorState: EditorState.set(newEditorState, {
+        nativelyRenderedContent: null,
+      }),
+    });
   }
 
   triggerAction(name) {
