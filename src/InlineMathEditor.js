@@ -26,7 +26,13 @@ export default class InlineMathEditor extends Component {
     // with this.props.children as single characters. Draft requires us to
     // render {this.props.children} and only {this.props.children} for cursors to
     // work correctly
-    return <Text style={styles.space}>{this.props.children}</Text>;
+    //debugger;
+    return <span style={{
+      letterSpacing: 80, // customize per width
+      backgroundColor: '#ddffdd',
+      verticalAlign: 'middle',
+      fontSize: 28, // customize per height
+    }} data-artemis-id={this.props.entityKey}>{this.props.children}</span>;
   }
 
 }
