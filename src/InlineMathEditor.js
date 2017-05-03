@@ -11,6 +11,11 @@ const MathQuill = window.MathQuill;
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#ddddff',
+  },
+  space: {
+    width: 80,
+    backgroundColor: '#ddffdd',
     display: 'inline-block',
   },
 });
@@ -18,7 +23,10 @@ const styles = StyleSheet.create({
 export default class InlineMathEditor extends Component {
 
   render() {
-    return <div contentEditable={false} className={css(styles.container)}><Text>[equation]</Text></div>;
+    //return <div contentEditable={false} className={css(styles.container)}><Text>[equation]</Text></div>;
+    //return <Text style={styles.container}>
+    return <Text style={styles.space} contentEditable={false}>{this.props.children}</Text>;
+    //</Text>;
   }
 
 }

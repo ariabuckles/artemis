@@ -5,7 +5,7 @@ export default class View extends Component {
   render() {
     const { style, ...props } = this.props;
     return (
-      <div className={css(style)}>
+      <div className={css(style)} {...props}>
         {this.props.children}
       </div>
     );

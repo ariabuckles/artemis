@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Editor, EditorState, Modifier, SelectionState } from "draft-js";
 import { View, Text, StyleSheet } from "./base-components";
 import ArtemisDecorator from './ArtemisDecorator';
+import "draft-js/dist/Draft.css";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,7 +24,7 @@ export default class ArtemisEditor extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Editor editorState={this.state.editorState} onChange={this._handleDraftChange} />
+        <Editor editorState={this.state.editorState} onChange={this._handleDraftChange} onContentChange={this._contentChange} />
       </View>
     );
   }
@@ -31,6 +32,10 @@ export default class ArtemisEditor extends Component {
   _handleDraftChange(newEditorState) {
     this.setState({ editorState: newEditorState });
   }
+
+  _contentChange = (state) => {
+    console.log('content change');
+  };
 
   triggerAction(name) {
     if (name === 'INSERT_EQUATION') {
