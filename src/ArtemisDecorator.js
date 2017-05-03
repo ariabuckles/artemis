@@ -16,6 +16,8 @@ const findEntities = (contentBlock, callback, contentState) => {
 const ArtemisDecorator = new CompositeDecorator([
   {
     strategy: findEntities,
+    // TODO(aria): Change InlineMathEditor to EntityRenderer that can render other
+    // entities :D (and goes to InlineMathEditor for equation entities)
     component: InlineMathEditor,
   },
 ]);

@@ -21,6 +21,11 @@ const styles = StyleSheet.create({
 export default class InlineMathEditor extends Component {
 
   render() {
+    // TODO(aria): Make this style dynamic for sizing
+    // This is rendering a single character because we only render InlineMathEditor's
+    // with this.props.children as single characters. Draft requires us to
+    // render {this.props.children} and only {this.props.children} for cursors to
+    // work correctly
     return <Text style={styles.space}>{this.props.children}</Text>;
   }
 
