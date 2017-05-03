@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { EditorBlock } from "draft-js";
-import { View, Text, StyleSheet } from "./base-components";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { EditorBlock } from 'draft-js';
+import { View, Text, StyleSheet } from './base-components';
 
 const styles = StyleSheet.create({
   artemisEditorBlock: {
-    position: "relative",
+    position: 'relative',
   },
   overlayThing: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
   },
@@ -37,7 +37,11 @@ export default class ArtemisEditorBlock extends Component {
   _measureSelf = () => {
     const node = ReactDOM.findDOMNode(this._ref);
     const newPos = node.getBoundingClientRect();
-    if (!this.state.pos || newPos.top !== this.state.pos.top || newPos.left !== this.state.pos.left) {
+    if (
+      !this.state.pos ||
+      newPos.top !== this.state.pos.top ||
+      newPos.left !== this.state.pos.left
+    ) {
       this.setState({ pos: newPos });
     }
   };
@@ -64,19 +68,21 @@ export default class ArtemisEditorBlock extends Component {
         <View contentEditable={false} style={styles.overlayThing}>
           {this.state.pos &&
             entities.map(e => {
-              const entityElement = document.querySelector(`[data-artemis-id="${e.key}"]`);
+              const entityElement = document.querySelector(
+                `[data-artemis-id="${e.key}"]`
+              );
               if (entityElement && this._ref) {
                 const pos = entityElement.getBoundingClientRect();
                 return (
                   <span
                     key={e.key}
                     style={{
-                      position: "absolute",
+                      position: 'absolute',
                       top: pos.top - this.state.pos.top,
                       width: pos.width,
                       left: pos.left - this.state.pos.left,
                       height: pos.height,
-                      backgroundColor: "rgba(255, 0, 0, 0.4)",
+                      backgroundColor: 'rgba(255, 0, 0, 0.4)',
                     }}
                   >
                     {e.key}

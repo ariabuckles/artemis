@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { Editor, EditorState, Modifier, SelectionState } from "draft-js";
-import { View, Text, StyleSheet } from "./base-components";
-import ArtemisDecorator from "./ArtemisDecorator";
-import ArtemisEditorBlock from "./ArtemisEditorBlock";
-import "draft-js/dist/Draft.css";
+import React, { Component } from 'react';
+import { Editor, EditorState, Modifier, SelectionState } from 'draft-js';
+import { View, Text, StyleSheet } from './base-components';
+import ArtemisDecorator from './ArtemisDecorator';
+import ArtemisEditorBlock from './ArtemisEditorBlock';
+import 'draft-js/dist/Draft.css';
 
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderStyle: "solid",
+    borderStyle: 'solid',
   },
 });
 
@@ -54,14 +54,14 @@ export default class ArtemisEditor extends Component {
   }
 
   triggerAction(name) {
-    if (name === "INSERT_EQUATION") {
+    if (name === 'INSERT_EQUATION') {
       const editorState = this.state.editorState;
       const contentState = editorState.getCurrentContent();
 
       const contentStateWithEntity = contentState.createEntity(
-        "EQUATION",
-        "IMMUTABLE",
-        { value: "x + 3" } // why not
+        'EQUATION',
+        'IMMUTABLE',
+        { value: 'x + 3' } // why not
       );
 
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
@@ -74,12 +74,14 @@ export default class ArtemisEditor extends Component {
         // then we should replace the space with this:
         // this is a nice ... char, but has a width: '\u22EF',
         // This character is just a space so our letter spacing is closer to the correct width ouo:
-        " ",
+        ' ',
         null,
         entityKey
       );
 
-      const stateWithContent = EditorState.set(editorState, { currentContent: newContentState });
+      const stateWithContent = EditorState.set(editorState, {
+        currentContent: newContentState,
+      });
 
       // build up a new selection just after the equation we inserted
       // TODO(aria): we might want this to select the equation instead?

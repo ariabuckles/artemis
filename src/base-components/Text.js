@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { css } from "aphrodite";
+import React, { Component } from 'react';
+import { css } from 'aphrodite';
 
 export default class Text extends Component {
   render() {

@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Editor, EditorState, Modifier, CompositeDecorator } from "draft-js";
-import InlineMathEditor from "./InlineMathEditor";
+import React, { Component } from 'react';
+import { Editor, EditorState, Modifier, CompositeDecorator } from 'draft-js';
+import InlineMathEditor from './InlineMathEditor';
 
 const findEntities = (contentBlock, callback, contentState) => {
   contentBlock.findEntityRanges(character => {

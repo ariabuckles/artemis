@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import ArtemisEditor from "./ArtemisEditor";
-import ArtemisToolbar from "./ArtemisToolbar";
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import ArtemisEditor from './ArtemisEditor';
+import ArtemisToolbar from './ArtemisToolbar';
 
 class App extends Component {
   render() {
@@ -11,7 +11,7 @@ class App extends Component {
         <div style={{ height: 100 }}>
           <ArtemisToolbar onAction={a => this._editor.triggerAction(a)} />
         </div>
-        <div style={{ overflow: "scroll", height: "100%" }}>
+        <div style={{ overflow: 'scroll', height: '100%' }}>
           <ArtemisEditor ref={editor => this._editor = editor} />
         </div>
       </div>
