@@ -10,9 +10,6 @@ require("mathquill/build/mathquill-basic.js");
 const MathQuill = window.MathQuill;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#ddddff',
-  },
   space: {
     letterSpacing: 80,
     backgroundColor: '#ddffdd',
@@ -22,10 +19,7 @@ const styles = StyleSheet.create({
 export default class InlineMathEditor extends Component {
 
   render() {
-    //return <div contentEditable={false} className={css(styles.container)}><Text>[equation]</Text></div>;
-    //return <Text style={styles.container}>
     return <Text style={styles.space}>{this.props.children}</Text>;
-    //</Text>;
   }
 
 }

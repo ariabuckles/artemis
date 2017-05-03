@@ -54,7 +54,11 @@ export default class ArtemisEditor extends Component {
 			const newContentState = Modifier.replaceText(
 				contentStateWithEntity,
         currSelection,
-        'x',
+        // TODO(aria): Measure the width of this character to calculate the appropriate letter-spacing!
+        // then we should replace the space with this:
+        // this is a nice ... char, but has a width: '\u22EF',
+        // This character is just a space so our letter spacing is closer to the correct width ouo:
+        ' ',
         null,
         entityKey
       );
