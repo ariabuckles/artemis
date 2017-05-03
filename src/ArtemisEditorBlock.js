@@ -24,7 +24,7 @@ export default class ArtemisEditorBlock extends Component {
     this._measureSelf();
   }
   componentWillUpdate() {
-    if (this._renderCount != 1) {
+    if (this._renderCount !== 1) {
       this._renderCount = 0;
     }
   }
