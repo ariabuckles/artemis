@@ -11,8 +11,10 @@ const MathQuill = window.MathQuill;
 
 const styles = StyleSheet.create({
   space: {
-    letterSpacing: 80,
+    letterSpacing: 80, // customize per width
     backgroundColor: '#ddffdd',
+    verticalAlign: 'middle',
+    fontSize: 28, // customize per height
   },
 });
 
