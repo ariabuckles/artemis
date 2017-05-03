@@ -14,9 +14,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ddddff',
   },
   space: {
-    width: 80,
+    letterSpacing: 80,
     backgroundColor: '#ddffdd',
-    display: 'inline-block',
   },
 });
 
@@ -25,7 +24,7 @@ export default class InlineMathEditor extends Component {
   render() {
     //return <div contentEditable={false} className={css(styles.container)}><Text>[equation]</Text></div>;
     //return <Text style={styles.container}>
-    return <Text style={styles.space} contentEditable={false}>{this.props.children}</Text>;
+    return <Text style={styles.space}>{this.props.children}</Text>;
     //</Text>;
   }
 
