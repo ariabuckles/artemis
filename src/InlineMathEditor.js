@@ -53,8 +53,8 @@ export class FloatingMathEditor extends Component {
 
   render() {
     return <KeypadInput
-      value="y - 2"
-      onChange={() => null}
+      value={this.props.value}
+      onChange={this.props.onChange}
       keypadElement={this.props.keypad && this.props.keypad.getElement()}
     />;
   }

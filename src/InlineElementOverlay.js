@@ -94,7 +94,11 @@ class BlockOverlay extends Component {
                   backgroundColor: 'rgba(255, 0, 0, 0.4)',
                 }}
               >
-                <FloatingMathEditor keypad={this.props.keypad} />
+                <FloatingMathEditor
+                  value={e.entity.data.value}
+                  keypad={this.props.keypad}
+                  onChange={(value) => this.props.onChange(e.key, { value: value })}
+                />
               </span>
             );
           }
@@ -107,12 +111,17 @@ class BlockOverlay extends Component {
 
 export default class InlineElementOverlay extends Component {
   render() {
-    const { contentState } = this.props;
+    const { contentState, keypad, onChangeElement } = this.props;
     const blocks = contentState.getBlockMap().toArray();
 
     return <View style={styles.inlineElementOverlay}>
       {blocks.map((block) => {
-        return <BlockOverlay contentState={contentState} block={block} />;
+        return <BlockOverlay
+          contentState={contentState}
+          block={block}
+          keypad={keypad}
+          onChange={onChangeElement}
+        />;
       })}
     </View>;
   }

@@ -39,9 +39,23 @@ export default class ArtemisEditor extends Component {
         <InlineElementOverlay
           contentState={this.state.editorState.getCurrentContent()}
           keypad={this.props.keypad}
+          onChangeElement={this._onChangeElement}
         />
       </View>
     );
+  }
+
+  _onChangeElement = (key, data) => {
+    const editorState = this.state.editorState;
+    const contentState = editorState.getCurrentContent();
+
+    const newContentState = contentState.mergeEntityData(key, data);
+
+    return this.setState({
+      editorState: EditorState.set(editorState, {
+        currentContent: newContentState,
+      }),
+    });
   }
 
   _handleDraftChange = (newEditorState) => {
