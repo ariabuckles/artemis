@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
 });
 
 class BlockOverlay extends Component {
-
   state = {
     pos: null,
   };
@@ -54,8 +53,7 @@ class BlockOverlay extends Component {
     ) {
       this.setState({ pos: newPos });
     }
-  }
-
+  };
   render() {
     const { block, contentState } = this.props;
     this._renderCount++;
@@ -73,39 +71,40 @@ class BlockOverlay extends Component {
       });
     });
 
-
-    return <View style={styles.blockOverlay} ref={n => this._ref = n}>
-      {this.state.pos &&
-        entities.map(e => {
-          const entityElement = document.querySelector(
-            `[data-artemis-id="${e.key}"]`
-          );
-          if (entityElement && this._ref) {
-            const pos = entityElement.getBoundingClientRect();
-            return (
-              <span
-                key={e.key}
-                style={{
-                  position: 'absolute',
-                  top: pos.top - this.state.pos.top,
-                  width: pos.width,
-                  left: pos.left - this.state.pos.left,
-                  height: pos.height,
-                  backgroundColor: 'rgba(255, 0, 0, 0.4)',
-                }}
-              >
-                <FloatingMathEditor
-                  value={e.entity.data.value}
-                  keypad={this.props.keypad}
-                  onChange={(value) => this.props.onChange(e.key, { value: value })}
-                />
-              </span>
+    return (
+      <View style={styles.blockOverlay} ref={n => this._ref = n}>
+        {this.state.pos &&
+          entities.map(e => {
+            const entityElement = document.querySelector(
+              `[data-artemis-id="${e.key}"]`
             );
-          }
-          return null;
-        })
-      }
-    </View>;
+            if (entityElement && this._ref) {
+              const pos = entityElement.getBoundingClientRect();
+              return (
+                <span
+                  key={e.key}
+                  style={{
+                    position: 'absolute',
+                    top: pos.top - this.state.pos.top,
+                    width: pos.width,
+                    left: pos.left - this.state.pos.left,
+                    height: pos.height,
+                    backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                  }}
+                >
+                  <FloatingMathEditor
+                    value={e.entity.data.value}
+                    keypad={this.props.keypad}
+                    onChange={value =>
+                      this.props.onChange(e.key, { value: value })}
+                  />
+                </span>
+              );
+            }
+            return null;
+          })}
+      </View>
+    );
   }
 }
 
@@ -114,15 +113,19 @@ export default class InlineElementOverlay extends Component {
     const { contentState, keypad, onChangeElement } = this.props;
     const blocks = contentState.getBlockMap().toArray();
 
-    return <View style={styles.inlineElementOverlay}>
-      {blocks.map((block) => {
-        return <BlockOverlay
-          contentState={contentState}
-          block={block}
-          keypad={keypad}
-          onChange={onChangeElement}
-        />;
-      })}
-    </View>;
+    return (
+      <View style={styles.inlineElementOverlay}>
+        {blocks.map(block => {
+          return (
+            <BlockOverlay
+              contentState={contentState}
+              block={block}
+              keypad={keypad}
+              onChange={onChangeElement}
+            />
+          );
+        })}
+      </View>
+    );
   }
 }

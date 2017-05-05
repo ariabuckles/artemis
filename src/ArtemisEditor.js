@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
 });
 
 export default class ArtemisEditor extends Component {
-
   state = {
     editorState: EditorState.createEmpty(ArtemisDecorator),
   };
@@ -56,9 +55,8 @@ export default class ArtemisEditor extends Component {
         currentContent: newContentState,
       }),
     });
-  }
-
-  _handleDraftChange = (newEditorState) => {
+  };
+  _handleDraftChange = newEditorState => {
     // NOTE: This disables native optimizations so we can remeasure
     // equation/widget overlays on every keystroke
     // NOTE: We're also doing this on every cursor change. SORRY.

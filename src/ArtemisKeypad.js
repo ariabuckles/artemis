@@ -9,7 +9,6 @@ const { Keypad } = require('./math-input').components;
 const { KeypadTypes } = require('./math-input').consts;
 
 export default class ArtemisKeypad extends Component {
-
   _dismissListeners = [];
 
   _dismiss = () => {
@@ -19,25 +18,27 @@ export default class ArtemisKeypad extends Component {
   };
 
   render() {
-    return <Keypad
-      onElementMounted={(element) => {
-        this._element = element;
-      }}
-      onDismiss={this._dismiss}
-      style={this.props.style}
-    />;
+    return (
+      <Keypad
+        onElementMounted={element => {
+          this._element = element;
+        }}
+        onDismiss={this._dismiss}
+        style={this.props.style}
+      />
+    );
   }
 
   getElement = () => {
     return this._element;
   };
 
-  addDismissListener = (newListener) => {
+  addDismissListener = newListener => {
     this._dismissListeners.push(newListener);
   };
 
-  removeDismissListener = (oldListener) => {
-    this._dismissListeners = this._dismissListeners.filter((listener) => {
+  removeDismissListener = oldListener => {
+    this._dismissListeners = this._dismissListeners.filter(listener => {
       return listener !== oldListener;
     });
   };

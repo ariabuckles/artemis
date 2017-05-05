@@ -50,14 +50,13 @@ export class InlineMathPlaceholder extends Component {
 }
 
 export class FloatingMathEditor extends Component {
-
   render() {
-    return <KeypadInput
-      value={this.props.value}
-      onChange={this.props.onChange}
-      keypadElement={this.props.keypad && this.props.keypad.getElement()}
-    />;
+    return (
+      <KeypadInput
+        value={this.props.value}
+        onChange={this.props.onChange}
+        keypadElement={this.props.keypad && this.props.keypad.getElement()}
+      />
+    );
   }
-
 }
-

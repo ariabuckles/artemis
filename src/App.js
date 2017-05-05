@@ -15,15 +15,18 @@ class App extends PureComponent {
     return (
       <div className="App">
         <div style={{ height: 100 }}>
-          <ArtemisToolbar onAction={a => this.state.editor && this.state.editor.triggerAction(a)} />
+          <ArtemisToolbar
+            onAction={a =>
+              this.state.editor && this.state.editor.triggerAction(a)}
+          />
         </div>
         <div style={{ overflow: 'scroll', height: '100%' }}>
           <ArtemisEditor
-            ref={editor => this.setState({editor: editor})}
+            ref={editor => this.setState({ editor: editor })}
             keypad={this.state.keypad}
           />
         </div>
-        <ArtemisKeypad ref={keypad => this.setState({keypad: keypad})} />
+        <ArtemisKeypad ref={keypad => this.setState({ keypad: keypad })} />
       </div>
     );
   }

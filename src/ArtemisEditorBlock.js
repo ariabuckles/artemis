@@ -86,13 +86,14 @@ export default class ArtemisEditorBlock extends Component {
                       backgroundColor: 'rgba(255, 0, 0, 0.4)',
                     }}
                   >
-                    <FloatingMathEditor keypad={this.props.blockProps.getKeypad()} />
+                    <FloatingMathEditor
+                      keypad={this.props.blockProps.getKeypad()}
+                    />
                   </span>
                 );
               }
               return null;
-            })
-          }
+            })}
         </View>
       </View>
     );
