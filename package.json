@@ -10,6 +10,9 @@
     "mathquill": "git+https://github.com/ClassJourney/mathquill.git",
     "prettier": "^1.1.0",
     "react": "^15.5.3",
+    "react-addons-create-fragment": "^15.5.3",
+    "react-addons-css-transition-group": "^15.5.2",
+    "react-addons-pure-render-mixin": "^15.5.2",
     "react-dom": "^15.5.3"
   },
   "devDependencies": {

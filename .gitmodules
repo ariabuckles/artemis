@@ -1,0 +1,3 @@
+[submodule "src/math-input"]
+	path = src/math-input
+	url = git@github.com:ClassJourney/math-input.git

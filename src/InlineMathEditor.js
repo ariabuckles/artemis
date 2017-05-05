@@ -4,13 +4,20 @@ import { css } from 'aphrodite';
 
 // TODO(aria): Fix the dependency order issue here so these can be imports.
 // ugh mathquill global jQuery dep
-window.jQuery = require('jquery');
-require('mathquill/build/mathquill.css');
-require('mathquill/build/mathquill-basic.js');
-const MathQuill = window.MathQuill;
+//window.jQuery = require('jquery');
+//require('mathquill/build/mathquill.css');
+//require('mathquill/build/mathquill-basic.js');
+//const MathQuill = window.MathQuill;
+
+// TODO(aria): Pull these dependencies into separate files so that import works instead of require.
+window.i18n = {
+  _: str => str,
+};
+const { KeypadInput } = require('./math-input').components;
+const { KeypadTypes } = require('./math-input').consts;
 
 const styles = StyleSheet.create({
-  space: {
+  placeholder: {
     letterSpacing: 80, // customize per width
     backgroundColor: '#ddffdd',
     verticalAlign: 'middle',
@@ -18,7 +25,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class InlineMathEditor extends Component {
+export class InlineMathPlaceholder extends Component {
   render() {
     // TODO(aria): Make this style dynamic for sizing
     // This is rendering a single character because we only render InlineMathEditor's
@@ -41,3 +48,12 @@ export default class InlineMathEditor extends Component {
     );
   }
 }
+
+export class FloatingMathEditor extends Component {
+
+  render() {
+
+  }
+
+}
+
