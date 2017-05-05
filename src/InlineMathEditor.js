@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
+import ReactDOM from 'react-dom';
+
 import { View, Text, StyleSheet } from './base-components';
 import { css } from 'aphrodite';
 
@@ -16,15 +18,6 @@ window.i18n = {
 const { KeypadInput } = require('./math-input').components;
 const { KeypadTypes } = require('./math-input').consts;
 
-const styles = StyleSheet.create({
-  placeholder: {
-    letterSpacing: 80, // customize per width
-    backgroundColor: '#ddffdd',
-    verticalAlign: 'middle',
-    fontSize: 28, // customize per height
-  },
-});
-
 export class InlineMathPlaceholder extends Component {
   render() {
     // TODO(aria): Make this style dynamic for sizing
@@ -33,23 +26,29 @@ export class InlineMathPlaceholder extends Component {
     // render {this.props.children} and only {this.props.children} for cursors to
     // work correctly
     //debugger;
+
+    const { contentState, entityKey } = this.props;
+    const entity = contentState.getEntity(entityKey);
+    const entityData = entity.getData();
+
+    const style = {
+      // TODO(aria): calculate and subtract the space sizing.
+      letterSpacing: entityData.width || 40,
+      fontSize: entityData.height || 20,
+      verticalAlign: 'middle',
+      // TODO(aria): remove this green colour; debugging only:
+      backgroundColor: '#ddffdd',
+    };
+
     return (
-      <span
-        style={{
-          letterSpacing: 80, // customize per width
-          backgroundColor: '#ddffdd',
-          verticalAlign: 'middle',
-          fontSize: 28, // customize per height
-        }}
-        data-artemis-id={this.props.entityKey}
-      >
+      <span style={style} data-artemis-id={this.props.entityKey}>
         {this.props.children}
       </span>
     );
   }
 }
 
-export class FloatingMathEditor extends Component {
+export class FloatingMathEditor extends PureComponent {
   render() {
     return (
       <KeypadInput
@@ -58,5 +57,15 @@ export class FloatingMathEditor extends Component {
         keypadElement={this.props.keypad && this.props.keypad.getElement()}
       />
     );
+  }
+
+  componentDidUpdate() {
+    const node = ReactDOM.findDOMNode(this);
+    const rect = node.getBoundingClientRect();
+    const { lastWidth, lastHeight } = this.props;
+
+    if (rect.width !== lastWidth || rect.height !== lastHeight) {
+      this.props.onMeasure(rect);
+    }
   }
 }

@@ -78,8 +78,12 @@ class BlockOverlay extends Component {
             const entityElement = document.querySelector(
               `[data-artemis-id="${e.key}"]`
             );
+
             if (entityElement && this._ref) {
               const pos = entityElement.getBoundingClientRect();
+
+              const entityData = e.entity.getData();
+
               return (
                 <span
                   key={e.key}
@@ -93,10 +97,19 @@ class BlockOverlay extends Component {
                   }}
                 >
                   <FloatingMathEditor
-                    value={e.entity.data.value}
+                    value={entityData.value}
+                    lastWidth={entityData.width}
+                    lastHeight={entityData.height}
                     keypad={this.props.keypad}
-                    onChange={value =>
-                      this.props.onChange(e.key, { value: value })}
+                    onChange={value => {
+                      this.props.onChange(e.key, { value: value });
+                    }}
+                    onMeasure={rect => {
+                      this.props.onChange(e.key, {
+                        width: rect.width,
+                        height: rect.height,
+                      });
+                    }}
                   />
                 </span>
               );
