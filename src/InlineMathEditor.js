@@ -1,4 +1,4 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import { View, Text, StyleSheet } from './base-components';
@@ -48,7 +48,15 @@ export class InlineMathPlaceholder extends Component {
   }
 }
 
-export class FloatingMathEditor extends PureComponent {
+export class FloatingMathEditor extends Component {
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.value !== this.props.value ||
+      // TODO(aria): check for differences in the actual keypad.getElement()
+      nextProps.keypad !== this.props.keypad
+    );
+  }
+
   render() {
     return (
       <KeypadInput
@@ -59,13 +67,27 @@ export class FloatingMathEditor extends PureComponent {
     );
   }
 
+  componentDidMount() {
+    this._measure();
+  }
+
   componentDidUpdate() {
+    this._measure();
+  }
+
+  _measure = () => {
     const node = ReactDOM.findDOMNode(this);
-    const rect = node.getBoundingClientRect();
+
+    // HACK(aria): node's size is incorrect here; we need to grab the
+    // inner node, which has a larger size ://///
+    // TODO(aria): cry more
+    const mathNode = node.getElementsByClassName('mq-editable-field')[0];
+
+    const rect = mathNode.getBoundingClientRect();
     const { lastWidth, lastHeight } = this.props;
 
     if (rect.width !== lastWidth || rect.height !== lastHeight) {
       this.props.onMeasure(rect);
     }
-  }
+  };
 }

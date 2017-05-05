@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 
 export default class ArtemisEditor extends Component {
   state = {
-    editorState: EditorState.createEmpty(ArtemisDecorator),
+    editorState: EditorState.createEmpty(new ArtemisDecorator()),
   };
 
   render() {
@@ -44,16 +44,23 @@ export default class ArtemisEditor extends Component {
     );
   }
 
-  _onChangeElement = (key, data) => {
+  _onChangeElement = (key, data, updateSize) => {
     const editorState = this.state.editorState;
     const contentState = editorState.getCurrentContent();
 
     const newContentState = contentState.mergeEntityData(key, data);
 
+    let updates = {
+      currentContent: newContentState,
+    };
+    if (updateSize) {
+      // making a new decorator forces a rerun of the decorator.
+      // TODO(aria): lament
+      updates.decorator = new ArtemisDecorator();
+    }
+
     return this.setState({
-      editorState: EditorState.set(editorState, {
-        currentContent: newContentState,
-      }),
+      editorState: EditorState.set(editorState, updates),
     });
   };
   _handleDraftChange = newEditorState => {

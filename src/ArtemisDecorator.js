@@ -9,13 +9,15 @@ const findEntities = (contentBlock, callback, contentState) => {
   }, callback);
 };
 
-const ArtemisDecorator = new CompositeDecorator([
-  {
-    strategy: findEntities,
-    // TODO(aria): Change InlineMathPlaceholder to EntityRenderer that can render other
-    // entities :D (and goes to InlineMathPlaceholder for equation entities)
-    component: InlineMathPlaceholder,
-  },
-]);
-
-export default ArtemisDecorator;
+export default class ArtemisDecorator extends CompositeDecorator {
+  constructor() {
+    super([
+      {
+        strategy: findEntities,
+        // TODO(aria): Change InlineMathPlaceholder to EntityRenderer that can render other
+        // entities :D (and goes to InlineMathPlaceholder for equation entities)
+        component: InlineMathPlaceholder,
+      },
+    ]);
+  }
+}

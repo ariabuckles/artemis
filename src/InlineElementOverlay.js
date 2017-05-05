@@ -105,10 +105,14 @@ class BlockOverlay extends Component {
                       this.props.onChange(e.key, { value: value });
                     }}
                     onMeasure={rect => {
-                      this.props.onChange(e.key, {
-                        width: rect.width,
-                        height: rect.height,
-                      });
+                      this.props.onChange(
+                        e.key,
+                        {
+                          width: rect.width,
+                          height: rect.height,
+                        },
+                        true
+                      );
                     }}
                   />
                 </span>
