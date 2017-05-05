@@ -2,13 +2,21 @@ import React, { Component } from 'react';
 import { Editor, EditorState, Modifier, SelectionState } from 'draft-js';
 import { View, Text, StyleSheet } from './base-components';
 import ArtemisDecorator from './ArtemisDecorator';
-import ArtemisEditorBlock from './ArtemisEditorBlock';
+import InlineElementOverlay from './InlineElementOverlay';
 import 'draft-js/dist/Draft.css';
 
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
     borderStyle: 'solid',
+    position: 'relative',
+  },
+
+  editorStackingContext: {
+    // defines a new stacking context so all z-indices inside are relative
+    // to the editor, and the overlay remains on top of all editor components
+    position: 'relative',
+    zIndex: 0,
   },
 });
 
@@ -18,24 +26,19 @@ export default class ArtemisEditor extends Component {
     editorState: EditorState.createEmpty(ArtemisDecorator),
   };
 
-  _blockRendererFn = (contentBlock) => {
-    const type = contentBlock.getType();
-    return {
-      component: ArtemisEditorBlock,
-      props: {
-        getKeypad: () => this.props.keypad,
-      },
-    };
-  };
-
   render() {
     return (
       <View style={styles.container}>
-        <Editor
-          spellCheck={true}
-          editorState={this.state.editorState}
-          onChange={this._handleDraftChange}
-          blockRendererFn={this._blockRendererFn}
+        <View style={styles.editorStackingContext}>
+          <Editor
+            spellCheck={true}
+            editorState={this.state.editorState}
+            onChange={this._handleDraftChange}
+          />
+        </View>
+        <InlineElementOverlay
+          contentState={this.state.editorState.getCurrentContent()}
+          keypad={this.props.keypad}
         />
       </View>
     );

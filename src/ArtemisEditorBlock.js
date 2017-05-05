@@ -91,7 +91,8 @@ export default class ArtemisEditorBlock extends Component {
                 );
               }
               return null;
-            })}
+            })
+          }
         </View>
       </View>
     );
