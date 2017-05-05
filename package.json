@@ -6,6 +6,7 @@
     "aphrodite": "^1.2.0",
     "draft-js": "^0.10.0",
     "jquery": "^3.2.1",
+    "katex": "^0.7.1",
     "math-input": "git+https://github.com/ClassJourney/math-input.git#web-support",
     "mathquill": "git+https://github.com/ClassJourney/mathquill.git",
     "prettier": "^1.1.0",

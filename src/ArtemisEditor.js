@@ -12,22 +12,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const blockRendererFn = contentBlock => {
-  const type = contentBlock.getType();
-  return {
-    component: ArtemisEditorBlock,
-  };
-};
-
 export default class ArtemisEditor extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorState: EditorState.createEmpty(ArtemisDecorator),
-    };
 
-    this._handleDraftChange = this._handleDraftChange.bind(this);
-  }
+  state = {
+    editorState: EditorState.createEmpty(ArtemisDecorator),
+  };
+
+  _blockRendererFn = (contentBlock) => {
+    const type = contentBlock.getType();
+    return {
+      component: ArtemisEditorBlock,
+      props: {
+        getKeypad: () => this.props.keypad,
+      },
+    };
+  };
 
   render() {
     return (
@@ -36,13 +35,13 @@ export default class ArtemisEditor extends Component {
           spellCheck={true}
           editorState={this.state.editorState}
           onChange={this._handleDraftChange}
-          blockRendererFn={blockRendererFn}
+          blockRendererFn={this._blockRendererFn}
         />
       </View>
     );
   }
 
-  _handleDraftChange(newEditorState) {
+  _handleDraftChange = (newEditorState) => {
     // NOTE: This disables native optimizations so we can remeasure
     // equation/widget overlays on every keystroke
     // NOTE: We're also doing this on every cursor change. SORRY.
@@ -51,7 +50,7 @@ export default class ArtemisEditor extends Component {
         nativelyRenderedContent: null,
       }),
     });
-  }
+  };
 
   triggerAction(name) {
     if (name === 'INSERT_EQUATION') {

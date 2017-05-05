@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { EditorBlock } from 'draft-js';
 import { View, Text, StyleSheet } from './base-components';
+import { FloatingMathEditor } from './InlineMathEditor';
 
 const styles = StyleSheet.create({
   artemisEditorBlock: {
@@ -85,7 +86,7 @@ export default class ArtemisEditorBlock extends Component {
                       backgroundColor: 'rgba(255, 0, 0, 0.4)',
                     }}
                   >
-                    {e.key}
+                    <FloatingMathEditor keypad={this.props.blockProps.getKeypad()} />
                   </span>
                 );
               }

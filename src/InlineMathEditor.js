@@ -4,10 +4,10 @@ import { css } from 'aphrodite';
 
 // TODO(aria): Fix the dependency order issue here so these can be imports.
 // ugh mathquill global jQuery dep
-//window.jQuery = require('jquery');
-//require('mathquill/build/mathquill.css');
-//require('mathquill/build/mathquill-basic.js');
-//const MathQuill = window.MathQuill;
+window.jQuery = require('jquery');
+require('mathquill/build/mathquill.css');
+require('mathquill/build/mathquill-basic.js');
+const MathQuill = window.MathQuill;
 
 // TODO(aria): Pull these dependencies into separate files so that import works instead of require.
 window.i18n = {
@@ -52,7 +52,11 @@ export class InlineMathPlaceholder extends Component {
 export class FloatingMathEditor extends Component {
 
   render() {
-
+    return <KeypadInput
+      value="y - 2"
+      onChange={() => null}
+      keypadElement={this.props.keypad && this.props.keypad.getElement()}
+    />;
   }
 
 }
