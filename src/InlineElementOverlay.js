@@ -90,9 +90,7 @@ class BlockOverlay extends Component {
                   style={{
                     position: 'absolute',
                     top: pos.top - this.state.pos.top,
-                    width: pos.width,
                     left: pos.left - this.state.pos.left,
-                    height: pos.height,
                     backgroundColor: 'rgba(255, 0, 0, 0.4)',
                   }}
                 >
