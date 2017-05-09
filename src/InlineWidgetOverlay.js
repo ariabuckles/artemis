@@ -43,8 +43,7 @@ class BlockOverlay extends Component {
   }
 
   _measureSelf = () => {
-    // TODO(aria): replace this._ref with this
-    const node = ReactDOM.findDOMNode(this._ref);
+    const node = ReactDOM.findDOMNode(this);
     const newPos = node.getBoundingClientRect();
     if (
       !this.state.pos ||
@@ -54,6 +53,7 @@ class BlockOverlay extends Component {
       this.setState({ pos: newPos });
     }
   };
+
   render() {
     const { block, contentState } = this.props;
     this._renderCount++;
@@ -72,14 +72,14 @@ class BlockOverlay extends Component {
     });
 
     return (
-      <View style={styles.blockOverlay} ref={n => this._ref = n}>
+      <View style={styles.blockOverlay}>
         {this.state.pos &&
           entities.map(e => {
             const entityElement = document.querySelector(
               `[data-artemis-id="${e.key}"]`
             );
 
-            if (entityElement && this._ref) {
+            if (entityElement && this.state.pos) {
               const pos = entityElement.getBoundingClientRect();
 
               const entityData = e.entity.getData();
