@@ -84,14 +84,18 @@ class BlockOverlay extends Component {
 
               const entityData = e.entity.getData();
 
+              const entityOffset = ((entityData.height || 0) - pos.height) / 2;
+
               return (
                 <span
                   key={e.key}
                   style={{
                     position: 'absolute',
-                    top: pos.top - this.state.pos.top,
+                    top: pos.top - this.state.pos.top - entityOffset,
                     left: pos.left - this.state.pos.left,
-                    backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                    //backgroundColor: 'rgba(255, 0, 0, 0.4)',
+                    padding: 1,
+                    pointerEvents: 'none',
                   }}
                 >
                   <FloatingMathEditor

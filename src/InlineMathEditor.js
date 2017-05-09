@@ -18,7 +18,42 @@ window.i18n = {
 const { KeypadInput } = require('./math-input').components;
 const { KeypadTypes } = require('./math-input').consts;
 
+const styles = StyleSheet.create({
+  overlay: {
+    display: 'inline-block',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: 'rgba(240, 240, 120, 0.5)',
+  },
+});
+
 export class InlineMathPlaceholder extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = this._calculateSpecifiedDimensions(props);
+    this.state.widthModifier = 0;
+  };
+
+  _calculateSpecifiedDimensions = (props) => {
+    const { contentState, entityKey } = this.props;
+    const entity = contentState.getEntity(entityKey);
+    const entityData = entity.getData();
+
+    return {
+      specifiedWidth: entityData.width || 40,
+      specifiedHeight: entityData.height || 20,
+    };
+  };
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(this._calculateSpecifiedDimensions(nextProps));
+  }
+
   render() {
     // TODO(aria): Make this style dynamic for sizing
     // This is rendering a single character because we only render InlineMathEditor's
@@ -27,17 +62,22 @@ export class InlineMathPlaceholder extends Component {
     // work correctly
     //debugger;
 
-    const { contentState, entityKey } = this.props;
-    const entity = contentState.getEntity(entityKey);
-    const entityData = entity.getData();
+    const { entityKey } = this.props;
+
+    const { specifiedWidth, specifiedHeight, widthModifier } = this.state;
 
     const style = {
-      // TODO(aria): calculate and subtract the space sizing.
-      letterSpacing: entityData.width || 40,
-      fontSize: entityData.height || 20,
+      letterSpacing: specifiedWidth + widthModifier + 2, // 2 from padding (hax)
+
+      // TODO(aria): uhhhh what to put here. mostly affects highlighting
+      fontSize: specifiedHeight - 5,
+      // Line height doesn't actually make the box the correct height, but it does
+      // size the overall line correctly. sorta weird, i know.
+      lineHeight: specifiedHeight + 2 + 'px', // 2 from the padding (haxx)
+
       verticalAlign: 'middle',
-      // TODO(aria): remove this green colour; debugging only:
-      backgroundColor: '#ddffdd',
+
+      //color: 'transparent',
     };
 
     return (
@@ -46,7 +86,37 @@ export class InlineMathPlaceholder extends Component {
       </span>
     );
   }
+
+  componentDidMount() {
+    this._measure();
+  }
+
+  componentDidUpdate() {
+    this._measure();
+  }
+
+  _measure = () => {
+    // TODO(aria) remove this.
+    // This should no longer be necessary now that we're using the
+    // invisible separator character instead of a space or '.'
+    // Remove this once we have this stored in git history or
+    // when we're confident the invisible separator character hack
+    // is working
+    const node = ReactDOM.findDOMNode(this);
+    const rect = node.getBoundingClientRect();
+
+    const desiredWidth = this.state.specifiedWidth + 2; // 2 from padding
+    const errorMargin = (desiredWidth + this.state.widthModifier) - rect.width;
+    if (errorMargin !== this.state.widthModifier) {
+      this.setState({ widthModifier: errorMargin });
+    }
+  };
 }
+
+const keypadInputStyle = {
+  backgroundColor: 'transparent',
+  pointerEvents: 'auto',
+};
 
 export class FloatingMathEditor extends Component {
   shouldComponentUpdate(nextProps) {
@@ -60,6 +130,7 @@ export class FloatingMathEditor extends Component {
   render() {
     return (
       <KeypadInput
+        style={keypadInputStyle}
         value={this.props.value}
         onChange={this.props.onChange}
         keypadElement={this.props.keypad && this.props.keypad.getElement()}

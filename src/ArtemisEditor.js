@@ -91,11 +91,16 @@ export default class ArtemisEditor extends Component {
       const newContentState = Modifier.replaceText(
         contentStateWithEntity,
         currSelection,
-        // TODO(aria): Measure the width of this character to calculate the appropriate letter-spacing!
-        // then we should replace the space with this:
-        // this is a nice ... char, but has a width: '\u22EF',
         // This character is just a space so our letter spacing is closer to the correct width ouo:
-        ' ',
+        // Invisible separator character.
+        // This seems to be one of the few characters that has all the properties we need:
+        //  * sizes with letter-spacing
+        //  * cursor moves before and after on letter spacing
+        //  * text wraps (not considered whitespace for text wrapping purposes)
+        //  * invisible (so we can have a transparent background on the math and show the
+        //    highlight colour through it
+        //  * nice-to-have: 0 width so we don't have to do measuring hacks for letter-spacing
+        '\u2063',
         null,
         entityKey
       );
