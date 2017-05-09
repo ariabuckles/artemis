@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Editor, EditorState, Modifier, CompositeDecorator } from 'draft-js';
-import { InlineMathPlaceholder } from './InlineMathEditor';
+import InlineWidgetPlaceholder from './InlineWidgetPlaceholder';
 
 const findEntities = (contentBlock, callback, contentState) => {
   contentBlock.findEntityRanges(character => {
@@ -14,9 +14,7 @@ export default class ArtemisDecorator extends CompositeDecorator {
     super([
       {
         strategy: findEntities,
-        // TODO(aria): Change InlineMathPlaceholder to EntityRenderer that can render other
-        // entities :D (and goes to InlineMathPlaceholder for equation entities)
-        component: InlineMathPlaceholder,
+        component: InlineWidgetPlaceholder,
       },
     ]);
   }
