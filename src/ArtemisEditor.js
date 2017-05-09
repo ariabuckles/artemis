@@ -21,9 +21,6 @@ const styles = StyleSheet.create({
 });
 
 export default class ArtemisEditor extends Component {
-  state = {
-    editorState: EditorState.createEmpty(new ArtemisDecorator()),
-  };
 
   render() {
     return (
@@ -31,12 +28,12 @@ export default class ArtemisEditor extends Component {
         <View style={styles.editorStackingContext}>
           <Editor
             spellCheck={true}
-            editorState={this.state.editorState}
+            editorState={this.props.editorState}
             onChange={this._handleDraftChange}
           />
         </View>
         <InlineElementOverlay
-          contentState={this.state.editorState.getCurrentContent()}
+          contentState={this.props.editorState.getCurrentContent()}
           keypad={this.props.keypad}
           onChangeElement={this._onChangeElement}
         />
@@ -45,7 +42,7 @@ export default class ArtemisEditor extends Component {
   }
 
   _onChangeElement = (key, data, updateSize) => {
-    const editorState = this.state.editorState;
+    const editorState = this.props.editorState;
     const contentState = editorState.getCurrentContent();
 
     const newContentState = contentState.mergeEntityData(key, data);
@@ -59,73 +56,17 @@ export default class ArtemisEditor extends Component {
       updates.decorator = new ArtemisDecorator();
     }
 
-    return this.setState({
-      editorState: EditorState.set(editorState, updates),
-    });
+    return this.props.onChange(EditorState.set(editorState, updates));
   };
+
   _handleDraftChange = newEditorState => {
     // NOTE: This disables native optimizations so we can remeasure
     // equation/widget overlays on every keystroke
     // NOTE: We're also doing this on every cursor change. SORRY.
-    return this.setState({
-      editorState: EditorState.set(newEditorState, {
+    return this.props.onChange(
+      EditorState.set(newEditorState, {
         nativelyRenderedContent: null,
-      }),
-    });
+      })
+    );
   };
-
-  triggerAction(name) {
-    if (name === 'INSERT_EQUATION') {
-      const editorState = this.state.editorState;
-      const contentState = editorState.getCurrentContent();
-
-      const contentStateWithEntity = contentState.createEntity(
-        'EQUATION',
-        'IMMUTABLE',
-        { value: 'x + 3' } // why not
-      );
-
-      const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-
-      const currSelection = editorState.getSelection();
-      const newContentState = Modifier.replaceText(
-        contentStateWithEntity,
-        currSelection,
-        // This character is just a space so our letter spacing is closer to the correct width ouo:
-        // Invisible separator character.
-        // This seems to be one of the few characters that has all the properties we need:
-        //  * sizes with letter-spacing
-        //  * cursor moves before and after on letter spacing
-        //  * text wraps (not considered whitespace for text wrapping purposes)
-        //  * invisible (so we can have a transparent background on the math and show the
-        //    highlight colour through it
-        //  * nice-to-have: 0 width so we don't have to do measuring hacks for letter-spacing
-        '\u2063',
-        null,
-        entityKey
-      );
-
-      const stateWithContent = EditorState.set(editorState, {
-        currentContent: newContentState,
-      });
-
-      // build up a new selection just after the equation we inserted
-      // TODO(aria): we might want this to select the equation instead?
-      const stateWithSelection = EditorState.acceptSelection(
-        stateWithContent,
-        new SelectionState({
-          anchorKey: currSelection.getStartKey(),
-          anchorOffset: currSelection.getStartOffset() + 1,
-          focusKey: currSelection.getEndKey(),
-          focusOffset: currSelection.getStartOffset() + 1,
-          isBackward: false,
-          hasFocus: false,
-        })
-      );
-
-      this.setState({
-        editorState: stateWithSelection,
-      });
-    }
-  }
 }

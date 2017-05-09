@@ -4,6 +4,7 @@ import './App.css';
 import ArtemisEditor from './ArtemisEditor';
 import ArtemisToolbar from './ArtemisToolbar';
 import ArtemisKeypad from './ArtemisKeypad';
+import * as ArtemisState from './ArtemisState';
 import { View, Text, StyleSheet } from './base-components';
 
 const styles = StyleSheet.create({
@@ -16,8 +17,8 @@ const styles = StyleSheet.create({
 
 class App extends PureComponent {
   state = {
-    editor: null,
     keypad: null,
+    artemisState: ArtemisState.empty(),
   };
 
   render() {
@@ -26,13 +27,13 @@ class App extends PureComponent {
         <View style={styles.container}>
           <div style={{ height: 100 }}>
             <ArtemisToolbar
-              onAction={a =>
-                this.state.editor && this.state.editor.triggerAction(a)}
+              onAction={this._applyAction}
             />
           </div>
           <div style={{ overflow: 'scroll', height: '100%' }}>
             <ArtemisEditor
-              ref={editor => this.setState({ editor: editor })}
+              editorState={this.state.artemisState}
+              onChange={this._onArtemisStateChange}
               keypad={this.state.keypad}
             />
           </div>
@@ -41,6 +42,18 @@ class App extends PureComponent {
       </div>
     );
   }
+
+  _onArtemisStateChange = (newArtemisState) => {
+    this.setState({
+      artemisState: newArtemisState,
+    });
+  };
+
+  _applyAction = (a) => {
+    this.setState({
+      artemisState: ArtemisState.applyAction(this.state.artemisState, a),
+    });
+  };
 }
 
 export default App;
