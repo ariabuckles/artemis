@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     margin: 20,
     maxWidth: 800,
   },
-
 });
 
 class App extends PureComponent {
@@ -26,9 +25,7 @@ class App extends PureComponent {
       <div className="App">
         <View style={styles.container}>
           <div style={{ height: 100 }}>
-            <ArtemisToolbar
-              onAction={this._applyAction}
-            />
+            <ArtemisToolbar onAction={this._applyAction} />
           </div>
           <div style={{ overflow: 'scroll', height: '100%' }}>
             <ArtemisEditor
@@ -43,13 +40,13 @@ class App extends PureComponent {
     );
   }
 
-  _onArtemisStateChange = (newArtemisState) => {
+  _onArtemisStateChange = newArtemisState => {
     this.setState({
       artemisState: newArtemisState,
     });
   };
 
-  _applyAction = (a) => {
+  _applyAction = a => {
     this.setState({
       artemisState: ArtemisState.applyAction(this.state.artemisState, a),
     });

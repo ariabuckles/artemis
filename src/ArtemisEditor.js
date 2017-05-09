@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
 });
 
 export default class ArtemisEditor extends Component {
-
   render() {
     return (
       <View style={styles.container}>

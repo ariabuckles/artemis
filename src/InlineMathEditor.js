@@ -31,15 +31,14 @@ const styles = StyleSheet.create({
 });
 
 export class InlineMathPlaceholder extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = this._calculateSpecifiedDimensions(props);
     this.state.widthModifier = 0;
-  };
+  }
 
-  _calculateSpecifiedDimensions = (props) => {
+  _calculateSpecifiedDimensions = props => {
     const { contentState, entityKey } = this.props;
     const entity = contentState.getEntity(entityKey);
     const entityData = entity.getData();
@@ -106,7 +105,7 @@ export class InlineMathPlaceholder extends Component {
     const rect = node.getBoundingClientRect();
 
     const desiredWidth = this.state.specifiedWidth + 2; // 2 from padding
-    const errorMargin = (desiredWidth + this.state.widthModifier) - rect.width;
+    const errorMargin = desiredWidth + this.state.widthModifier - rect.width;
     if (errorMargin !== this.state.widthModifier) {
       this.setState({ widthModifier: errorMargin });
     }

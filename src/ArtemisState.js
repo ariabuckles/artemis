@@ -12,7 +12,6 @@ export const applyAction = (artemisState, action) => {
 
   // TODO(aria): make action an object
   if (type === 'INSERT_WIDGET') {
-
     const widgetInfo = action.payload;
 
     const contentStateWithEntity = contentState.createEntity(
@@ -60,8 +59,7 @@ export const applyAction = (artemisState, action) => {
     );
 
     return stateWithSelection;
-
   } else {
-    return "could not find action: " + JSON.stringify(action);
+    return 'could not find action: ' + JSON.stringify(action);
   }
 };

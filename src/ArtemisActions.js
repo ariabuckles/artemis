@@ -1,4 +1,3 @@
-
 export const newInlineMath = () => {
   return {
     type: 'INSERT_WIDGET',

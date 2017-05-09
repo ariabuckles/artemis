@@ -19,7 +19,9 @@ export default class ArtemisToolbar extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <button onClick={() => this.props.onAction(ArtemisActions.newInlineMath())}>
+        <button
+          onClick={() => this.props.onAction(ArtemisActions.newInlineMath())}
+        >
           Eq
         </button>
       </View>
