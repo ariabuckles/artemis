@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Editor, EditorState, Modifier, SelectionState } from 'draft-js';
 import { View, Text, StyleSheet } from './base-components';
 import ArtemisDecorator from './ArtemisDecorator';
-import InlineElementOverlay from './InlineElementOverlay';
+import InlineWidgetOverlay from './InlineWidgetOverlay';
 import 'draft-js/dist/Draft.css';
 
 const styles = StyleSheet.create({
@@ -32,7 +32,7 @@ export default class ArtemisEditor extends Component {
             onChange={this._handleDraftChange}
           />
         </View>
-        <InlineElementOverlay
+        <InlineWidgetOverlay
           contentState={this.props.editorState.getCurrentContent()}
           keypad={this.props.keypad}
           onChangeElement={this._onChangeElement}

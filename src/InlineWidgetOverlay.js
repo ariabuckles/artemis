@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from './base-components';
 import { FloatingMathEditor } from './InlineMathEditor';
 
 const styles = StyleSheet.create({
-  inlineElementOverlay: {
+  inlineWidgetOverlay: {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -127,7 +127,7 @@ class BlockOverlay extends Component {
   }
 }
 
-export default class InlineElementOverlay extends Component {
+export default class InlineWidgetOverlay extends Component {
   render() {
     const { contentState, keypad, onChangeElement } = this.props;
     const blocks = contentState.getBlockMap().toArray();
@@ -146,7 +146,7 @@ export default class InlineElementOverlay extends Component {
     }
 
     return (
-      <View style={styles.inlineElementOverlay}>
+      <View style={styles.inlineWidgetOverlay}>
         {blockOverlays}
       </View>
     );
