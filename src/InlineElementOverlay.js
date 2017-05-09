@@ -132,18 +132,22 @@ export default class InlineElementOverlay extends Component {
     const { contentState, keypad, onChangeElement } = this.props;
     const blocks = contentState.getBlockMap().toArray();
 
+    let blockOverlays = [];
+    for (const [key, block] of contentState.getBlockMap().entries()) {
+      blockOverlays.push(
+        <BlockOverlay
+          key={key}
+          contentState={contentState}
+          block={block}
+          keypad={keypad}
+          onChange={onChangeElement}
+        />
+      );
+    }
+
     return (
       <View style={styles.inlineElementOverlay}>
-        {blocks.map(block => {
-          return (
-            <BlockOverlay
-              contentState={contentState}
-              block={block}
-              keypad={keypad}
-              onChange={onChangeElement}
-            />
-          );
-        })}
+        {blockOverlays}
       </View>
     );
   }
