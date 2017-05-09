@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Editor, EditorState } from 'draft-js';
+
+import * as ArtemisActions from './ArtemisActions';
 import { View, Text, StyleSheet } from './base-components';
 
 const styles = StyleSheet.create({
@@ -17,7 +19,7 @@ export default class ArtemisToolbar extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <button onClick={() => this.props.onAction('INSERT_EQUATION')}>
+        <button onClick={() => this.props.onAction(ArtemisActions.newInlineMath())}>
           Eq
         </button>
       </View>

@@ -8,14 +8,17 @@ export const empty = () => {
 export const applyAction = (artemisState, action) => {
   const editorState = artemisState;
   const contentState = editorState.getCurrentContent();
+  const type = action.type;
 
   // TODO(aria): make action an object
-  if (action === 'INSERT_EQUATION') {
+  if (type === 'INSERT_WIDGET') {
+
+    const widgetInfo = action.payload;
 
     const contentStateWithEntity = contentState.createEntity(
-      'EQUATION',
+      widgetInfo.type,
       'IMMUTABLE',
-      { value: 'x + 3' } // why not
+      widgetInfo
     );
 
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
