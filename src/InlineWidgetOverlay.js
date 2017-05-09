@@ -23,23 +23,12 @@ class BlockOverlay extends Component {
     pos: null,
   };
 
-  _renderCount = 0;
-
   componentDidMount() {
     this._measureSelf();
   }
 
-  componentWillUpdate() {
-    if (this._renderCount !== 1) {
-      this._renderCount = 0;
-    }
-  }
-
   componentDidUpdate() {
     this._measureSelf();
-    if (this._renderCount < 2) {
-      this.forceUpdate();
-    }
   }
 
   _measureSelf = () => {
@@ -56,7 +45,6 @@ class BlockOverlay extends Component {
 
   render() {
     const { block, contentState } = this.props;
-    this._renderCount++;
 
     let entities = [];
     block.findEntityRanges(character => {
