@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { View, Text, StyleSheet } from './base-components';
-import { css } from 'aphrodite';
-
 // TODO(aria): are there more things i need to do to this component
 // to make it support other widget types?
 export default class InlineWidgetPlaceholder extends Component {
   constructor(props) {
     super(props);
 
-    this.state = this._calculateSpecifiedDimensions(props);
-    this.state.widthModifier = 0;
+    this.state = Object.assign(
+      this._calculateSpecifiedDimensions(props),
+      { widthModifier: 0 }
+    );
   }
 
   _calculateSpecifiedDimensions = props => {
@@ -54,7 +53,7 @@ export default class InlineWidgetPlaceholder extends Component {
     };
 
     return (
-      <span style={style} data-artemis-id={this.props.entityKey}>
+      <span style={style} data-artemis-id={entityKey}>
         {this.props.children}
       </span>
     );

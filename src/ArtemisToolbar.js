@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Editor, EditorState } from 'draft-js';
 
 import * as ArtemisActions from './ArtemisActions';
-import { View, Text, StyleSheet } from './base-components';
+import { View, StyleSheet } from './base-components';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,10 +11,6 @@ const styles = StyleSheet.create({
 });
 
 export default class ArtemisToolbar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <View style={styles.container}>

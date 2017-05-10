@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Editor, EditorState, Modifier, SelectionState } from 'draft-js';
-import { View, Text, StyleSheet } from './base-components';
+import { Editor, EditorState } from 'draft-js';
+import { View, StyleSheet } from './base-components';
 import ArtemisDecorator from './ArtemisDecorator';
 import InlineWidgetOverlay from './InlineWidgetOverlay';
 import 'draft-js/dist/Draft.css';

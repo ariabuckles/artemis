@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { EditorBlock } from 'draft-js';
-import { View, Text, StyleSheet } from './base-components';
+import { View, StyleSheet } from './base-components';
 import InlineWidgetEditor from './InlineWidgetEditor';
 
 const styles = StyleSheet.create({
@@ -126,7 +125,6 @@ class BlockOverlay extends Component {
 export default class InlineWidgetOverlay extends Component {
   render() {
     const { widgetEditors, contentState, keypad, onChangeElement } = this.props;
-    const blocks = contentState.getBlockMap().toArray();
 
     let blockOverlays = [];
     for (const [key, block] of contentState.getBlockMap().entries()) {

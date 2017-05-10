@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { View, Text, StyleSheet } from './base-components';
-import { css } from 'aphrodite';
-
-import InlineMathEditor from './widgets/InlineMathEditor';
 import InlineWidgetNotFoundEditor from './widgets/InlineWidgetNotFoundEditor';
 
 export default class InlineWidgetEditor extends Component {
@@ -40,6 +36,11 @@ export default class InlineWidgetEditor extends Component {
 
   _measure = () => {
     const node = ReactDOM.findDOMNode(this);
+
+    if (node == null) {
+      // We reach this code path if our editor renders `null`
+      return;
+    }
 
     // We used to find the mq-editable-field node here, but since removing
     // the size constraint on this View, it seems like we're able to safely

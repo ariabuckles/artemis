@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Editor, EditorState, Modifier, CompositeDecorator } from 'draft-js';
+import * as Draft from 'draft-js';
 import InlineWidgetPlaceholder from './InlineWidgetPlaceholder';
 
 const findEntities = (contentBlock, callback, contentState) => {
@@ -9,7 +8,7 @@ const findEntities = (contentBlock, callback, contentState) => {
   }, callback);
 };
 
-export default class ArtemisDecorator extends CompositeDecorator {
+export default class ArtemisDecorator extends Draft.CompositeDecorator {
   constructor() {
     super([
       {

@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 
-// TODO(aria): Pull these dependencies into separate files so that import works instead of require.
-window.i18n = {
-  _: str => str,
-};
-window.katex = require('katex');
-const { Keypad } = require('./math-input').components;
-const { KeypadTypes } = require('./math-input').consts;
+const { Keypad } = require('./MathInput').components;
+// const { KeypadTypes } = require('./MathInput').consts;
 
 export default class ArtemisKeypad extends Component {
   _dismissListeners = [];

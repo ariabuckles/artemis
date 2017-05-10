@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import ArtemisEditor from './ArtemisEditor';
 import ArtemisToolbar from './ArtemisToolbar';
 import ArtemisKeypad from './ArtemisKeypad';
 import * as ArtemisState from './ArtemisState';
 import * as ArtemisWidgets from './ArtemisWidgets';
-import { View, Text, StyleSheet } from './base-components';
+import { View, StyleSheet } from './base-components';
 
 const styles = StyleSheet.create({
   container: {

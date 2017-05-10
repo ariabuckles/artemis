@@ -1,4 +1,4 @@
-const defaultEditorCache = null;
+let defaultEditorCache = null;
 
 export const defaultEditors = () => {
   defaultEditorCache = defaultEditorCache || {
