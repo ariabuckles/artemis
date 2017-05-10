@@ -22,12 +22,9 @@ export default class InlineWidgetEditor extends Component {
     const WidgetEditor = widgetEditors[type];
 
     if (WidgetEditor == null) {
-      return <InlineWidgetNotFoundEditor type={type} />
-    }
-    else {
-      return (
-        <WidgetEditor {...options} onChange={onChange} keypad={keypad} />
-      );
+      return <InlineWidgetNotFoundEditor type={type} />;
+    } else {
+      return <WidgetEditor {...options} onChange={onChange} keypad={keypad} />;
     }
   }
 

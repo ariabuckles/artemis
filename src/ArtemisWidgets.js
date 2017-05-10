@@ -1,4 +1,3 @@
-
 const defaultEditorCache = null;
 
 export const defaultEditors = () => {

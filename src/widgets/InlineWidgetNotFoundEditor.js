@@ -17,11 +17,12 @@ const styles = StyleSheet.create({
 export default class InlineWidgetNotFoundEditor extends PureComponent {
   render() {
     const { type } = this.props;
-    return <View style={styles.inlineWidgetNotFoundEditor}>
-      <Text>
-        Widget type '{type}' not found
-      </Text>
-    </View>
+    return (
+      <View style={styles.inlineWidgetNotFoundEditor}>
+        <Text>
+          Widget type '{type}' not found
+        </Text>
+      </View>
+    );
   }
 }
-
