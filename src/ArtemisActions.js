@@ -3,6 +3,9 @@ export const newInlineMath = () => {
     type: 'INSERT_WIDGET',
     payload: {
       type: 'inline-math',
+      options: {
+        value: '',
+      },
     },
   };
 };

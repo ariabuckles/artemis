@@ -49,6 +49,8 @@ export default class ArtemisEditor extends Component {
     let updates = {
       currentContent: newContentState,
     };
+
+    // TODO(aria): just check for width/height here?
     if (updateSize) {
       // making a new decorator forces a rerun of the decorator.
       // TODO(aria): lament

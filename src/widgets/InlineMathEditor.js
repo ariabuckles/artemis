@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { View, Text, StyleSheet } from './base-components';
+import { View, Text, StyleSheet } from '../base-components';
 import { css } from 'aphrodite';
 
 // TODO(aria): Fix the dependency order issue here so these can be imports.
@@ -15,8 +15,8 @@ const MathQuill = window.MathQuill;
 window.i18n = {
   _: str => str,
 };
-const { KeypadInput } = require('./math-input').components;
-const { KeypadTypes } = require('./math-input').consts;
+const { KeypadInput } = require('../math-input').components;
+const { KeypadTypes } = require('../math-input').consts;
 
 
 const keypadInputStyle = {
@@ -24,7 +24,7 @@ const keypadInputStyle = {
   pointerEvents: 'auto',
 };
 
-export class FloatingMathEditor extends Component {
+export default class InlineMathEditor extends Component {
   shouldComponentUpdate(nextProps) {
     return (
       nextProps.value !== this.props.value ||
@@ -38,33 +38,15 @@ export class FloatingMathEditor extends Component {
       <KeypadInput
         style={keypadInputStyle}
         value={this.props.value}
-        onChange={this.props.onChange}
+        onChange={this._changeValue}
         keypadElement={this.props.keypad && this.props.keypad.getElement()}
       />
     );
   }
 
-  componentDidMount() {
-    this._measure();
+  _changeValue = (newValue) => {
+    this.props.onChange({
+      value: newValue,
+    });
   }
-
-  componentDidUpdate() {
-    this._measure();
-  }
-
-  _measure = () => {
-    const node = ReactDOM.findDOMNode(this);
-
-    // HACK(aria): node's size is incorrect here; we need to grab the
-    // inner node, which has a larger size ://///
-    // TODO(aria): cry more
-    const mathNode = node.getElementsByClassName('mq-editable-field')[0];
-
-    const rect = mathNode.getBoundingClientRect();
-    const { lastWidth, lastHeight } = this.props;
-
-    if (rect.width !== lastWidth || rect.height !== lastHeight) {
-      this.props.onMeasure(rect);
-    }
-  };
 }

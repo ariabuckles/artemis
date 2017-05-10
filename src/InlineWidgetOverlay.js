@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { EditorBlock } from 'draft-js';
 import { View, Text, StyleSheet } from './base-components';
-import { FloatingMathEditor } from './InlineMathEditor';
+import InlineWidgetEditor from './InlineWidgetEditor';
 
 const styles = StyleSheet.create({
   inlineWidgetOverlay: {
@@ -86,13 +86,18 @@ class BlockOverlay extends Component {
                     pointerEvents: 'none',
                   }}
                 >
-                  <FloatingMathEditor
-                    value={entityData.value}
+                  <InlineWidgetEditor
+                    options={entityData.options}
                     lastWidth={entityData.width}
                     lastHeight={entityData.height}
                     keypad={this.props.keypad}
-                    onChange={value => {
-                      this.props.onChange(e.key, { value: value });
+                    onChange={newOptions => {
+                      const options = Object.assign(
+                        {},
+                        entityData.options,
+                        newOptions
+                      );
+                      this.props.onChange(e.key, { options: options });
                     }}
                     onMeasure={rect => {
                       this.props.onChange(
