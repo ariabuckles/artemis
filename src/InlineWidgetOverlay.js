@@ -44,7 +44,7 @@ class BlockOverlay extends Component {
   };
 
   render() {
-    const { block, contentState } = this.props;
+    const { widgetEditors, block, contentState } = this.props;
 
     let entities = [];
     block.findEntityRanges(character => {
@@ -70,6 +70,7 @@ class BlockOverlay extends Component {
             if (entityElement && this.state.pos) {
               const pos = entityElement.getBoundingClientRect();
 
+              const widgetType = e.entity.getType();
               const entityData = e.entity.getData();
 
               const entityOffset = ((entityData.height || 0) - pos.height) / 2;
@@ -87,6 +88,8 @@ class BlockOverlay extends Component {
                   }}
                 >
                   <InlineWidgetEditor
+                    type={widgetType}
+                    widgetEditors={widgetEditors}
                     options={entityData.options}
                     lastWidth={entityData.width}
                     lastHeight={entityData.height}
@@ -122,7 +125,7 @@ class BlockOverlay extends Component {
 
 export default class InlineWidgetOverlay extends Component {
   render() {
-    const { contentState, keypad, onChangeElement } = this.props;
+    const { widgetEditors, contentState, keypad, onChangeElement } = this.props;
     const blocks = contentState.getBlockMap().toArray();
 
     let blockOverlays = [];
@@ -130,6 +133,7 @@ export default class InlineWidgetOverlay extends Component {
       blockOverlays.push(
         <BlockOverlay
           key={key}
+          widgetEditors={widgetEditors}
           contentState={contentState}
           block={block}
           keypad={keypad}

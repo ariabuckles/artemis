@@ -5,6 +5,7 @@ import { View, Text, StyleSheet } from './base-components';
 import { css } from 'aphrodite';
 
 import InlineMathEditor from './widgets/InlineMathEditor';
+import InlineWidgetNotFoundEditor from './widgets/InlineWidgetNotFoundEditor';
 
 export default class InlineWidgetEditor extends Component {
   shouldComponentUpdate(nextProps) {
@@ -16,18 +17,28 @@ export default class InlineWidgetEditor extends Component {
   }
 
   render() {
-    const { options, onChange, keypad } = this.props;
-    return (
-      <InlineMathEditor {...options} onChange={onChange} keypad={keypad} />
-    );
+    const { type, widgetEditors, options, onChange, keypad } = this.props;
+
+    const WidgetEditor = widgetEditors[type];
+
+    if (WidgetEditor == null) {
+      return <InlineWidgetNotFoundEditor type={type} />
+    }
+    else {
+      return (
+        <WidgetEditor {...options} onChange={onChange} keypad={keypad} />
+      );
+    }
   }
 
   componentDidMount() {
-    this._measure();
+    // We delay this to wait for aphrodite styles to resolve ;_;
+    setTimeout(this._measure, 0);
   }
 
   componentDidUpdate() {
-    this._measure();
+    // We delay this to wait for aphrodite styles to resolve ;_;
+    setTimeout(this._measure, 0);
   }
 
   _measure = () => {

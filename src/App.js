@@ -5,6 +5,7 @@ import ArtemisEditor from './ArtemisEditor';
 import ArtemisToolbar from './ArtemisToolbar';
 import ArtemisKeypad from './ArtemisKeypad';
 import * as ArtemisState from './ArtemisState';
+import * as ArtemisWidgets from './ArtemisWidgets';
 import { View, Text, StyleSheet } from './base-components';
 
 const styles = StyleSheet.create({
@@ -30,6 +31,7 @@ class App extends PureComponent {
           <div style={{ overflow: 'scroll', height: '100%' }}>
             <ArtemisEditor
               editorState={this.state.artemisState}
+              widgetEditors={ArtemisWidgets.defaultEditors()}
               onChange={this._onArtemisStateChange}
               keypad={this.state.keypad}
             />

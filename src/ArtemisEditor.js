@@ -32,6 +32,7 @@ export default class ArtemisEditor extends Component {
           />
         </View>
         <InlineWidgetOverlay
+          widgetEditors={this.props.widgetEditors}
           contentState={this.props.editorState.getCurrentContent()}
           keypad={this.props.keypad}
           onChangeElement={this._onChangeElement}
