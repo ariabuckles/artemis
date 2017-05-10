@@ -18,11 +18,7 @@ export default class InlineWidgetEditor extends Component {
   render() {
     const { options, onChange, keypad } = this.props;
     return (
-      <InlineMathEditor
-        {...options}
-        onChange={onChange}
-        keypad={keypad}
-      />
+      <InlineMathEditor {...options} onChange={onChange} keypad={keypad} />
     );
   }
 
@@ -48,4 +44,3 @@ export default class InlineWidgetEditor extends Component {
     }
   };
 }
-

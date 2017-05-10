@@ -18,7 +18,6 @@ window.i18n = {
 const { KeypadInput } = require('../math-input').components;
 const { KeypadTypes } = require('../math-input').consts;
 
-
 const keypadInputStyle = {
   backgroundColor: 'transparent',
   pointerEvents: 'auto',
@@ -44,9 +43,9 @@ export default class InlineMathEditor extends Component {
     );
   }
 
-  _changeValue = (newValue) => {
+  _changeValue = newValue => {
     this.props.onChange({
       value: newValue,
     });
-  }
+  };
 }

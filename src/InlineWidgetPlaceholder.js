@@ -85,4 +85,3 @@ export default class InlineWidgetPlaceholder extends Component {
     }
   };
 }
-
