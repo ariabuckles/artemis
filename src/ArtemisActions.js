@@ -9,3 +9,13 @@ export const newInlineMath = () => {
     },
   };
 };
+
+export const insertWidget = (type) => {
+  return {
+    type: 'INSERT_WIDGET',
+    payload: {
+      type: type,
+      options: { },
+    },
+  };
+};

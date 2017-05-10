@@ -17,7 +17,12 @@ export default class ArtemisToolbar extends Component {
         <button
           onClick={() => this.props.onAction(ArtemisActions.newInlineMath())}
         >
-          Eq
+          inline-math
+        </button>
+        <button
+          onClick={() => this.props.onAction(ArtemisActions.insertWidget('numeric-input'))}
+        >
+          numeric-input
         </button>
       </View>
     );
