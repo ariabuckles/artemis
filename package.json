@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "aphrodite": "^1.2.0",
+    "classnames": "^1.1.4",
     "draft-js": "^0.10.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "katex": "^0.7.1",
+    "kmath": "^0.0.1",
     "math-input": "git+https://github.com/ClassJourney/math-input.git#web-support",
     "mathquill": "git+https://github.com/ClassJourney/mathquill.git",
     "prettier": "^1.1.0",
@@ -15,6 +17,7 @@
     "react-addons-create-fragment": "^15.5.3",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-pure-render-mixin": "^15.5.2",
+    "react-components": "^0.4.0",
     "react-dom": "^15.5.3"
   },
   "devDependencies": {

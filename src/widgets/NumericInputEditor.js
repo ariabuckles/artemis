@@ -5,6 +5,8 @@ import { View, StyleSheet } from '../base-components';
 
 import Popover from '../helpers/Popover';
 
+import PerseusNumericInputEditor from '../lib/perseus/widgets/numeric-input-editor.jsx';
+
 const styles = StyleSheet.create({
   input: {
     display: 'flex',
@@ -32,10 +34,11 @@ const styles = StyleSheet.create({
   },
 
   editor: {
-    width: 200,
-    height: 200,
+    width: 360,
+    height: 360,
     backgroundColor: 'white',
     border: `2px solid #4FAED1`,
+    borderRadius: 5,
     margin: 8,
   },
 });
