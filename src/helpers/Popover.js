@@ -5,18 +5,14 @@ import { View, StyleSheet } from '../base-components';
 
 const styles = StyleSheet.create({
   unfocused: {
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'transparent',
-    borderRadius: 3,
     pointerEvents: 'auto',
+    color: '#ccc'
   },
 
   focused: {
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'blue',
-    borderRadius: 3,
+    boxShadow: `0 0 0 2px #4FAED1`,
+    color: '#4FAED1',
+    borderRadius: 4,
     pointerEvents: 'auto',
   },
 
@@ -70,4 +66,3 @@ export default class Popover extends Component {
     window.removeEventListener('click', this._blurOnClickElsewhere);
   }
 }
-
