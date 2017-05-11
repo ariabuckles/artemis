@@ -3,27 +3,27 @@ import React, { Component } from 'react';
 import * as ArtemisActions from './ArtemisActions';
 import { View, StyleSheet } from './base-components';
 
+
 const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderStyle: 'solid',
+  debugContainer: {
+    border: `1px dashed #ccc`,
   },
 });
 
 export default class ArtemisToolbar extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <button
+      <View style={this.props.debug ? styles.debugContainer : null}>
+        <View
           onClick={() => this.props.onAction(ArtemisActions.newInlineMath())}
         >
           inline-math
-        </button>
-        <button
+        </View>
+        <View
           onClick={() => this.props.onAction(ArtemisActions.insertWidget('numeric-input'))}
         >
           numeric-input
-        </button>
+        </View>
       </View>
     );
   }

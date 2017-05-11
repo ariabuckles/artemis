@@ -7,9 +7,10 @@ import 'draft-js/dist/Draft.css';
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderStyle: 'solid',
     position: 'relative',
+  },
+  debugContainer: {
+    border: `1px dashed #ccc`,
   },
 
   editorStackingContext: {
@@ -23,12 +24,13 @@ const styles = StyleSheet.create({
 export default class ArtemisEditor extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={{...styles.container, ...(this.props.debug ? styles.debugContainer : {})}}>
         <View style={styles.editorStackingContext}>
           <Editor
             spellCheck={true}
             editorState={this.props.editorState}
             onChange={this._handleDraftChange}
+            placeholder={this.props.placeholder}
           />
         </View>
         <InlineWidgetOverlay
