@@ -7,7 +7,6 @@ import Popover from '../helpers/Popover';
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: 'white',
     display: 'flex',
     minWidth: 64,
     boxSizing: 'border-box',
