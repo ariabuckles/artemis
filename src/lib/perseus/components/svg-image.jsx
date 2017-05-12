@@ -9,7 +9,10 @@ var $ = require("jquery");
 var _ = require("underscore");
 
 var FixedToResponsive = require("../components/fixed-to-responsive.jsx");
-var Graphie = require("../components/graphie.jsx");
+
+// extraGraphie not supported in artemis currently
+//var Graphie = require("../components/graphie.jsx");
+
 var ImageLoader = require("../components/image-loader.jsx");
 var Util = require("../util.js");
 var Zoom = require("../zoom.js");
@@ -514,18 +517,19 @@ var SvgImage = React.createClass({
         // TODO(alex): Convert all existing uses of that to web+graphie. This
         // is tricky because web+graphie doesn't support labels on non-graphie
         // images.
-        var extraGraphie;
+        //var extraGraphie;
         if (this.props.extraGraphie && this.props.extraGraphie.labels.length) {
-            extraGraphie = (
-                <Graphie
-                    box={this.props.extraGraphie.box}
-                    range={this.props.extraGraphie.range}
-                    options={{labels: this.props.extraGraphie.labels}}
-                    responsive={true}
-                    addMouseLayer={false}
-                    setup={this.setupGraphie}
-                />
-            );
+            console.warn('extraGraphie not supported');
+            //extraGraphie = (
+            //    <Graphie
+            //        box={this.props.extraGraphie.box}
+            //        range={this.props.extraGraphie.range}
+            //        options={{labels: this.props.extraGraphie.labels}}
+            //        responsive={true}
+            //        addMouseLayer={false}
+            //        setup={this.setupGraphie}
+            //    />
+            //);
         }
 
         // If preloader is undefined, we use the default. If it's
@@ -562,7 +566,7 @@ var SvgImage = React.createClass({
                             preloader={preloader}
                             onUpdate={this.props.onUpdate}
                         />
-                        {extraGraphie}
+                        {/*extraGraphie*/}
                     </FixedToResponsive>
                 );
             } else {
@@ -598,18 +602,19 @@ var SvgImage = React.createClass({
 
             var scale = [40 * this.props.scale, 40 * this.props.scale];
 
-            graphie = (
-                <Graphie
-                    ref="graphie"
-                    box={box}
-                    scale={scale}
-                    range={this.state.range}
-                    options={_.pick(this.state, "labels")}
-                    responsive={responsive}
-                    addMouseLayer={false}
-                    setup={this.setupGraphie}
-                />
-            );
+            console.warn('graphies are not yet supported in svg-image in artemis');
+            //graphie = (
+            //    <Graphie
+            //        ref="graphie"
+            //        box={box}
+            //        scale={scale}
+            //        range={this.state.range}
+            //        options={_.pick(this.state, "labels")}
+            //        responsive={responsive}
+            //        addMouseLayer={false}
+            //        setup={this.setupGraphie}
+            //    />
+            //);
         }
 
         if (responsive) {
@@ -628,7 +633,7 @@ var SvgImage = React.createClass({
                         imgProps={imageProps}
                     />
                     {graphie}
-                    {extraGraphie}
+                    {/*extraGraphie*/}
                 </FixedToResponsive>
             );
         } else {

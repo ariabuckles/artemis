@@ -6,6 +6,10 @@
 
 const $ = require("jquery");
 const _ = require("underscore");
+// KAS needs this :(
+window._ = _;
+require('kas/kas.js');
+const KAS = window.KAS;
 
 const KhanMath = require("./math.js");
 

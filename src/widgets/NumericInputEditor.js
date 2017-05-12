@@ -48,7 +48,9 @@ export default class NumericInputEditor extends Component {
   render() {
     return <Popover>
       <View style={styles.input} />
-      <View style={styles.editor} />
+      <View style={styles.editor}>
+        <PerseusNumericInputEditor />
+      </View>
     </Popover>;
   }
 }

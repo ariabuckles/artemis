@@ -8,11 +8,11 @@ const _ = require("underscore");
 const Changeable    = require("../mixins/changeable.jsx");
 const EditorJsonify = require("../mixins/editor-jsonify.jsx");
 
-const ButtonGroup = require("react-components/button-group.jsx");
+const ButtonGroup = require("react-components/button-group.js");
 const {iconGear, iconTrash} = require("../icon-paths.js");
 const InfoTip = require("../components/info-tip.jsx");
 const InlineIcon = require("../components/inline-icon.jsx");
-const MultiButtonGroup = require("react-components/multi-button-group.jsx");
+const MultiButtonGroup = require("react-components/multi-button-group.js");
 const NumberInput = require("../components/number-input.jsx");
 const PropCheckBox = require("../components/prop-check-box.jsx");
 const TextInput = require("../components/text-input.jsx");

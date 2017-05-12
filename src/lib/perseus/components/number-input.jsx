@@ -6,6 +6,7 @@ var classNames = require("classnames");
 var React = require('react');
 var ReactDOM = require("react-dom");
 var _ = require("underscore");
+var $ = require('jquery');
 
 var firstNumericalParse = require("../util.js").firstNumericalParse;
 var captureScratchpadTouchStart =
@@ -207,7 +208,7 @@ var NumberInput = React.createClass({
     },
 
     _setValue: function(val, format) {
-        window.jQuery(ReactDOM.findDOMNode(this.refs.input)).val(toNumericString(val, format));
+        $(ReactDOM.findDOMNode(this.refs.input)).val(toNumericString(val, format));
     }
 });
 
