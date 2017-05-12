@@ -190,13 +190,17 @@ const NumericInputEditor = React.createClass({
         };
 
         var generateInputAnswerEditors = () => answers.map((answer, i) => {
-            var editor = <textarea
-                value={answer.message || ""}
-                placeholder={"Why is this answer " + answer.status + "?\t" +
-                    instructions[answer.status]}
-                onChange={(e) => {
-                    this.updateAnswer(i, {message: e.target.value});
-                }} />;
+            var editor = <div className="perseus-single-editor">
+                <textarea
+                    style={{width: '100%'}}
+                    className="perseus-textarea-pair"
+                    value={answer.message || ""}
+                    placeholder={"Why is this answer " + answer.status + "?\t" +
+                        instructions[answer.status]}
+                    onChange={(e) => {
+                        this.updateAnswer(i, {message: e.target.value});
+                    }} />
+            </div>
             return <div className="perseus-widget-row" key={i}>
                 <div className={"input-answer-editor-value-container" +
                     (answer.maxError ? " with-max-error" : "")}>
