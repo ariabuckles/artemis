@@ -74,8 +74,10 @@ var NumberInput = React.createClass({
             classes = classes + " " + this.props.className;
         }
 
+        const { onFormatChange, checkValidity, useArrowKeys, ...safeProps } = this.props;
+
         return <input
-            {...this.props}
+            {...safeProps}
             className={classes}
             type="text"
             ref="input"
