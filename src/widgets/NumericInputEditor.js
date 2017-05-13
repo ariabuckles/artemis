@@ -52,7 +52,10 @@ export default class NumericInputEditor extends Component {
     return <Popover>
       <View style={styles.input} />
       <View className="framework-perseus" style={styles.editor}>
-        <PerseusNumericInputEditor />
+        <PerseusNumericInputEditor
+          {...this.props}
+          onChange={this.props.onChange}
+        />
       </View>
     </Popover>;
   }
