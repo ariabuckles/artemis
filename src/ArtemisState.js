@@ -1,5 +1,6 @@
 import * as Draft from 'draft-js';
 import ArtemisDecorator from './ArtemisDecorator';
+import * as Serialization from './Serialization';
 
 export const empty = () => {
   return Draft.EditorState.createEmpty(new ArtemisDecorator());
@@ -63,3 +64,9 @@ export const applyAction = (artemisState, action) => {
     return 'could not find action: ' + JSON.stringify(action);
   }
 };
+
+
+export const serialize = Serialization.serialize;
+
+export const deserialize = Serialization.deserialize;
+

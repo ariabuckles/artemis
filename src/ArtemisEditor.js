@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { Editor, EditorState } from 'draft-js';
+import * as Draft from 'draft-js';
 import { View, StyleSheet } from './base-components';
 import ArtemisDecorator from './ArtemisDecorator';
+import * as ArtemisState from './ArtemisState';
 import InlineWidgetOverlay from './InlineWidgetOverlay';
 import 'draft-js/dist/Draft.css';
+
+if (process.env.NODE_ENV !== 'production') {
+  window.convertToRaw = Draft.convertToRaw;
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -22,11 +27,18 @@ const styles = StyleSheet.create({
 });
 
 export default class ArtemisEditor extends Component {
+
+  componentDidMount() {
+    if (process.env.NODE_ENV !== 'production') {
+      window.serialize = () => ArtemisState.serialize(this.props.editorState.getCurrentContent());
+    }
+  }
+
   render() {
     return (
       <View style={{...styles.container, ...(this.props.debug ? styles.debugContainer : {})}}>
         <View style={styles.editorStackingContext}>
-          <Editor
+          <Draft.Editor
             spellCheck={true}
             editorState={this.props.editorState}
             onChange={this._handleDraftChange}
@@ -60,7 +72,7 @@ export default class ArtemisEditor extends Component {
       updates.decorator = new ArtemisDecorator();
     }
 
-    return this.props.onChange(EditorState.set(editorState, updates));
+    return this.props.onChange(Draft.EditorState.set(editorState, updates));
   };
 
   _handleDraftChange = newEditorState => {
@@ -68,7 +80,7 @@ export default class ArtemisEditor extends Component {
     // equation/widget overlays on every keystroke
     // NOTE: We're also doing this on every cursor change. SORRY.
     return this.props.onChange(
-      EditorState.set(newEditorState, {
+      Draft.EditorState.set(newEditorState, {
         nativelyRenderedContent: null,
       })
     );
