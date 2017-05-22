@@ -1,4 +1,16 @@
 import * as Draft from 'draft-js';
+import * as InternalConstants from './InternalConstants';
+
+const CURRENT_ARTEMIS_VERSION = 0;
+
+const EMPTY_ARTEMIS_DATA = {
+  artemisVersion: CURRENT_ARTEMIS_VERSION,
+};
+
+const EMPTY_ARTEMIS_BLOCK = {
+  type: 'paragraph',
+  content: [],
+};
 
 const serializeWidgetEntity = (entity) => {
   // TODO(aria): Be better about what to include here
@@ -8,11 +20,11 @@ const serializeWidgetEntity = (entity) => {
 };
 
 
-const deserializeWidgetEntity = (widget) => {
+const deserializeWidgetEntity = (widgetInfo) => {
   return {
-    type: widget.type,
+    type: widgetInfo.type,
     mutability: 'IMMUTABLE',
-    data: widget,
+    data: widgetInfo,
   };
 };
 
@@ -100,25 +112,92 @@ export const serialize = (artemisState) => {
   }
 
   return {
-    artemisVersion: 0,
+    artemisVersion: CURRENT_ARTEMIS_VERSION,
     content: artemisBlocks,
   };
 };
 
 
-const deserializeBlock = (artemisBlock, /* mutated */ entityMap) => {
-
+const getArtemisBlocksFromContent = (content) => {
+  if (content == null || content.length == 0) {
+    return [EMPTY_ARTEMIS_BLOCK];
+  } else {
+    return content;
+  }
 };
 
 
-export const deserialize = (artemisSerialization) => {
-  const artemisBlocks = artemisSerialization || [];
+const deserializeBlock = (artemisBlock, /* mutated */ entityMap) => {
+
+  if (artemisBlock.type === 'paragraph') {
+    let text = '';
+    let inlineStyleRanges = [];
+    let entityRanges = [];
+
+    for (const contentPiece of artemisBlock.content) {
+      const type = contentPiece.type;
+
+      if (type === 'text') {
+        text += contentPiece.content;
+      } else if (type === 'widget') {
+        const widgetInfo = contentPiece.info;
+        const newEntityKey = entityMap.length;
+
+        entityRanges.push({
+          key: newEntityKey,
+          length: 1,
+          offset: text.length,
+        });
+
+        text += InternalConstants.WIDGET_CHAR;
+
+        entityMap.push(deserializeWidgetEntity(widgetInfo));
+      } else {
+        throw new Error(`contentPiece type '${type}' not supported`);
+      }
+    }
+
+    // return the draftjs version of this raw block.
+    return {
+      type: 'unstyled',
+      text: text,
+      depth: 0,
+      inlineStyleRanges: inlineStyleRanges,
+      entityRanges: entityRanges,
+      // block metadata
+      data: {},
+    };
+
+  } else {
+    throw new Error('non paragraph blocks not yet supported sowwy~');
+  }
+};
+
+
+export const deserialize = (artemisSerialization = EMPTY_ARTEMIS_DATA) => {
+
+  const artemisVersion = artemisSerialization.artemisVersion;
+
+  if (artemisVersion != CURRENT_ARTEMIS_VERSION) {
+    throw new Error(
+      'loading other versions of artemis data is not yet supported, sorry <3'
+    );
+  }
+
+  const artemisBlocks = getArtemisBlocksFromContent(artemisSerialization.content);
 
   let entityMap = [];
-  const draftBlocks = artemisBlocks.map((artemisBlock) => {
+  let draftBlocks = artemisBlocks.map((artemisBlock) => {
     return deserializeBlock(artemisBlock, entityMap);
   });
 
+  const rawDraftRepr = {
+    blocks: draftBlocks,
+    // remove the array properties of entityMap to match the draft raw API
+    entityMap: Object.assign({}, entityMap),
+  };
+
+  return Draft.convertFromRaw(rawDraftRepr);
 };
 
 

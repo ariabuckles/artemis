@@ -1,6 +1,7 @@
 import * as Draft from 'draft-js';
 import ArtemisDecorator from './ArtemisDecorator';
 import * as Serialization from './Serialization';
+import * as InternalConstants from './InternalConstants';
 
 export const empty = () => {
   return Draft.EditorState.createEmpty(new ArtemisDecorator());
@@ -27,16 +28,7 @@ export const applyAction = (artemisState, action) => {
     const newContentState = Draft.Modifier.replaceText(
       contentStateWithEntity,
       currSelection,
-      // This character is just a space so our letter spacing is closer to the correct width ouo:
-      // Invisible separator character.
-      // This seems to be one of the few characters that has all the properties we need:
-      //  * sizes with letter-spacing
-      //  * cursor moves before and after on letter spacing
-      //  * text wraps (not considered whitespace for text wrapping purposes)
-      //  * invisible (so we can have a transparent background on the math and show the
-      //    highlight colour through it
-      //  * nice-to-have: 0 width so we don't have to do measuring hacks for letter-spacing
-      '\u2063',
+      InternalConstants.WIDGET_CHAR,
       null,
       entityKey
     );
