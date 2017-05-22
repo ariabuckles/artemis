@@ -50,31 +50,35 @@ const serializeBlock = (block, entityMap) => {
 
   let startIndex = 0;
 
-  let inlineThings = [];
+  let blockContent = [];
 
   for (const range of ranges) {
     if (range.offset !== startIndex) {
-      inlineThings.push({
+      blockContent.push({
         type: 'text',
         style: null,
         content: text.slice(startIndex, range.offset),
       });
     }
 
-    inlineThings.push(createInlineThingFromRange(text, range, entityMap));
+    blockContent.push(createInlineThingFromRange(text, range, entityMap));
 
     startIndex = range.offset + range.length;
   }
 
   if (startIndex !== text.length) {
-    inlineThings.push({
+    blockContent.push({
       type: 'text',
       style: null,
       content: text.slice(startIndex, text.length),
     });
   }
 
-  return inlineThings;
+  return {
+    // TODO(aria): use a better type here? maybe type: text subtype: unstyled?
+    type: 'paragraph',
+    content: blockContent,
+  };
 };
 
 
@@ -83,9 +87,22 @@ export const serialize = (artemisState) => {
 
   const { blocks, entityMap } = rawDraftRepr;
 
-  const artemisRepr = blocks.map((block) => serializeBlock(block, entityMap));
+  let artemisBlocks = blocks.map((block) => serializeBlock(block, entityMap));
 
-  return artemisRepr;
+  // remove empty blocks from the end:
+  for (let i = artemisBlocks.length - 1; i >= 0; i--) {
+    const block = artemisBlocks[i];
+    if (block.type === 'paragraph' && block.content.length === 0) {
+      artemisBlocks.pop();
+    } else {
+      break;
+    }
+  }
+
+  return {
+    artemisVersion: 0,
+    content: artemisBlocks,
+  };
 };
 
 
