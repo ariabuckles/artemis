@@ -106,7 +106,18 @@ export const serialize = (artemisState) => {
 };
 
 
+const deserializeBlock = (artemisBlock, /* mutated */ entityMap) => {
+
+};
+
+
 export const deserialize = (artemisSerialization) => {
+  const artemisBlocks = artemisSerialization || [];
+
+  let entityMap = [];
+  const draftBlocks = artemisBlocks.map((artemisBlock) => {
+    return deserializeBlock(artemisBlock, entityMap);
+  });
 
 };
 
