@@ -11,4 +11,4 @@ window.i18n = {
   _: str => str,
 };
 
-module.exports = require('./math-input/src/index.js');
+module.exports = require('./lib/math-input/src/index.js');
