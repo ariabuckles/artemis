@@ -94,9 +94,7 @@ const serializeBlock = (block, entityMap) => {
 };
 
 
-export const serialize = (artemisState) => {
-  const rawDraftRepr = Draft.convertToRaw(artemisState);
-
+export const _serializeFromDraftRaw = (rawDraftRepr) => {
   const { blocks, entityMap } = rawDraftRepr;
 
   let artemisBlocks = blocks.map((block) => serializeBlock(block, entityMap));
@@ -115,6 +113,10 @@ export const serialize = (artemisState) => {
     artemisVersion: CURRENT_ARTEMIS_VERSION,
     content: artemisBlocks,
   };
+};
+
+export const serialize = (artemisState) => {
+  return _serializeFromDraftRaw(Draft.convertToRaw(artemisState));
 };
 
 
@@ -174,7 +176,7 @@ const deserializeBlock = (artemisBlock, /* mutated */ entityMap) => {
 };
 
 
-export const deserialize = (artemisSerialization = EMPTY_ARTEMIS_DATA) => {
+export const _deserializeToDraftRaw = (artemisSerialization = EMPTY_ARTEMIS_DATA) => {
 
   const artemisVersion = artemisSerialization.artemisVersion;
 
@@ -197,7 +199,12 @@ export const deserialize = (artemisSerialization = EMPTY_ARTEMIS_DATA) => {
     entityMap: Object.assign({}, entityMap),
   };
 
-  return Draft.convertFromRaw(rawDraftRepr);
+  return rawDraftRepr;
+};
+
+
+export const deserialize = (artemisSerialization) => {
+  return Draft.convertFromRaw(_deserializeToDraftRaw(artemisSerialization));
 };
 
 
