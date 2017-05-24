@@ -5,6 +5,7 @@
 /* globals KA */
 var _ = require("underscore");
 
+var React = require('react');
 var SimpleMarkdown = require("simple-markdown");
 var TeX = require("react-components/tex.js");
 var Util_rWidgetRule = /^\[\[\u2603 (([a-z-]+) ([0-9]+))\]\]/;

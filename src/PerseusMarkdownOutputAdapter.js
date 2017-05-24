@@ -41,7 +41,7 @@ const rules = {
     artemis: (node, output, state) => {
       return {
         type: 'paragraph',
-        content: output(node.content),
+        content: output(node.content, state),
       };
     }
   },
