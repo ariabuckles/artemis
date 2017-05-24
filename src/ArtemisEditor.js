@@ -3,6 +3,7 @@ import * as Draft from 'draft-js';
 import { View, StyleSheet } from './base-components';
 import ArtemisDecorator from './ArtemisDecorator';
 import * as ArtemisState from './ArtemisState';
+import * as PerseusAdapter from './PerseusAdapter';
 import InlineWidgetOverlay from './InlineWidgetOverlay';
 import 'draft-js/dist/Draft.css';
 
@@ -33,8 +34,16 @@ export default class ArtemisEditor extends Component {
       window.artemisEditor = this;
       window.serialize = () => ArtemisState.serialize(this.props.editorState.getCurrentContent());
       window.deserialize = (data) => this.props.onChange(
-        Draft.EditorState.createWithContent(ArtemisState.deserialize(data), new ArtemisDecorator()),
+        Draft.EditorState.createWithContent(
+          ArtemisState.deserialize(data),
+          new ArtemisDecorator()
+        ),
       );
+      window.loadPerseus = (perseusItem) => {
+        window.deserialize(
+          PerseusAdapter.artemisDataFromPerseusItem(perseusItem)
+        );
+      };
     }
   }
 
