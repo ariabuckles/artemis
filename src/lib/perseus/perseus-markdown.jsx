@@ -6,8 +6,8 @@
 var _ = require("underscore");
 
 var SimpleMarkdown = require("simple-markdown");
-var TeX = require("react-components/tex.jsx");
-var Util = require("./util.js");
+var TeX = require("react-components/tex.js");
+var Util_rWidgetRule = /^\[\[\u2603 (([a-z-]+) ([0-9]+))\]\]/;
 
 /**
  * This match function matches math in `$`s, such as:
@@ -258,7 +258,7 @@ var rules = _.extend({}, SimpleMarkdown.defaultRules, {
     },
     widget: {
         order: SimpleMarkdown.defaultRules.link.order - 0.75,
-        match: SimpleMarkdown.inlineRegex(Util.rWidgetRule),
+        match: SimpleMarkdown.inlineRegex(Util_rWidgetRule),
         parse: (capture, parse, state) => {
             return {
                 id: capture[1],
