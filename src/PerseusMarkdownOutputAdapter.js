@@ -69,6 +69,21 @@ const rules = {
       };
     }
   },
+
+  widget: {
+    artemis: (node, output, state) => {
+      const id = node.id;
+      const widget = state.widgets[id];
+
+      return {
+        type: 'widget',
+        info: {
+          type: widget.type,
+          options: widget.options,
+        },
+      };
+    }
+  },
 };
 
 
