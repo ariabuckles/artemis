@@ -5,6 +5,13 @@ import { View, StyleSheet } from './base-components';
 
 import './FontAwesome';
 
+const iconStyles = {
+  display: 'block',
+  fontFamily: 'FontAwesome',
+  textAlign: 'center',
+  fontSize: 28,
+}
+
 const styles = StyleSheet.create({
   debugContainer: {
     border: `1px dashed #ccc`,
@@ -12,9 +19,15 @@ const styles = StyleSheet.create({
   toolbar: {
     position: 'relative',
     zIndex: 1,
-    display: 'flex'
+    display: 'flex',
+    overflowX: 'auto',
   },
   button: {
+    boxSizing: 'border-box',
+    userSelect: 'none',
+    width: 85,
+    flexShrink: 0,
+    textAlign: 'center',
     padding: 8,
     color: '#666',
     cursor: 'pointer',
@@ -29,39 +42,89 @@ const styles = StyleSheet.create({
   widgetsIcon: {
     ':after': {
       content: '"\\f044"',
-      display: 'block',
-      fontFamily: 'FontAwesome',
-      textAlign: 'center',
-      fontSize: 28,
+      ...iconStyles,
     },
   },
   equationIcon: {
     ':after': {
       content: '"\\f12b"',
-      display: 'block',
-      fontFamily: 'FontAwesome',
-      textAlign: 'center',
-      fontSize: 28,
+      ...iconStyles,
     }
   },
-  widgetsModal: {
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
-    zIndex: 2,
-    background: 'white',
-    padding: 16,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+  boldIcon: {
+    ':after': {
+      content: '"\\f032"',
+      ...iconStyles,
+    }
   },
-  widgetsModalClose: {
-    position: 'absolute',
-    right: 20,
-    top: 16,
+  tableIcon: {
+    ':after': {
+      content: '"\\f009"',
+      ...iconStyles,
+    }
+  },
+  textIcon: {
+    ':after': {
+      content: '"\\f031"',
+      ...iconStyles,
+    }
+  },
+  numberIcon: {
+    ':after': {
+      content: '"\\f096"',
+      ...iconStyles,
+    }
+  },
+  multipleChoiceIcon: {
+    ':after': {
+      content: '"\\f0ca"',
+      ...iconStyles,
+    }
+  },
+  graphIcon: {
+    ':after': {
+      content: '"\\f201"',
+      ...iconStyles,
+    }
+  },
+  histogramIcon: {
+    ':after': {
+      content: '"\\f080"',
+      ...iconStyles,
+    }
+  },
+  italicsIcon: {
+    ':after': {
+      content: '"\\f033"',
+      ...iconStyles,
+    }
+  },
+  numberLineIcon: {
+    ':after': {
+      content: '"\\f07e"',
+      ...iconStyles,
+    }
+  },
+  imageIcon: {
+    ':after': {
+      content: '"\\f03e"',
+      ...iconStyles,
+    }
+  },
+  widgetsRibbonWrapper: {
+    display: 'flex',
+  },
+  widgetsRibbon: {
+    background: '#eee',
+    display: 'none',
+  },
+  widgetsRibbonShowing: {
+    display: 'flex',
+  },
+
+  widgetsRibbonClose: {
     fontSize: 32,
+    padding: 16,
     cursor: 'pointer',
     lineHeight: 1,
     color: '#999',
@@ -69,54 +132,127 @@ const styles = StyleSheet.create({
       color: '#4FAED1',
     },
   },
-  widgetsModalWidget: {
-    width: 100,
-    height: 100,
-    border: `1px solid #ddd`,
-    padding: 8,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-
-    ':hover': {
-      color: '#4FAED1',
-      borderColor: '#4FAED1',
-    },
-  },
 
 });
 
 export default class ArtemisToolbar extends Component {
   state = {
-    showWidgetsModal: false,
+    showWidgetsRibbon: false,
   }
   insertWidget = (widget) => {
     this.props.onAction(ArtemisActions.insertWidget(widget))
-    this.setState({showWidgetsModal: false})
   }
-  renderWidgetsModal = () => {
-    return <View style={styles.widgetsModal}>
+  toggleWidgetsRibbon = () => {
+    this.setState({showWidgetsRibbon: !this.state.showWidgetsRibbon})
+  }
+  renderWidgetsRibbon = () => {
+    return [
       <View
-        style={styles.widgetsModalClose}
-        onClick={() => this.setState({showWidgetsModal: false})}
-      >
-        ×
-      </View>
-
-      <View
-        style={styles.widgetsModalWidget}
+        style={[styles.button, styles.widgetsRibbonButton]}
         onClick={() => this.insertWidget('numeric-input')}
+        key='numeric-input'
       >
-        Number
+        <View style={styles.numberIcon} />
+        <View style={styles.buttonCaption}>
+          Number
+        </View>
+      </View>,
+      <View
+        style={[styles.button, styles.widgetsRibbonButton]}
+        onClick={() => this.insertWidget('multiple-choice')}
+        key='multiple-choice'
+      >
+        <View style={styles.multipleChoiceIcon} />
+        <View style={styles.buttonCaption}>
+          Multiple choice
+        </View>
+      </View>,
+      <View
+        style={[styles.button, styles.widgetsRibbonButton]}
+        onClick={() => this.insertWidget('text-input')}
+        key='text-input'
+      >
+        <View style={styles.textIcon} />
+        <View style={styles.buttonCaption}>
+          Text
+        </View>
+      </View>,
+      <View
+        style={[styles.button, styles.widgetsRibbonButton]}
+        onClick={() => this.insertWidget('histogram')}
+        key='histogram'
+      >
+        <View style={styles.histogramIcon} />
+        <View style={styles.buttonCaption}>
+          Histogram
+        </View>
+      </View>,
+      <View
+        style={[styles.button, styles.widgetsRibbonButton]}
+        onClick={() => this.insertWidget('number-line')}
+        key='number-line'
+      >
+        <View style={styles.numberLineIcon} />
+        <View style={styles.buttonCaption}>
+          Number line
+        </View>
+      </View>,
+      <View
+        style={[styles.button, styles.widgetsRibbonButton]}
+        onClick={() => this.insertWidget('graph')}
+        key='graph'
+      >
+        <View style={styles.graphIcon} />
+        <View style={styles.buttonCaption}>
+          Graph
+        </View>
       </View>
-
-    </View>
+    ];
   }
   render() {
     return (
-      <View style={this.props.debug && styles.debugContainer}>
-        <View style={styles.toolbar}>
+      <View style={[styles.toolbar, this.props.debug && styles.debugContainer]}>
+          <View
+            style={styles.button}
+            onClick={() => console.log('bold')}
+          >
+            <View style={styles.boldIcon} />
+            <View style={styles.buttonCaption}>
+              Bold
+            </View>
+          </View>
+
+          <View
+            style={styles.button}
+            onClick={() => console.log('italics')}
+          >
+            <View style={styles.italicsIcon} />
+            <View style={styles.buttonCaption}>
+              Italics
+            </View>
+          </View>
+
+          <View
+            style={styles.button}
+            onClick={() => console.log('image')}
+          >
+            <View style={styles.imageIcon} />
+            <View style={styles.buttonCaption}>
+              Image
+            </View>
+          </View>
+
+
+          <View
+            style={styles.button}
+            onClick={() => console.log('table')}
+          >
+            <View style={styles.tableIcon} />
+            <View style={styles.buttonCaption}>
+              Table
+            </View>
+          </View>
+
           <View
             style={styles.button}
             onClick={() => this.props.onAction(ArtemisActions.newInlineMath())}
@@ -126,17 +262,22 @@ export default class ArtemisToolbar extends Component {
               Equation
             </View>
           </View>
-          <View
-            style={styles.button}
-            onClick={() => this.setState({showWidgetsModal: true})}
-          >
-            <View style={styles.widgetsIcon} />
-            <View style={styles.buttonCaption}>
-              Answer Field
-            </View>
+          <View style={[styles.widgetsRibbonWrapper,
+              this.state.showWidgetsRibbon && styles.widgetsRibbonWrapperExpanded]}>
+            <View
+              style={styles.button}
+              onClick={this.toggleWidgetsRibbon}
+              >
+                <View style={styles.widgetsIcon} />
+                <View style={styles.buttonCaption}>
+                  Answer field
+                </View>
+              </View>
+              <View style={[styles.widgetsRibbon,
+                  this.state.showWidgetsRibbon && styles.widgetsRibbonShowing]}>
+                {this.renderWidgetsRibbon()}
+              </View>
           </View>
-        </View>
-        {this.state.showWidgetsModal && this.renderWidgetsModal()}
       </View>
     );
   }
