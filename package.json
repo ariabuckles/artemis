@@ -39,7 +39,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "pretty": "make pretty",
-    "postinstall": "BABEL_ENV=production git submodule sync --init && babel src --out-dir lib --copy-files"
+    "postinstall": "BABEL_ENV=production git submodule update --init && babel src --out-dir lib --copy-files"
   },
   "babel": {
     "presets": ["react-app"]
