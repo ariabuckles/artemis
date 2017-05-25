@@ -1,3 +1,10 @@
+/**
+ * A simple-markdown style outputter for artemis data
+ *
+ * Given a perseus-markdown tree, this outputs an artemis data tree ^_^
+ *
+ * "Everything is just simple-markdown on the inside" ~ Oliver
+ */
 import SimpleMarkdown from 'simple-markdown';
 
 const artemisDataFor = (outputFunc) => {
@@ -44,6 +51,7 @@ const artemisDataFor = (outputFunc) => {
 };
 
 
+// perseus-markdown ast rules, converting to artemis nodes
 const rules = {
   paragraph: {
     artemis: (node, output, state) => {

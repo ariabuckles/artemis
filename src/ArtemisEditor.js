@@ -44,6 +44,17 @@ export default class ArtemisEditor extends Component {
           PerseusAdapter.artemisDataFromPerseusItem(perseusItem)
         );
       };
+      window.savePerseus = () => {
+        console.log(
+          JSON.stringify(
+            PerseusAdapter.perseusItemFromArtemisData(
+              window.serialize()
+            ),
+            null,
+            2
+          )
+        );
+      }
     }
   }
 

@@ -1,5 +1,6 @@
 import PerseusMarkdown from './lib/perseus/perseus-markdown.jsx';
 import * as PerseusMarkdownOutputAdapter from './PerseusMarkdownOutputAdapter';
+import * as ArtemisASTOutputter from './ArtemisASTOutputter';
 
 export const artemisDataFromPerseusItem = (perseusItem) => {
   const content = perseusItem.question.content;
@@ -20,8 +21,11 @@ export const artemisDataFromPerseusItem = (perseusItem) => {
 
 export const perseusItemFromArtemisData = (artemisData) => {
 
-  let content = '';
   let widgets = {};
+  const content = ArtemisASTOutputter.perseusItemOutput(artemisData.content, {
+    // modified by the output
+    widgets: widgets,
+  });
 
   return {
     question: {
