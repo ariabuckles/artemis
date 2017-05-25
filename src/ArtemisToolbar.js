@@ -187,6 +187,16 @@ export default class ArtemisToolbar extends Component {
       </View>,
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
+        onClick={() => this.insertWidget('expression')}
+        key='expression'
+      >
+        <View style={styles.equationIcon} />
+        <View style={styles.buttonCaption}>
+          Math Expression
+        </View>
+      </View>,
+      <View
+        style={[styles.button, styles.widgetsRibbonButton]}
         onClick={() => this.insertWidget('text-input')}
         key='text-input'
       >
