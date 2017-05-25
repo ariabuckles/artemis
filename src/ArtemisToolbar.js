@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   widgetsRibbon: {
-    background: '#eee',
+    background: '#f3f2f1',
     display: 'none',
   },
   widgetsRibbonShowing: {
@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
       color: '#4FAED1',
     },
   },
-
 });
 
 export default class ArtemisToolbar extends Component {
@@ -243,21 +242,37 @@ export default class ArtemisToolbar extends Component {
       showWidgetsRibbon
     } = this.state;
     return (
-      <View style={[styles.toolbar, this.props.debug && styles.debugContainer]}>
+      <View
+        style={[
+          styles.toolbar,
+          this.props.debug && styles.debugContainer,
+        ]}
+      >
 
-        <View style={[styles.widgetsRibbonWrapper,
-            showWidgetsRibbon && styles.widgetsRibbonWrapperExpanded]}>
+        <View
+          style={[
+            styles.widgetsRibbonWrapper,
+            showWidgetsRibbon && styles.widgetsRibbonWrapperExpanded,
+          ]}>
           <View
             style={styles.button}
             onClick={this.toggleWidgetsRibbon}
             >
-              <View style={!showWidgetsRibbon ? styles.widgetsIcon : styles.closeIcon} />
+              <View
+                style={
+                !showWidgetsRibbon ? styles.widgetsIcon : styles.closeIcon
+                }
+              />
               <View style={styles.buttonCaption}>
                 Answer field
               </View>
             </View>
-            <View style={[styles.widgetsRibbon,
-                showWidgetsRibbon && styles.widgetsRibbonShowing]}>
+            <View
+              style={[
+                styles.widgetsRibbon,
+                showWidgetsRibbon && styles.widgetsRibbonShowing
+              ]}
+            >
               {this.renderWidgetsRibbon()}
             </View>
         </View>
