@@ -159,6 +159,7 @@ export default class ArtemisToolbar extends Component {
   }
   insertWidget = (widget) => {
     this.props.onAction(ArtemisActions.insertWidget(widget))
+    this.setState({showWidgetsRibbon: false})
   }
   toggleWidgetsRibbon = () => {
     this.setState({showWidgetsRibbon: !this.state.showWidgetsRibbon})
