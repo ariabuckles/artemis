@@ -1,5 +1,6 @@
 import * as Draft from 'draft-js';
 import * as InternalConstants from './InternalConstants';
+import ArtemisDecorator from './ArtemisDecorator';
 
 const CURRENT_ARTEMIS_VERSION = 0;
 
@@ -116,7 +117,8 @@ export const _serializeFromDraftRaw = (rawDraftRepr) => {
 };
 
 export const serialize = (artemisState) => {
-  return _serializeFromDraftRaw(Draft.convertToRaw(artemisState));
+  const contentState = artemisState.getCurrentContent();
+  return _serializeFromDraftRaw(Draft.convertToRaw(contentState));
 };
 
 
@@ -204,7 +206,12 @@ export const _deserializeToDraftRaw = (artemisSerialization = EMPTY_ARTEMIS_DATA
 
 
 export const deserialize = (artemisSerialization) => {
-  return Draft.convertFromRaw(_deserializeToDraftRaw(artemisSerialization));
+  const rawDraftRepr = _deserializeToDraftRaw(artemisSerialization);
+  const contentState = Draft.convertFromRaw(rawDraftRepr);
+  return Draft.EditorState.createWithContent(
+    contentState,
+    new ArtemisDecorator(),
+  );
 };
 
 

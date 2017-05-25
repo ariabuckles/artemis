@@ -32,12 +32,17 @@ export default class ArtemisEditor extends Component {
   componentDidMount() {
     if (process.env.NODE_ENV !== 'production') {
       window.artemisEditor = this;
-      window.serialize = () => ArtemisState.serialize(this.props.editorState.getCurrentContent());
+      window.serialize = () => {
+        console.log(
+          JSON.stringify(
+            ArtemisState.serialize(this.props.editorState),
+            null,
+            2
+          )
+        );
+      };
       window.deserialize = (data) => this.props.onChange(
-        Draft.EditorState.createWithContent(
-          ArtemisState.deserialize(data),
-          new ArtemisDecorator()
-        ),
+        ArtemisState.deserialize(data)
       );
       window.loadPerseus = (perseusItem) => {
         window.deserialize(
