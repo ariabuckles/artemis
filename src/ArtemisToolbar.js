@@ -20,17 +20,21 @@ const styles = StyleSheet.create({
     position: 'relative',
     zIndex: 1,
     display: 'flex',
-    overflowX: 'auto',
   },
   button: {
     boxSizing: 'border-box',
     userSelect: 'none',
     width: 85,
+    height: 80,
     flexShrink: 0,
+    lineHeight: 1,
     textAlign: 'center',
     padding: 8,
     color: '#666',
     cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     ':hover': {
       color: '#4FAED1',
     }
@@ -42,6 +46,12 @@ const styles = StyleSheet.create({
   widgetsIcon: {
     ':after': {
       content: '"\\f044"',
+      ...iconStyles,
+    },
+  },
+  closeIcon: {
+    ':after': {
+      content: '"\\f057"',
       ...iconStyles,
     },
   },
@@ -113,6 +123,14 @@ const styles = StyleSheet.create({
   },
   widgetsRibbonWrapper: {
     display: 'flex',
+  },
+  widgetsRibbonWrapperExpanded: {
+    background: 'white',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
   widgetsRibbon: {
     background: '#eee',
@@ -210,74 +228,79 @@ export default class ArtemisToolbar extends Component {
     ];
   }
   render() {
+    const {
+      showWidgetsRibbon
+    } = this.state;
     return (
       <View style={[styles.toolbar, this.props.debug && styles.debugContainer]}>
+
+        <View style={[styles.widgetsRibbonWrapper,
+            showWidgetsRibbon && styles.widgetsRibbonWrapperExpanded]}>
           <View
             style={styles.button}
-            onClick={() => console.log('bold')}
-          >
-            <View style={styles.boldIcon} />
-            <View style={styles.buttonCaption}>
-              Bold
-            </View>
-          </View>
-
-          <View
-            style={styles.button}
-            onClick={() => console.log('italics')}
-          >
-            <View style={styles.italicsIcon} />
-            <View style={styles.buttonCaption}>
-              Italics
-            </View>
-          </View>
-
-          <View
-            style={styles.button}
-            onClick={() => console.log('image')}
-          >
-            <View style={styles.imageIcon} />
-            <View style={styles.buttonCaption}>
-              Image
-            </View>
-          </View>
-
-
-          <View
-            style={styles.button}
-            onClick={() => console.log('table')}
-          >
-            <View style={styles.tableIcon} />
-            <View style={styles.buttonCaption}>
-              Table
-            </View>
-          </View>
-
-          <View
-            style={styles.button}
-            onClick={() => this.props.onAction(ArtemisActions.newInlineMath())}
-          >
-            <View style={styles.equationIcon} />
-            <View style={styles.buttonCaption}>
-              Equation
-            </View>
-          </View>
-          <View style={[styles.widgetsRibbonWrapper,
-              this.state.showWidgetsRibbon && styles.widgetsRibbonWrapperExpanded]}>
-            <View
-              style={styles.button}
-              onClick={this.toggleWidgetsRibbon}
-              >
-                <View style={styles.widgetsIcon} />
-                <View style={styles.buttonCaption}>
-                  Answer field
-                </View>
+            onClick={this.toggleWidgetsRibbon}
+            >
+              <View style={!showWidgetsRibbon ? styles.widgetsIcon : styles.closeIcon} />
+              <View style={styles.buttonCaption}>
+                Answer field
               </View>
-              <View style={[styles.widgetsRibbon,
-                  this.state.showWidgetsRibbon && styles.widgetsRibbonShowing]}>
-                {this.renderWidgetsRibbon()}
-              </View>
+            </View>
+            <View style={[styles.widgetsRibbon,
+                showWidgetsRibbon && styles.widgetsRibbonShowing]}>
+              {this.renderWidgetsRibbon()}
+            </View>
+        </View>
+
+        <View
+          style={styles.button}
+          onClick={() => console.log('bold')}
+        >
+          <View style={styles.boldIcon} />
+          <View style={styles.buttonCaption}>
+            Bold
           </View>
+        </View>
+
+        <View
+          style={styles.button}
+          onClick={() => console.log('italics')}
+        >
+          <View style={styles.italicsIcon} />
+          <View style={styles.buttonCaption}>
+            Italics
+          </View>
+        </View>
+
+        <View
+          style={styles.button}
+          onClick={() => console.log('image')}
+        >
+          <View style={styles.imageIcon} />
+          <View style={styles.buttonCaption}>
+            Image
+          </View>
+        </View>
+
+
+        <View
+          style={styles.button}
+          onClick={() => console.log('table')}
+        >
+          <View style={styles.tableIcon} />
+          <View style={styles.buttonCaption}>
+            Table
+          </View>
+        </View>
+
+        <View
+          style={styles.button}
+          onClick={() => this.props.onAction(ArtemisActions.newInlineMath())}
+        >
+          <View style={styles.equationIcon} />
+          <View style={styles.buttonCaption}>
+            Equation
+          </View>
+        </View>
       </View>
     );
   }
