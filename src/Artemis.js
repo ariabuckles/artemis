@@ -1,11 +1,11 @@
 import ArtemisEditor from './ArtemisEditor';
 import ArtemisToolbar from './ArtemisToolbar';
+import ArtemisKeypad from './ArtemisKeypad';
 import * as ArtemisState from './ArtemisState';
 import * as ArtemisActions from './ArtemisActions';
 import * as ArtemisWidgets from './ArtemisWidgets';
-import ArtemisKeypad from './ArtemisKeypad';
 // TODO(aria): Rename this to ArtemisPerseusAdapter
-import PerseusAdapter from './PerseusAdapter';
+import * as PerseusAdapter from './PerseusAdapter';
 
 export {
   ArtemisEditor as Editor,
