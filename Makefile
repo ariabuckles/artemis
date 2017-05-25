@@ -6,3 +6,6 @@ pretty:
 
 test:
 	./node_modules/.bin/jest --no-watchman
+
+build:
+	npm run postinstall

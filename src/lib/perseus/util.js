@@ -641,7 +641,7 @@ const Util = {
         };
 
         // Require here to prevent recursive imports
-        var SvgImage = require("./components/svg-image.jsx");
+        var SvgImage = require("./components/svg-image");
         img.src = SvgImage.getRealImageUrl(url);
     },
 

@@ -6,7 +6,7 @@ import { View, StyleSheet } from '../base-components';
 import Popover from '../helpers/Popover';
 
 import '../lib/perseus/perseus-css';
-import PerseusNumericInputEditor from '../lib/perseus/widgets/numeric-input-editor.jsx';
+import PerseusNumericInputEditor from '../lib/perseus/widgets/numeric-input-editor';
 
 const styles = StyleSheet.create({
   input: {

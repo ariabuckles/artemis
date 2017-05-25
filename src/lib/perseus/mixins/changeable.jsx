@@ -14,7 +14,7 @@
 const React = require("react");
 const _ = require("underscore");
 
-const WIDGET_PROP_BLACKLIST = require("./widget-prop-blacklist.jsx");
+const WIDGET_PROP_BLACKLIST = require("./widget-prop-blacklist");
 
 const USAGE = "Usage:\n" +
             "  this.change({propName: 5}, callback);\n" +

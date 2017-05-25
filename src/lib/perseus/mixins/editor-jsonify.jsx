@@ -4,7 +4,7 @@
 
 var _ = require("underscore");
 
-var WIDGET_PROP_BLACKLIST = require("./widget-prop-blacklist.jsx");
+var WIDGET_PROP_BLACKLIST = require("./widget-prop-blacklist");
 
 var EditorJsonify = {
     serialize: function() {

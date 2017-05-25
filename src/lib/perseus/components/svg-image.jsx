@@ -8,12 +8,12 @@ var React = require("react");
 var $ = require("jquery");
 var _ = require("underscore");
 
-var FixedToResponsive = require("../components/fixed-to-responsive.jsx");
+var FixedToResponsive = require("../components/fixed-to-responsive");
 
 // extraGraphie not supported in artemis currently
-//var Graphie = require("../components/graphie.jsx");
+//var Graphie = require("../components/graphie");
 
-var ImageLoader = require("../components/image-loader.jsx");
+var ImageLoader = require("../components/image-loader");
 var Util = require("../util.js");
 var Zoom = require("../zoom.js");
 

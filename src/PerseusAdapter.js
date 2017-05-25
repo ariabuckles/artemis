@@ -1,4 +1,4 @@
-import PerseusMarkdown from './lib/perseus/perseus-markdown.jsx';
+import PerseusMarkdown from './lib/perseus/perseus-markdown';
 import * as PerseusMarkdownOutputAdapter from './PerseusMarkdownOutputAdapter';
 import * as ArtemisASTOutputter from './ArtemisASTOutputter';
 

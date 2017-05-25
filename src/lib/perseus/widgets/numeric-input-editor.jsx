@@ -5,17 +5,17 @@
 const React = require('react');
 const _ = require("underscore");
 
-const Changeable    = require("../mixins/changeable.jsx");
-const EditorJsonify = require("../mixins/editor-jsonify.jsx");
+const Changeable    = require("../mixins/changeable");
+const EditorJsonify = require("../mixins/editor-jsonify");
 
 const ButtonGroup = require("react-components/button-group.js");
 const {iconGear, iconTrash} = require("../icon-paths.js");
-const InfoTip = require("../components/info-tip.jsx");
-const InlineIcon = require("../components/inline-icon.jsx");
+const InfoTip = require("../components/info-tip");
+const InlineIcon = require("../components/inline-icon");
 const MultiButtonGroup = require("react-components/multi-button-group.js");
-const NumberInput = require("../components/number-input.jsx");
-const PropCheckBox = require("../components/prop-check-box.jsx");
-const TextInput = require("../components/text-input.jsx");
+const NumberInput = require("../components/number-input");
+const PropCheckBox = require("../components/prop-check-box");
+const TextInput = require("../components/text-input");
 
 const firstNumericalParse = require("../util.js").firstNumericalParse;
 

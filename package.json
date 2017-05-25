@@ -2,8 +2,11 @@
   "name": "artemis",
   "version": "0.1.0",
   "private": true,
+  "main": "./lib/Artemis.js",
   "dependencies": {
     "aphrodite": "^1.2.0",
+    "babel-cli": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "classnames": "^1.1.4",
     "draft-js": "^0.10.0",
     "font-awesome": "^4.7.0",
@@ -25,7 +28,6 @@
   "devDependencies": {
     "babel-jest": "^20.0.3",
     "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^18.1.0",
@@ -36,7 +38,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "pretty": "make pretty"
+    "pretty": "make pretty",
+    "postinstall": "BABEL_ENV=production babel src --out-dir lib --copy-files"
   },
   "babel": {
     "presets": ["react-app"]
@@ -48,7 +51,8 @@
     },
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "<rootDir>/src/lib/"
+      "<rootDir>/src/lib/",
+      "<rootDir>/lib/lib/"
     ]
   }
 }
