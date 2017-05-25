@@ -1,11 +1,6 @@
 import React, { PureComponent } from 'react';
-import ArtemisEditor from './ArtemisEditor';
-import ArtemisToolbar from './ArtemisToolbar';
-import ArtemisKeypad from './ArtemisKeypad';
-import * as ArtemisState from './ArtemisState';
-import * as ArtemisWidgets from './ArtemisWidgets';
 import { View, StyleSheet } from './base-components';
-import './FontAwesome';
+import * as Artemis from './Artemis';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,7 +48,7 @@ const styles = StyleSheet.create({
 class App extends PureComponent {
   state = {
     keypad: null,
-    artemisState: ArtemisState.empty(),
+    artemisState: Artemis.State.empty(),
   };
 
   render() {
@@ -70,13 +65,13 @@ class App extends PureComponent {
 
           <View style={styles.artemisContainer}>
             <View style={styles.toolbar}>
-              <ArtemisToolbar onAction={this._applyAction} />
+              <Artemis.Toolbar onAction={this._applyAction} />
             </View>
 
             <View style={styles.editor}>
-              <ArtemisEditor
+              <Artemis.Editor
                 editorState={this.state.artemisState}
-                widgetEditors={ArtemisWidgets.defaultEditors()}
+                widgetEditors={Artemis.Widgets.defaultEditors()}
                 onChange={this._onArtemisStateChange}
                 keypad={this.state.keypad}
                 placeholder='Write your question here...'
@@ -84,7 +79,7 @@ class App extends PureComponent {
             </View>
           </View>
 
-          <ArtemisKeypad ref={keypad => this.setState({ keypad: keypad })} />
+          <Artemis.Keypad ref={keypad => this.setState({ keypad: keypad })} />
 
         </View>
       </View>
@@ -99,7 +94,7 @@ class App extends PureComponent {
 
   _applyAction = a => {
     this.setState({
-      artemisState: ArtemisState.applyAction(this.state.artemisState, a),
+      artemisState: Artemis.State.applyAction(this.state.artemisState, a),
     });
   };
 }

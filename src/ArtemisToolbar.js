@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import * as ArtemisActions from './ArtemisActions';
 import { View, StyleSheet } from './base-components';
 
+import './FontAwesome';
 
 const styles = StyleSheet.create({
   debugContainer: {
