@@ -16,7 +16,7 @@
     "kas": "https://github.com/Khan/KAS.git",
     "katex": "^0.7.1",
     "kmath": "^0.0.1",
-    "math-input": "git+https://github.com/ClassJourney/math-input.git#web-support",
+    "math-input": "git+https://github.com/ClassJourney/math-input.git#classjourney",
     "mathquill": "git+https://github.com/ClassJourney/mathquill.git",
     "prettier": "^1.1.0",
     "react": "^15.5.3",
