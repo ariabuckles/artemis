@@ -64,7 +64,11 @@ const rules = {
         state.usedWidgetIds[type] = num;
         const widgetId = `${type} ${num}`;
 
-        state.widgets[widgetId] = widgetInfo;
+        state.widgets[widgetId] = Object.assign(
+          {},
+          widgetInfo,
+          { graded: true }
+        );
         return '[[' + SNOWMAN + ' ' + widgetId + ']]';
       }
     },
