@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   button: {
     boxSizing: 'border-box',
     userSelect: 'none',
-    width: 85,
+    width: 70,
     height: 80,
     flexShrink: 0,
     lineHeight: 1,
@@ -264,7 +264,7 @@ export default class ArtemisToolbar extends Component {
                 }
               />
               <View style={styles.buttonCaption}>
-                Answer field
+                Answer
               </View>
             </View>
             <View
