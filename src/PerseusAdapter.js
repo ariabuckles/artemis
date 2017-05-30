@@ -30,6 +30,7 @@ export const perseusItemFromArtemisData = (artemisData) => {
   return {
     question: {
       content: content,
+      images: {},
       widgets: widgets,
     },
     itemDataVersion: {

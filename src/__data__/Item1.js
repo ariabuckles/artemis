@@ -76,7 +76,7 @@ export const draft = {
 
 export const perseus = {
   "question": {
-    "content": "if $y=x+1$\n\nwhat is x?",
+    "content": "if $y=x+1$\n\nwhat is x\\?\n\n",
     "images": {},
     "widgets": {}
   },
