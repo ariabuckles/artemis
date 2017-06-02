@@ -6,8 +6,6 @@ import ArtemisDecorator from './ArtemisDecorator';
 import * as ArtemisState from './ArtemisState';
 import * as PerseusAdapter from './PerseusAdapter';
 import InlineWidgetOverlay from './InlineWidgetOverlay';
-import * as ArtemisPasteProcessor from './helpers/ArtemisPasteProcessor';
-import * as Insertion from './helpers/Insertion';
 
 import 'draft-js/dist/Draft.css';
 
@@ -102,9 +100,7 @@ export default class ArtemisEditor extends Component {
   };
 
   _handlePastedText = (text: string, html: string, editorState: any) => {
-    console.log('paste', text, html, editorState);
-    const fragmentContentState = ArtemisPasteProcessor.processHtml(html, editorState.getCurrentContent());
-    const newEditorState = Insertion.insertFragment(editorState, fragmentContentState);
+    const newEditorState = ArtemisState.pasteHtml(editorState, html);
     this.props.onChange(newEditorState);
     return true;
   };

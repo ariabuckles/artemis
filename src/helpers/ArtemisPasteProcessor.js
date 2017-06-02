@@ -5,6 +5,8 @@ import Immutable from 'immutable';
 const convertFromHTMLToContentBlocks = Draft.convertFromHTML;
 import getSafeBodyFromHTML from 'draft-js/lib/getSafeBodyFromHTML';
 
+import WidgetEntityHelper from './WidgetEntityHelper';
+
 export const processHtml = (html, contentState) => {
   // We use some private parameters of convertFromHTMLToContentBlocks here,
   // hence why we're taking the draft name. Find the source/api in
@@ -16,21 +18,34 @@ export const processHtml = (html, contentState) => {
   // for pulling widget entities out of
   // We promise this doesn't execute scripts because getSafeBodyFromHTML
   // doesn't execute scripts.
-  let getBodyFromHtmlCache = null;
-  const getBodyFromHtml = (html) => {
-    if (getBodyFromHtmlCache) {
-      return getBodyFromHtmlCache;
+  let getPastedBodyCache = null;
+  const getPastedBody = (html) => {
+    if (getPastedBodyCache) {
+      return getPastedBodyCache;
     } else {
       return getSafeBodyFromHTML(html);
     }
   };
 
-  const body = getBodyFromHtml(html);
+  // we're gonna mutate this, oh yay!
+  const body = getPastedBody(html);
 
-  const draftData = convertFromHTMLToContentBlocks(html, getBodyFromHtml);
+  const widgets = []; //TODO(aria): get widgets here
+
+  let entitiesContentState = contentState;
+  let widgetEntityMap = {};
+  for (const widgetInfo of widgets) {
+    const insertedData = WidgetEntityHelper.createWidgetEntity(
+      entitiesContentState,
+      widgetInfo
+    );
+    entitiesContentState = insertedData.contentState;
+    widgetEntityMap[insertedData.entityKey] = widgetInfo;
+  }
+  const entityMap = entitiesContentState.getEntityMap();
+
+  const draftData = convertFromHTMLToContentBlocks(html, getPastedBody);
   const contentBlocks = draftData.contentBlocks;
-
-  const entityMap = Immutable.OrderedMap();
 
   const fragmentContentState = Draft.ContentState.createFromBlockArray(
     contentBlocks,

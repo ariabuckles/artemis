@@ -1,6 +1,7 @@
 import * as Draft from 'draft-js';
 import * as InternalConstants from './InternalConstants';
 import ArtemisDecorator from './ArtemisDecorator';
+import * as WidgetEntityHelper from './helpers/WidgetEntityHelper';
 
 const CURRENT_ARTEMIS_VERSION = 0;
 
@@ -21,13 +22,7 @@ const serializeWidgetEntity = (entity) => {
 };
 
 
-const deserializeWidgetEntity = (widgetInfo) => {
-  return {
-    type: widgetInfo.type,
-    mutability: 'IMMUTABLE',
-    data: widgetInfo,
-  };
-};
+const deserializeWidgetEntity = WidgetEntityHelper.entityFromWidgetInfo;
 
 
 const mergeInlineRanges = (entityRanges, inlineStyleRanges) => {
