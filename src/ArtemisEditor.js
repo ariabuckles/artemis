@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import * as Draft from 'draft-js';
+
 import { View, StyleSheet } from './base-components';
 import ArtemisDecorator from './ArtemisDecorator';
 import * as ArtemisState from './ArtemisState';
 import * as PerseusAdapter from './PerseusAdapter';
 import InlineWidgetOverlay from './InlineWidgetOverlay';
+import * as ArtemisPasteProcessor from './helpers/ArtemisPasteProcessor';
+import * as Insertion from './helpers/Insertion';
+
 import 'draft-js/dist/Draft.css';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -72,19 +76,40 @@ export default class ArtemisEditor extends Component {
             editorState={this.props.editorState}
             onChange={this._handleDraftChange}
             placeholder={this.props.placeholder}
+            handlePastedText={this._handlePastedText}
+            ref={editor => { this._editor = editor; }}
           />
         </View>
         <InlineWidgetOverlay
           widgetEditors={this.props.widgetEditors}
           contentState={this.props.editorState.getCurrentContent()}
           keypad={this.props.keypad}
-          onChangeElement={this._onChangeElement}
+          onChangeElement={this._handleChangeElement}
         />
       </View>
     );
   }
 
-  _onChangeElement = (key, data, updateSize) => {
+  _handleDraftChange = newEditorState => {
+    // NOTE: This disables native optimizations so we can remeasure
+    // equation/widget overlays on every keystroke
+    // NOTE: We're also doing this on every cursor change. SORRY.
+    return this.props.onChange(
+      Draft.EditorState.set(newEditorState, {
+        nativelyRenderedContent: null,
+      })
+    );
+  };
+
+  _handlePastedText = (text: string, html: string, editorState: any) => {
+    console.log('paste', text, html, editorState);
+    const fragmentContentState = ArtemisPasteProcessor.processHtml(html, editorState.getCurrentContent());
+    const newEditorState = Insertion.insertFragment(editorState, fragmentContentState);
+    this.props.onChange(newEditorState);
+    return true;
+  };
+
+  _handleChangeElement = (key, data, updateSize) => {
     const editorState = this.props.editorState;
     const contentState = editorState.getCurrentContent();
 
@@ -101,17 +126,8 @@ export default class ArtemisEditor extends Component {
       updates.decorator = new ArtemisDecorator();
     }
 
+    // TODO(aria): undo stack stuff here?
     return this.props.onChange(Draft.EditorState.set(editorState, updates));
   };
 
-  _handleDraftChange = newEditorState => {
-    // NOTE: This disables native optimizations so we can remeasure
-    // equation/widget overlays on every keystroke
-    // NOTE: We're also doing this on every cursor change. SORRY.
-    return this.props.onChange(
-      Draft.EditorState.set(newEditorState, {
-        nativelyRenderedContent: null,
-      })
-    );
-  };
 }

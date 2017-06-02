@@ -33,12 +33,16 @@ export const applyAction = (artemisState, action) => {
       entityKey
     );
 
+    // TODO(aria): push an instance onto the undoStack here.
+    // See EditorState.push (which we can't actually use cause
+    // its change types are limited yuck)
     const stateWithContent = Draft.EditorState.set(editorState, {
       currentContent: newContentState,
     });
 
     // build up a new selection just after the equation we inserted
     // TODO(aria): we might want this to select the equation instead?
+    // TODO(aria): merge this with the above EditorState.set?
     const stateWithSelection = Draft.EditorState.acceptSelection(
       stateWithContent,
       new Draft.SelectionState({
