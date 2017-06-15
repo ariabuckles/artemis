@@ -37,6 +37,7 @@ export default class ArtemisEditor extends Component {
   componentDidMount() {
     const editorNode = ReactDOM.findDOMNode(this._editor);
     const editableDiv = editorNode.querySelector('[contenteditable=true]');
+    editableDiv.addEventListener('cut', this._handleCut);
     editableDiv.addEventListener('copy', this._handleCopy);
 
     if (process.env.NODE_ENV !== 'production') {
@@ -94,6 +95,25 @@ export default class ArtemisEditor extends Component {
       </View>
     );
   }
+
+  _handleCut = e => {
+    const { editorState } = this.props;
+    const html = ArtemisPasteProcessor.getAlternativeCopyHtml(editorState);
+    if (html) {
+      e.clipboardData.setData('text/plain', InternalConstants.WIDGET_CHAR);
+      e.clipboardData.setData('text/html', html);
+      e.preventDefault();
+
+      const newContentState = Draft.Modifier.removeRange(
+        editorState.getCurrentContent(),
+        editorState.getSelection(),
+        'backward' // TODO(aria): Not sure if we need anything specific here
+      );
+      return this.props.onChange(
+        Draft.EditorState.push(editorState, newContentState, 'remove-range')
+      );
+    }
+  };
 
   _handleCopy = e => {
     const { editorState } = this.props;
