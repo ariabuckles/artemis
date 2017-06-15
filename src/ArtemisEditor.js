@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import * as Draft from 'draft-js';
 
 import { View, StyleSheet } from './base-components';
 import ArtemisDecorator from './ArtemisDecorator';
 import * as ArtemisState from './ArtemisState';
+import * as ArtemisPasteProcessor from './helpers/ArtemisPasteProcessor';
 import * as PerseusAdapter from './PerseusAdapter';
+import * as InternalConstants from './InternalConstants';
 import InlineWidgetOverlay from './InlineWidgetOverlay';
 
 import 'draft-js/dist/Draft.css';
@@ -32,6 +35,10 @@ const styles = StyleSheet.create({
 export default class ArtemisEditor extends Component {
 
   componentDidMount() {
+    const editorNode = ReactDOM.findDOMNode(this._editor);
+    const editableDiv = editorNode.querySelector('[contenteditable=true]');
+    editableDiv.addEventListener('copy', this._handleCopy);
+
     if (process.env.NODE_ENV !== 'production') {
       window.artemisEditor = this;
       window.serialize = () => {
@@ -55,7 +62,7 @@ export default class ArtemisEditor extends Component {
         console.log(
           JSON.stringify(
             PerseusAdapter.perseusItemFromArtemisData(
-              window.serialize()
+              ArtemisState.serialize(this.props.editorState)
             ),
             null,
             2
@@ -87,6 +94,16 @@ export default class ArtemisEditor extends Component {
       </View>
     );
   }
+
+  _handleCopy = e => {
+    const { editorState } = this.props;
+    const html = ArtemisPasteProcessor.getAlternativeCopyHtml(editorState);
+    if (html) {
+      e.clipboardData.setData('text/plain', InternalConstants.WIDGET_CHAR);
+      e.clipboardData.setData('text/html', html);
+      e.preventDefault();
+    }
+  };
 
   _handleDraftChange = newEditorState => {
     // NOTE: This disables native optimizations so we can remeasure

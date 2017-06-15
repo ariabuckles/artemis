@@ -62,6 +62,7 @@ class BlockOverlay extends Component {
       <View style={styles.blockOverlay}>
         {this.state.pos &&
           entities.map(e => {
+            // TODO(aria): Change `document` here to `ReactDOM.findDOMNode(this)`
             const entityElement = document.querySelector(
               `[data-artemis-id="${e.key}"]`
             );

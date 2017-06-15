@@ -28,15 +28,21 @@ export default class InlineWidgetPlaceholder extends Component {
     this.setState(this._calculateSpecifiedDimensions(nextProps));
   }
 
+  // TODO(aria): make a shouldComponentUpdate to make this efficient D:
+
   render() {
-    // TODO(aria): Make this style dynamic for sizing
     // This is rendering a single character because we only render InlineMathEditor's
     // with this.props.children as single characters. Draft requires us to
     // render {this.props.children} and only {this.props.children} for cursors to
     // work correctly
     //debugger;
 
-    const { entityKey } = this.props;
+    const { contentState, entityKey } = this.props;
+
+    // the widget info, plus some size info
+    // TODO(aria): use WidgetEntityHelpers here to convert this to a true
+    // widgetInfo?
+    const entityData = contentState.getEntity(entityKey).getData();
 
     const { specifiedWidth, specifiedHeight, widthModifier } = this.state;
 
@@ -53,7 +59,11 @@ export default class InlineWidgetPlaceholder extends Component {
     };
 
     return (
-      <span style={style} data-artemis-id={entityKey}>
+      <span
+        style={style}
+        data-artemis-id={entityKey}
+        data-artemis-widget-info={JSON.stringify(entityData)}
+      >
         {this.props.children}
       </span>
     );

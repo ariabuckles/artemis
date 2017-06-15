@@ -1,5 +1,4 @@
-// This character is just a space so our letter spacing is closer to the correct width ouo:
-// Invisible separator character.
+// Invisible separator character / zero-width comma
 // This seems to be one of the few characters that has all the properties we need:
 //  * sizes with letter-spacing
 //  * cursor moves before and after on letter spacing

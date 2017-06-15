@@ -14,14 +14,8 @@ const EMPTY_ARTEMIS_BLOCK = {
   content: [],
 };
 
-const serializeWidgetEntity = (entity) => {
-  // TODO(aria): Be better about what to include here
-  const { width, height, ...widgetInfo } = entity.data;
 
-  return widgetInfo;
-};
-
-
+const serializeWidgetEntity = WidgetEntityHelper.widgetInfoFromEntity;
 const deserializeWidgetEntity = WidgetEntityHelper.entityFromWidgetInfo;
 
 
