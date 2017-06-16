@@ -11,11 +11,10 @@ const Util        = require("../util.js");
 const Changeable    = require("../mixins/changeable.jsx");
 const EditorJsonify = require("../mixins/editor-jsonify.jsx");
 
-const BlurInput    = require("react-components/blur-input.jsx");
-const Editor       = require("../editor.jsx");
+const BlurInput    = require("react-components/blur-input.js");
+const Editor       = require("../editor-stub.jsx");
 const InfoTip      = require("../components/info-tip.jsx");
 const InlineIcon   = require("../components/inline-icon.jsx");
-const RangeInput   = require("../components/range-input.jsx");
 
 const defaultBoxSize = 400;
 const defaultRange = [0, 10];
@@ -88,8 +87,6 @@ const ImageEditor = React.createClass({
 
     getInitialState: function() {
         return {
-            showAdvancedSettings:
-                this.props.title.length > 0 || this.props.labels.length > 0,
             backgroundImageError: "",
         };
     },
@@ -140,39 +137,6 @@ const ImageEditor = React.createClass({
 
         var advancedSettings = <div className="graph-settings">
             <div>
-                <label>Graphie X range:{' '}
-                    <RangeInput
-                        value={this.props.range[0]}
-                        onChange={_.partial(this.onRangeChange, 0)} />
-                </label>
-            </div>
-            <div>
-                <label>Graphie Y range:{' '}
-                    <RangeInput
-                        value={this.props.range[1]}
-                        onChange={_.partial(this.onRangeChange, 1)} />
-                </label>
-            </div>
-            <div className="add-label">
-                <button onClick={this.addLabel}>
-                    {' '}Add a label{' '}
-                </button>
-            </div>
-            {this.props.labels.length > 0 &&
-                <table className="label-settings">
-                    <thead>
-                    <tr>
-                        <th>Coordinates</th>
-                        <th>Content</th>
-                        <th>Alignment</th>
-                        <th/>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {this.props.labels.map(this._renderRowForLabel)}
-                    </tbody>
-                </table>}
-            <div>
                 <label>
                     <div>
                         Title:
@@ -192,15 +156,6 @@ const ImageEditor = React.createClass({
             </div>
         </div>;
 
-        var showHideAdvancedSettings = <div>
-            <a href="#" onClick={this._toggleAdvancedSettings}>
-                {this.state.showAdvancedSettings ? "Hide " : "Show "}
-                advanced settings
-            </a>
-
-            {this.state.showAdvancedSettings && advancedSettings}
-        </div>;
-
         var backgroundImageErrorText = <div className='renderer-widget-error'>
             {this.state.backgroundImageError}
         </div>;
@@ -218,54 +173,8 @@ const ImageEditor = React.createClass({
             </label>
 
             {backgroundImage.url && imageSettings}
-            {backgroundImage.url && showHideAdvancedSettings}
+            {backgroundImage.url && advancedSettings}
         </div>;
-    },
-
-    _toggleAdvancedSettings: function(e) {
-        e.preventDefault();
-        this.setState({
-            showAdvancedSettings: !this.state.showAdvancedSettings,
-        });
-    },
-
-    _renderRowForLabel: function(label, i) {
-        return <tr key={i}>
-            <td>
-                <RangeInput
-                    value={label.coordinates}
-                    onChange={this.onCoordinateChange.bind(this, i)} />
-            </td>
-            <td style={{verticalAlign: "bottom", width: "5px"}}>
-                <input
-                    type="text"
-                    className="graph-settings-axis-label"
-                    value={label.content}
-                    onChange={this.onContentChange.bind(this, i)} />
-            </td>
-            <td>
-                <select
-                    className="perseus-widget-dropdown"
-                    value={label.alignment}
-                    onChange={this.onAlignmentChange.bind(this, i)}>
-                    {captionAlignments.map(function(alignment, i) {
-                        return <option key={"" + i} value={alignment}>
-                            {alignment}
-                        </option>;
-                    }, this)}
-                </select>
-            </td>
-            <td>
-                <a
-                    href="#"
-                    className="simple-button orange delete-label"
-                    title="Remove this label"
-                    onClick={this.removeLabel.bind(this, i)}
-                >
-                    <InlineIcon {...iconTrash} />
-                </a>
-            </td>
-        </tr>;
     },
 
     change(...args) {

@@ -32,4 +32,5 @@ module.exports = [
     "onFocus",
     "trackInteraction",
     "keypadElement",
+    "keypad",
 ];

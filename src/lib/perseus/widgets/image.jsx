@@ -12,11 +12,10 @@ const { StyleSheet, css } = require("aphrodite");
 var React = require("react");
 var _ = require("underscore");
 
-var ApiOptions   = require("../perseus-api.jsx").Options;
+var apiOptions   = require("../api-options-stub.jsx");
 const { baseUnitPx } = require("../styles/constants.js");
 var Changeable    = require("../mixins/changeable.jsx");
 const mediaQueries = require("../styles/media-queries.js");
-var Renderer     = require("../renderer.jsx");
 var SvgImage     = require("../components/svg-image.jsx");
 
 var defaultBoxSize = 400;
@@ -41,7 +40,6 @@ var ImageWidget = React.createClass({
         ...Changeable.propTypes,
         alignment: React.PropTypes.oneOf(supportedAlignments),
         alt: React.PropTypes.string,
-        apiOptions: ApiOptions.propTypes,
         // TODO(alex): Rename to something else, e.g. "image", perhaps flatten
         backgroundImage: React.PropTypes.shape({
             url: React.PropTypes.string,
@@ -102,12 +100,12 @@ var ImageWidget = React.createClass({
             labels: [],
             alt: "",
             caption: "",
+            apiOptions: apiOptions,
         };
     },
 
     render: function() {
         var image;
-        var alt;
         var {apiOptions} = this.props;
 
         var backgroundImage = this.props.backgroundImage;
@@ -116,27 +114,10 @@ var ImageWidget = React.createClass({
             image = <SvgImage
                         src={backgroundImage.url}
                         alt={
-                            /* alt text is formatted in a sr-only
-                               div next to the image, so we make
-                               this empty here.
-                               If there is no alt text at all,
-                               we don't put an alt attribute on
-                               the image, so that screen readers
-                               know there's something they can't
-                               read there :(.
-                               NOTE: React <=0.13 (maybe later)
-                               has a bug where it won't ever
-                               remove an attribute, so if this
-                               alt node is ever defined it's
-                               not removed. This is sort of
-                               dangerous, but we usually re-key
-                               new renderers so that they're
-                               rendered from scratch anyways,
-                               so this shouldn't be a problem
-                               in practice right now, although
-                               it will exhibit weird behaviour
-                               while editing. */
-                            this.props.alt ? "" : undefined
+                            /* NOTE(aria): canonically this should be in a renderer,
+                             * but artemis doesn't have a perseus renderer to spare,
+                             * so here it is, unformatted ;_; */
+                            this.props.alt || undefined
                         }
                         width={backgroundImage.width}
                         height={backgroundImage.height}
@@ -150,16 +131,8 @@ var ImageWidget = React.createClass({
                         zoomToFullSizeOnMobile={apiOptions.isMobile}
                         constrainHeight={apiOptions.isMobile}
                         allowFullBleed={apiOptions.isMobile}
+                        responsive={this.props.responsive}
             />;
-        }
-
-        if (this.props.alt) {
-            alt = <span className="perseus-sr-only">
-                <Renderer
-                    content={this.props.alt}
-                    apiOptions={apiOptions}
-                />
-            </span>;
         }
 
         // For mobile we combine an image's title and caption.
@@ -217,17 +190,15 @@ var ImageWidget = React.createClass({
                             minWidth: minWidth,
                         }}
                     >
-                        <Renderer
-                            content={title + this.props.caption}
-                            apiOptions={apiOptions}
-                        />
+                        <div>
+                            {title + this.props.caption}
+                        </div>
                     </div>
                 </div>;
             }
 
             return <div className="perseus-image-widget">
                 {image}
-                {alt}
                 {titleAndCaption}
             </div>;
 
@@ -237,26 +208,19 @@ var ImageWidget = React.createClass({
 
             if (this.props.title) {
                 title = <div className="perseus-image-title">
-                    <Renderer
-                        content={this.props.title}
-                        apiOptions={apiOptions}
-                    />
+                    {this.props.title}
                 </div>;
             }
 
             if (this.props.caption) {
                 caption = <div className="perseus-image-caption">
-                    <Renderer
-                        content={this.props.caption}
-                        apiOptions={apiOptions}
-                    />
+                    {this.props.caption}
                 </div>;
             }
 
             return <div className="perseus-image-widget">
                 {title}
                 {image}
-                {alt}
                 {caption}
             </div>;
         }
@@ -274,7 +238,7 @@ var ImageWidget = React.createClass({
         return ImageWidget.validate(this.getUserInput(), rubric);
     },
 
-    focus: $.noop,
+    focus: () => null,
 });
 
 _.extend(ImageWidget, {

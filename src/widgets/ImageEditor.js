@@ -7,12 +7,12 @@ import Popover from '../helpers/Popover';
 
 import '../lib/perseus/perseus-css';
 import PerseusImageEditor from '../lib/perseus/widgets/image-editor';
-import PerseusImage from '../lib/perseus/widgets/image';
+import { widget as PerseusImage } from '../lib/perseus/widgets/image';
 
 const styles = StyleSheet.create({
   image: {
     display: 'flex',
-    minWidth: 64,
+    minWidth: 100,
     boxSizing: 'border-box',
     position: 'relative',
     overflow: 'hidden',
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgb(186, 190, 194)',
     borderWidth: 1,
     borderRadius: 4,
-    minHeight: 48,
+    minHeight: 100,
     padding: '6px 6px 1px',
     color: 'inherit',
     textAlign: 'center',
@@ -42,8 +42,10 @@ export default class ImageEditor extends Component {
 
   render() {
     return <Popover>
-      <View style={styles.image}>
-        <PerseusImage {...this.props.options} />
+      <View className="framework-perseus" style={styles.image}>
+        {/* responsive false because we have no size info in artemis
+            overlays */}
+        <PerseusImage {...this.props} responsive={false} />
       </View>
       <View className="framework-perseus" style={styles.editor}>
         <PerseusImageEditor

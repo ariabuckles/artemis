@@ -12,8 +12,9 @@
 // which caused the zoomed image to end up behind the overlay. We sidestep all
 // of that by simplifying to just use a new image element.
 
-/*global $*/
 /*jshint browser:true, node:true */
+
+var $ = require('jquery');
 
 "use strict";
 
