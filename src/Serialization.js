@@ -167,7 +167,10 @@ const deserializeBlock = (artemisBlock, /* mutated */ entityMap) => {
 };
 
 
-export const _deserializeToDraftRaw = (artemisSerialization = EMPTY_ARTEMIS_DATA) => {
+export const _deserializeToDraftRaw = (artemisSerialization) => {
+  if (artemisSerialization == null) {
+    artemisSerialization = EMPTY_ARTEMIS_DATA;
+  }
 
   const artemisVersion = artemisSerialization.artemisVersion;
 

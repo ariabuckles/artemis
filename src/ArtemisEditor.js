@@ -56,7 +56,10 @@ export default class ArtemisEditor extends Component {
       );
       window.loadPerseus = (perseusItem) => {
         window.deserialize(
-          PerseusAdapter.artemisDataFromPerseusItem(perseusItem)
+          PerseusAdapter.artemisDataFromPerseusItem(
+            perseusItem,
+            this.props.widgetEditors
+          )
         );
       };
       window.savePerseus = () => {

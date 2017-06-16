@@ -2,15 +2,23 @@ import PerseusMarkdown from './lib/perseus/perseus-markdown';
 import * as PerseusMarkdownOutputAdapter from './PerseusMarkdownOutputAdapter';
 import * as ArtemisASTOutputter from './ArtemisASTOutputter';
 
-export const artemisDataFromPerseusItem = (perseusItem) => {
+export const artemisDataFromPerseusItem = (perseusItem, supportedWidgets) => {
   const content = perseusItem.question.content;
   const widgets = perseusItem.question.widgets;
 
   const parsed = PerseusMarkdown.parse(content);
 
-  const output = PerseusMarkdownOutputAdapter.artemisDataOutput(parsed, {
+  let outputState = {
     widgets: widgets,
-  });
+    supportedWidgets: supportedWidgets,
+  };
+
+  const output = PerseusMarkdownOutputAdapter.artemisDataOutput(parsed, outputState);
+
+  if (outputState.error) {
+    console.warn(outputState.error);
+    return null;
+  }
 
   return {
     artemisVersion: 0,

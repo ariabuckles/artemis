@@ -51,6 +51,33 @@ const artemisDataFor = (outputFunc) => {
 };
 
 
+const importWidgetInfo = (widgetInfo, widgetId, outputState) => {
+  const type = widgetInfo.type;
+
+  if (outputState.supportedWidgets && !outputState.supportedWidgets[type]) {
+    outputState.error = {
+      message: "Widget type not supported",
+      widgetId: widgetId,
+    };
+    return null;
+  }
+
+  const isStatic = widgetInfo.static || widgetInfo.graded == false;
+  if (isStatic && type !== 'image') {
+    outputState.error = {
+      message: "Static or ungraded non-images are not supported",
+      widgetId: widgetId,
+    };
+    return null;
+  }
+
+  return {
+    type: widgetInfo.type,
+    options: widgetInfo.options,
+  };
+};
+
+
 // perseus-markdown ast rules, converting to artemis nodes
 const rules = {
   paragraph: {
@@ -221,10 +248,7 @@ const rules = {
 
       return {
         type: 'widget',
-        info: {
-          type: widget.type,
-          options: widget.options,
-        },
+        info: importWidgetInfo(widget, id, state),
       };
     }
   },
