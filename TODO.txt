@@ -1,3 +1,4 @@
  - investigate whether we need es6-shim ( https://draftjs.org/docs/overview.html#content )
- - handle copy-pasting entities (i think we need to data-ify them on the html then add new entities when pasting?)
+ - make our perseus markdown parser parse all entities but set outputState.error for bad ones,
+   instead of crashing
 
