@@ -4,35 +4,6 @@ import ReactDOM from 'react-dom';
 import InlineWidgetNotFoundEditor from './widgets/InlineWidgetNotFoundEditor';
 
 export default class InlineWidgetEditor extends Component {
-  shouldComponentUpdate(nextProps) {
-    return (
-      nextProps.options !== this.props.options ||
-      // TODO(aria): check for differences in the actual keypad.getElement()
-      nextProps.keypad !== this.props.keypad
-    );
-  }
-
-  render() {
-    const { type, widgetEditors, options, onChange, keypad } = this.props;
-
-    const WidgetEditor = widgetEditors[type];
-
-    if (WidgetEditor == null) {
-      return <InlineWidgetNotFoundEditor type={type} />;
-    } else {
-      return <WidgetEditor {...options} onChange={onChange} keypad={keypad} />;
-    }
-  }
-
-  componentDidMount() {
-    // We delay this to wait for aphrodite styles to resolve ;_;
-    setTimeout(this._measure, 0);
-  }
-
-  componentDidUpdate() {
-    // We delay this to wait for aphrodite styles to resolve ;_;
-    setTimeout(this._measure, 0);
-  }
 
   _measure = () => {
     const node = ReactDOM.findDOMNode(this);
@@ -52,4 +23,56 @@ export default class InlineWidgetEditor extends Component {
       this.props.onMeasure(rect);
     }
   };
+
+  componentDidMount() {
+    // Some components may change sizes later. yuck!
+    const node = ReactDOM.findDOMNode(this);
+    if (node !== null) {
+      this._observer.observe(node, {
+        childList: true,
+        attributes: true,
+        subtree: true,
+      });
+    }
+
+    // We delay this to wait for aphrodite styles to resolve ;_;
+    setTimeout(this._measure, 0);
+  }
+
+  componentDidUpdate = () => {
+    // We delay this to wait for aphrodite styles to resolve ;_;
+    setTimeout(this._measure, 0);
+  }
+
+  _observer = new MutationObserver(this.componentDidUpdate)
+
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.options !== this.props.options ||
+      // TODO(aria): check for differences in the actual keypad.getElement()
+      nextProps.keypad !== this.props.keypad
+    );
+  }
+
+  render() {
+    const { type, widgetEditors, options, onChange, keypad } = this.props;
+
+    const WidgetEditor = widgetEditors[type];
+
+    if (WidgetEditor == null) {
+      return <InlineWidgetNotFoundEditor
+        type={type}
+      />;
+    } else {
+      return <WidgetEditor
+        {...options}
+        onChange={onChange}
+        keypad={keypad}
+      />;
+    }
+  }
+
+  componentWillUnmount() {
+    this._observer.disconnect();
+  }
 }
