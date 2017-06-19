@@ -6,6 +6,8 @@ export const artemisDataFromPerseusItem = (perseusItem, supportedWidgets) => {
   const content = perseusItem.question.content;
   const widgets = perseusItem.question.widgets;
 
+  const preprocessed = PerseusMarkdownOutputAdapter.preprocess(content);
+
   const parsed = PerseusMarkdown.parse(content);
 
   let outputState = {

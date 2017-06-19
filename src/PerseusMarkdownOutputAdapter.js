@@ -7,6 +7,11 @@
  */
 import SimpleMarkdown from 'simple-markdown';
 
+export const preprocess = (source) => {
+  const mdSource = SimpleMarkdown.preprocess(source);
+  return mdSource;
+};
+
 const artemisDataFor = (outputFunc) => {
   const nestedOutput = (ast, state) => {
     state = state || {};
@@ -22,10 +27,6 @@ const artemisDataFor = (outputFunc) => {
         if (Array.isArray(nodeResult)) {
           Array.prototype.push.apply(result, nodeResult);
 
-          // Hacks to combine text nodes.
-          // Mostly for simplicity of testing, this isn't strictly required
-          // TODO(aria): apologize more
-
         } else if (nodeResult == null || nodeResult.type == null) {
           // do not push onto the results
           // set the type to null for prevNodeResult checks
@@ -33,6 +34,9 @@ const artemisDataFor = (outputFunc) => {
 
         } else if (nodeResult.type === 'text' && prevNodeResult.type === 'text' &&
             nodeResult.style === prevNodeResult.style){
+          // Hacks to combine text nodes.
+          // Mostly for simplicity of testing, this isn't strictly required
+          // TODO(aria): apologize more
           prevNodeResult.content += nodeResult.content;
 
         } else {
@@ -254,7 +258,6 @@ const rules = {
   // * lists
   // * tables
   // * blockQuotes
-  // * images
 
   widget: {
     artemis: (node, output, state) => {
