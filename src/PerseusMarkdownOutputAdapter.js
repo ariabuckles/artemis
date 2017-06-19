@@ -231,7 +231,22 @@ const rules = {
 
   image: {
     artemis: (node, output, state) => {
-      throw new Error('images not yet supported');
+      return {
+        type: 'widget',
+        info: {
+          type: 'image',
+          options: {
+            backgroundImage: {
+              url: node.target,
+              // TODO(aria): pass through the values in images{} to here
+              width: undefined,
+              height: undefined,
+            },
+            alt: node.alt,
+            title: node.title,
+          },
+        },
+      };
     },
   },
 

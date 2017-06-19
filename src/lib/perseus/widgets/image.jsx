@@ -66,7 +66,7 @@ var ImageWidget = React.createClass({
         ),
 
         title: React.PropTypes.string,
-        trackInteraction: React.PropTypes.func.isRequired,
+        trackInteraction: React.PropTypes.func,
     },
 
     statics: {
