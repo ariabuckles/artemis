@@ -30,22 +30,35 @@ const ESCAPE_CHAR_REGEX = /[^0-9A-Za-z\s\u00c0-\uffff]/g;
 const SNOWMAN = '\u2603';
 
 
+const ALL_WHITESPACE = /^\s*$/;
+const isOnlyNodeInBlock = (node, siblings) => {
+  return siblings.every(sibling => {
+    return sibling === node || (sibling.type === 'text' && ALL_WHITESPACE.test(sibling.content));
+  });
+};
+
+
+const encodeMarkdownEntity = (entityStr: string) => {
+  // We need to escape all non-alphanumericish characters because they may be
+  // simple-markdown special characters :o
+  // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter
+  // for the magick $& we're using here, which inserts the matched portion
+  // of the string
+  return entityStr.replace(ESCAPE_CHAR_REGEX, '\\$&');
+};
+
+
 // artemis node rules, converting to perseus ast nodes
 const rules = {
   paragraph: {
     perseus: (node, output, state) => {
-      return output(node.content, state) + '\n\n';
+      return output(node.content, Object.assign({}, state, { siblings: node.content })) + '\n\n';
     },
   },
 
   text: {
     perseus: (node, output, state) => {
-      // We need to escape all non-alphanumericish characters because they may be
-      // simple-markdown special characters :o
-      // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter
-      // for the magick $& we're using here, which inserts the matched portion
-      // of the string
-      return node.content.replace(ESCAPE_CHAR_REGEX, '\\$&');
+      return encodeMarkdownEntity(node.content);
     },
   },
 
@@ -53,10 +66,18 @@ const rules = {
     perseus: (node, output, state) => {
       const widgetInfo = node.info;
       const type = widgetInfo.type;
+      const options = widgetInfo.options;
 
       if (type === 'inline-math') {
         // katex inline math
-        return '$' + widgetInfo.options.value + '$';
+        return '$' + options.value + '$';
+
+      } else if (type === 'image' && !isOnlyNodeInBlock(node, state.siblings)) {
+        // inline images
+        const url = options.backgroundImage && options.backgroundImage.url || '';
+        // TODO(aria): we ignore title attrs right now
+        // TODO(aria): we should output width/height to the images table
+        return '![' + encodeMarkdownEntity(options.alt) + '](' + url + ')';
 
       } else {
         // normal perseus widget
