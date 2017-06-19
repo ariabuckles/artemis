@@ -253,7 +253,9 @@ const ImageEditor = React.createClass({
     // noisily load the image in response to the author changing it
     onUrlChange: function(url, silent) {
         // All article content must be KA-owned!
-        if (!INTERNALLY_HOSTED_URL_RE.test(url)) {
+        // NOTE(aria): This restriction is removed for Artemis because
+        // we can't rehost images yet. Also we're not KA
+        if (false && !INTERNALLY_HOSTED_URL_RE.test(url)) {
             this.setState({
                 backgroundImageError: (
                     'Images must be from sites hosted by Khan Academy. ' +
