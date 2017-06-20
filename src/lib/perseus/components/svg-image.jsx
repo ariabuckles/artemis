@@ -7,6 +7,7 @@ var classNames = require("classnames");
 var React = require("react");
 var $ = require("jquery");
 var _ = require("underscore");
+var TeX = require("../../../components/tex").default;
 
 var FixedToResponsive = require("../components/fixed-to-responsive");
 
@@ -31,6 +32,18 @@ var ZOOMABLE_THRESHOLD = 700;
 //   ...
 // }
 var labelDataCache = {};
+
+const styles = {
+  labelsLayer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    fontSize: 14,
+    color: 'black',
+  },
+};
 
 // Write our own JSONP handler because all the other ones don't do things we
 // need.
@@ -193,6 +206,19 @@ function defaultPreloader() {
         },
     });
 }
+
+
+const labelDirections = {
+    "center": 'translate(-50%, -50%)',
+    "above": 'translate(-50%, -100%)',
+    "above right": 'translate(0, -100%)',
+    "right": 'translate(0, -50%)',
+    "below right": 'none',
+    "below": 'translate(-50%, 0)',
+    "below left": 'translate(-100%, 0)',
+    "left": 'translate(-100%, -50%)',
+    "above left": 'translate(-100%, -100%)',
+};
 
 var SvgImage = React.createClass({
     propTypes: {
@@ -415,53 +441,52 @@ var SvgImage = React.createClass({
         }
     },
 
-    setupGraphie: function(graphie, options) {
-        _.map(options.labels, (labelData) => {
-            if (shouldRenderJipt()) {
-                var elem = graphie.label(
-                    labelData.coordinates,
-                    labelData.content,
-                    labelData.alignment,
-                    false
-                );
+    _renderLabelsLayer: function(box, range, labels) {
+        return <div style={styles.labelsLayer}>
+            {labels.map((labelData) => {
+                if (labelData.coordinates) {
+                    // Create labels from the data
+                    // TODO(charlie): Some erroneous labels are being sent down
+                    // without coordinates. They don't seem to have any content, so
+                    // it seems fine to just ignore them (rather than error), but
+                    // we should figure out why this is happening.
+                
+                    //var label = graphie.label(
+                    //    labelData.coordinates,
+                    //    labelData.content,
+                    //    labelData.alignment,
+                    //    labelData.typesetAsMath,
+                    //    {"font-size": (100 * this.props.scale) + "%"}
+                    //);
 
-                $(elem).data("jipt-label-index", jiptLabels.length);
-                jiptLabels.push({
-                    label: elem,
-                    useMath: labelData.typesetAsMath,
-                });
-            } else if (labelData.coordinates) {
-                // Create labels from the data
-                // TODO(charlie): Some erroneous labels are being sent down
-                // without coordinates. They don't seem to have any content, so
-                // it seems fine to just ignore them (rather than error), but
-                // we should figure out why this is happening.
-                var label = graphie.label(
-                    labelData.coordinates,
-                    labelData.content,
-                    labelData.alignment,
-                    labelData.typesetAsMath,
-                    {"font-size": (100 * this.props.scale) + "%"}
-                );
+                    const content = labelData.typesetAsMath ? <TeX>{labelData.content}</TeX> : labelData.content;
+                    const scale = [
+                        box[0] / (range[0][1] - range[0][0]),
+                        box[1] / (range[1][1] - range[1][0]),
+                    ];
 
-                // Convert absolute positioning css from pixels to percentages
-                // TODO(alex): Dynamically resize font-size as well. This
-                // almost certainly means listening to throttled window.resize
-                // events.
-                var position = label.position();
-                var height = this.props.height * this.props.scale;
-                var width = this.props.width * this.props.scale;
-                label.css({
-                    top: position.top / height * 100 + '%',
-                    left: position.left / width * 100 + '%',
-                });
+                    const left = (labelData.coordinates[0] - range[0][0]) / (range[0][1] - range[0][0]);
+                    const top = 1 - (labelData.coordinates[1] - range[1][0]) / (range[1][1] - range[1][0]);
 
-                // Add back the styles to each of the labels
-                _.each(labelData.style, (styleValue, styleName) => {
-                    label.css(styleName, styleValue);
-                });
-            }
-        });
+                    const transform = labelDirections[labelData.alignment];
+
+                    return <span
+                        style={Object.assign({}, labelData.style || {}, {
+                            position: 'absolute',
+                            left: left * 100 + '%',
+                            top: top * 100 + '%',
+                            transform: transform,
+                            padding: 7,
+                        })}
+                        data-alignment={labelData.alignment}
+                        data-x={labelData.coordinates[0]}
+                        data-y={labelData.coordinates[1]}
+                    >
+                        {content}
+                    </span>;
+                }
+            })}
+        </div>;
     },
 
     _handleZoomClick: function(e) {
@@ -615,6 +640,7 @@ var SvgImage = React.createClass({
             //        setup={this.setupGraphie}
             //    />
             //);
+            graphie = this._renderLabelsLayer(box, this.state.range, this.state.labels);
         }
 
         if (responsive) {

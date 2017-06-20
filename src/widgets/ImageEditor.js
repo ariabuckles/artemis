@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     minHeight: 100,
     padding: '6px 6px 1px',
-    color: 'inherit',
     textAlign: 'center',
+    color: 'black',
   },
 
   editor: {
