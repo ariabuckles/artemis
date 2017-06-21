@@ -1,5 +1,5 @@
  - investigate whether we need es6-shim ( https://draftjs.org/docs/overview.html#content )
  - make our perseus markdown parser parse all entities but set outputState.error for bad ones,
    instead of crashing
- - fix on-paste detection of WIDGET_CHAR characters now that those vary per browser
+ - fix copy-paste of widget into safari from chrome
 

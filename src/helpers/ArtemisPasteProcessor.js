@@ -10,6 +10,10 @@ import getSafeBodyFromHTML from 'draft-js/lib/getSafeBodyFromHTML';
 import * as WidgetEntityHelper from './WidgetEntityHelper';
 import * as InternalConstants from '../InternalConstants';
 
+// Unicode for 'not a character'. Also cannot be part of a
+// surrogate pair yay
+const TEMP_WIDGET_CHAR = '\uffff'; // unicode 'not a character'
+const TEMP_WIDGET_CHARS_R = new RegExp(TEMP_WIDGET_CHAR, 'g');
 
 export const processHtml = (html, contentState) => {
   // We use some private parameters of convertFromHTMLToContentBlocks here,
@@ -17,22 +21,8 @@ export const processHtml = (html, contentState) => {
   // draft-js/src/model/encoding/convertFromHTMLToContentBlocks.js
   // or draft-js/lib/model/encoding/convertFromHTMLToContentBlocks.js
 
-  // create a memoized version of getSafeBodyFromHTML so that we can only
-  // do this conversion once, and use it both for converting to draft and
-  // for pulling widget entities out of
-  // We promise this doesn't execute scripts because getSafeBodyFromHTML
-  // doesn't execute scripts.
-  let getPastedBodyCache = null;
-  const getPastedBody = (html) => {
-    if (getPastedBodyCache) {
-      return getPastedBodyCache;
-    } else {
-      return getSafeBodyFromHTML(html);
-    }
-  };
-
   // we're gonna mutate this, oh yay!
-  const body = getPastedBody(html);
+  const body = getSafeBodyFromHTML(html);
   const widgetNodes = body.querySelectorAll('[data-artemis-widget-info]');
 
   let entitiesContentState = contentState;
@@ -52,44 +42,55 @@ export const processHtml = (html, contentState) => {
     // change the widget ID to match our new widget ID so that this
     // is parsed properly by draft's convertFromHTMLToContentBlocks
     widgetNode.setAttribute('data-artemis-id', insertedData.entityKey);
+    // replace text with a unique char here so that we can detect it below
+    // without using WIDGET_CHAR, which varies depending on browser, and
+    // also may be a character in the pasted text
+    widgetNode.textContent = TEMP_WIDGET_CHAR;
     widgetKeys.push(insertedData.entityKey);
 
-    // TODO(aria): replace text with a unique char here so that we
-    // can detect it below without using WIDGET_CHAR, which is variable
   }
   const entityMap = entitiesContentState.getEntityMap();
 
-  const draftData = convertFromHTMLToContentBlocks(html, getPastedBody);
+  // replace getSafeBodyFromHTML with our mutated dom tree so that we:
+  // (a) do this conversion once, and use it both for converting to draft
+  // and for pulling widget entities out of
+  // and (b) we maintain our mutations from above
+  // We promise this doesn't execute scripts because getSafeBodyFromHTML
+  // doesn't execute scripts.
+  const draftData = convertFromHTMLToContentBlocks(html, () => body);
 
   // Add entity annotations to our content blocks
   let widgetIndex = 0;
   const contentBlocks = draftData.contentBlocks.map((block) => {
     const chars = block.getText();
 
+    // replace both the char metadatas and the text characters
+    let newChars = null;
     const newCharDatas = block.getCharacterList().withMutations((charDatas) => {
-      let lastIndex = -1;
-      while (true) {
-        lastIndex = chars.indexOf(InternalConstants.WIDGET_CHAR, lastIndex + 1);
-        if (lastIndex < 0) {
-          break;
-        }
+
+      newChars = chars.replace(TEMP_WIDGET_CHARS_R, (match, index) => {
 
         const widgetKey = widgetKeys[widgetIndex++];
         if (widgetKey == null) {
           return;
         }
 
-        const charMetadata = charDatas.get(lastIndex);
+        const charMetadata = charDatas.get(index);
         const newCharMetadata = Draft.CharacterMetadata.applyEntity(
           charMetadata,
           widgetKey
         );
 
-        charDatas.set(lastIndex, newCharMetadata);
-      }
+        charDatas.set(index, newCharMetadata);
+
+        return InternalConstants.WIDGET_CHAR;
+      });
     });
 
-    return block.set('characterList', newCharDatas);
+    const newBlock = block.
+      set('text', newChars).
+      set('characterList', newCharDatas);
+    return newBlock;
   });
 
   const fragmentContentState = Draft.ContentState.createFromBlockArray(

@@ -13,8 +13,7 @@ let WIDGET_CHAR_COLOR = 'black';
 
 if (typeof document !== undefined) {
   var span = document.createElement('span');
-  var zwcomma = document.createTextNode(ZERO_WIDTH_COMMA);
-  span.appendChild(zwcomma);
+  span.textContent = ZERO_WIDTH_COMMA;
   span.style.letterSpacing = '100px';
   document.body.appendChild(span);
 
