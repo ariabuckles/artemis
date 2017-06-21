@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import * as InternalConstants from './InternalConstants';
+
 // TODO(aria): are there more things i need to do to this component
 // to make it support other widget types?
 export default class InlineWidgetPlaceholder extends Component {
@@ -11,6 +13,8 @@ export default class InlineWidgetPlaceholder extends Component {
       this._calculateSpecifiedDimensions(props),
       { widthModifier: 0 }
     );
+
+    this._measureCount = 0;
   }
 
   _calculateSpecifiedDimensions = props => {
@@ -48,6 +52,7 @@ export default class InlineWidgetPlaceholder extends Component {
 
     const style = {
       letterSpacing: specifiedWidth + widthModifier + 2, // 2 from padding (hax)
+      color: InternalConstants.WIDGET_CHAR_COLOR,
 
       // TODO(aria): uhhhh what to put here. mostly affects highlighting
       fontSize: specifiedHeight - 5,
@@ -78,12 +83,19 @@ export default class InlineWidgetPlaceholder extends Component {
   }
 
   _measure = () => {
-    // TODO(aria) remove this.
-    // This should no longer be necessary now that we're using the
-    // invisible separator character instead of a space or '.'
-    // Remove this once we have this stored in git history or
-    // when we're confident the invisible separator character hack
-    // is working
+    // To avoid infinite loops, only try to adjust our size 10 times.
+    // if we're failing post that... basically it's just an error, but go
+    // on anyways
+    this._measureCount++;
+    if (this._measureCount >= 10) {
+      console.warn('could not size placeholder for entity ' + this.props.entityKey);
+      this._measureCount = 0;
+      return;
+    }
+
+    // This should not be necessary for zero-width-commas, but is necessary
+    // on non-chrome platforms that don't support sized zero-width-commas,
+    // such as safari
     const node = ReactDOM.findDOMNode(this);
     const rect = node.getBoundingClientRect();
 
@@ -91,6 +103,8 @@ export default class InlineWidgetPlaceholder extends Component {
     const errorMargin = desiredWidth + this.state.widthModifier - rect.width;
     if (errorMargin !== this.state.widthModifier) {
       this.setState({ widthModifier: errorMargin });
+    } else {
+      this._measureCount = 0;
     }
   };
 }

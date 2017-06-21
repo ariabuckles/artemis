@@ -53,6 +53,9 @@ export const processHtml = (html, contentState) => {
     // is parsed properly by draft's convertFromHTMLToContentBlocks
     widgetNode.setAttribute('data-artemis-id', insertedData.entityKey);
     widgetKeys.push(insertedData.entityKey);
+
+    // TODO(aria): replace text with a unique char here so that we
+    // can detect it below without using WIDGET_CHAR, which is variable
   }
   const entityMap = entitiesContentState.getEntityMap();
 
