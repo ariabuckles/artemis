@@ -5,6 +5,7 @@ import * as Draft from 'draft-js';
 import { View, StyleSheet } from './base-components';
 import ArtemisDecorator from './ArtemisDecorator';
 import * as ArtemisState from './ArtemisState';
+import * as BlockHandlers from './draft/BlockHandlers';
 import * as ArtemisPasteProcessor from './helpers/ArtemisPasteProcessor';
 import * as PerseusAdapter from './PerseusAdapter';
 import * as InternalConstants from './InternalConstants';
@@ -84,6 +85,8 @@ export default class ArtemisEditor extends Component {
             spellCheck={true}
             editorState={this.props.editorState}
             onChange={this._handleDraftChange}
+            blockRenderMap={BlockHandlers.blockRenderMap}
+            blockStyleFn={BlockHandlers.blockStyleFn}
             placeholder={this.props.placeholder}
             handlePastedText={this._handlePastedText}
             ref={editor => { this._editor = editor; }}
