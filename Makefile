@@ -1,3 +1,5 @@
+.PHONY: server pretty test build
+
 server:
 	./node_modules/.bin/react-scripts start
 

@@ -12,11 +12,11 @@ const { StyleSheet, css } = require("aphrodite");
 var React = require("react");
 var _ = require("underscore");
 
-var apiOptions   = require("../api-options-stub.jsx");
+var apiOptions   = require("../api-options-stub");
 const { baseUnitPx } = require("../styles/constants.js");
-var Changeable    = require("../mixins/changeable.jsx");
+var Changeable    = require("../mixins/changeable");
 const mediaQueries = require("../styles/media-queries.js");
-var SvgImage     = require("../components/svg-image.jsx");
+var SvgImage     = require("../components/svg-image");
 
 var defaultBoxSize = 400;
 var defaultRange = [0, 10];

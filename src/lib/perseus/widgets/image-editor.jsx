@@ -8,13 +8,13 @@ const _ = require("underscore");
 const {iconTrash} = require("../icon-paths.js");
 const Util        = require("../util.js");
 
-const Changeable    = require("../mixins/changeable.jsx");
-const EditorJsonify = require("../mixins/editor-jsonify.jsx");
+const Changeable    = require("../mixins/changeable");
+const EditorJsonify = require("../mixins/editor-jsonify");
 
 const BlurInput    = require("react-components/blur-input.js");
-const Editor       = require("../editor-stub.jsx");
-const InfoTip      = require("../components/info-tip.jsx");
-const InlineIcon   = require("../components/inline-icon.jsx");
+const Editor       = require("../editor-stub");
+const InfoTip      = require("../components/info-tip");
+const InlineIcon   = require("../components/inline-icon");
 
 const defaultBoxSize = 400;
 const defaultRange = [0, 10];
