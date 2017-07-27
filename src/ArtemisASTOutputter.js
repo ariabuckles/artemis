@@ -38,7 +38,10 @@ const isOnlyNodeInBlock = (node, siblings) => {
 };
 
 
-const encodeMarkdownEntity = (entityStr: string) => {
+const encodeMarkdownEntity = (entityStr: ?string) => {
+  if (string == null) {
+    return '';
+  }
   // We need to escape all non-alphanumericish characters because they may be
   // simple-markdown special characters :o
   // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter
