@@ -39,7 +39,7 @@ const isOnlyNodeInBlock = (node, siblings) => {
 
 
 const encodeMarkdownEntity = (entityStr: ?string) => {
-  if (string == null) {
+  if (entityStr == null) {
     return '';
   }
   // We need to escape all non-alphanumericish characters because they may be
