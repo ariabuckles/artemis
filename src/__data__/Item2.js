@@ -70,7 +70,7 @@ export const artemis = {
 };
 
 
-export const perseus ={
+export const perseus = {
   "question": {
     "content": "Yhat is the distance between points $(11, 9)$ and  $(3, 3)$ on the coordinate plane\\? y\n\n[[☃ numeric-input 1]]\n\n",
     "images": {},
