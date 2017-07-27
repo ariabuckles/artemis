@@ -49,7 +49,7 @@ export const draft = {
   },
   "blocks": [
     {
-      "text": "if ⁣",
+      "text": "if ,", // TODO(aria): make the widget symbol here obvious
       "type": "unstyled",
       "depth": 0,
       "inlineStyleRanges": [],

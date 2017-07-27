@@ -12,6 +12,31 @@ export const preprocess = (source) => {
   return mdSource;
 };
 
+const addToResult = (result, prevResult, nodeResult) => {
+  if (Array.isArray(nodeResult)) {
+    for (const nodeResultItem of nodeResult) {
+      prevResult = addToResult(result, prevResult, nodeResultItem);
+    }
+    return prevResult;
+  } else if (nodeResult == null || nodeResult.type == null) {
+    // do not push onto the result
+    // set the type to null for prevNodeResult checks
+    return { type: null };
+
+  } else if (nodeResult.type === 'text' && prevResult.type === 'text' &&
+      nodeResult.style === prevResult.style){
+    // Hacks to combine text nodes.
+    // Mostly for simplicity of testing, this isn't strictly required
+    // TODO(aria): apologize more
+    prevResult.content += nodeResult.content;
+    return prevResult;
+
+  } else {
+    result.push(nodeResult);
+    return nodeResult;
+  }
+};
+
 const artemisDataFor = (outputFunc) => {
   const nestedOutput = (ast, state) => {
     state = state || {};
@@ -23,27 +48,7 @@ const artemisDataFor = (outputFunc) => {
       let prevNodeResult = {};
       ast.forEach((node) => {
         let nodeResult = nestedOutput(node, state);
-
-        if (Array.isArray(nodeResult)) {
-          Array.prototype.push.apply(result, nodeResult);
-
-        } else if (nodeResult == null || nodeResult.type == null) {
-          // do not push onto the results
-          // set the type to null for prevNodeResult checks
-          nodeResult = { type: null };
-
-        } else if (nodeResult.type === 'text' && prevNodeResult.type === 'text' &&
-            nodeResult.style === prevNodeResult.style){
-          // Hacks to combine text nodes.
-          // Mostly for simplicity of testing, this isn't strictly required
-          // TODO(aria): apologize more
-          prevNodeResult.content += nodeResult.content;
-
-        } else {
-          result.push(nodeResult);
-        }
-
-        prevNodeResult = nodeResult;
+        prevNodeResult = addToResult(result, prevNodeResult, nodeResult);
       });
 
       return result;
