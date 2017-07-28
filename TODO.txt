@@ -2,4 +2,6 @@
  - make our perseus markdown parser parse all entities but set outputState.error for bad ones,
    instead of crashing
  - fix copy-paste of widget into safari from chrome
+ - it may be possible to use an inline-block image now instead of a spacey comma if we
+   wanna try that
 
