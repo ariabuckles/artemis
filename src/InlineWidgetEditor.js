@@ -5,6 +5,8 @@ import InlineWidgetNotFoundEditor from './widgets/InlineWidgetNotFoundEditor';
 
 export default class InlineWidgetEditor extends Component {
 
+  _measureTimeout = null;
+
   _measure = () => {
     const node = ReactDOM.findDOMNode(this);
 
@@ -22,6 +24,8 @@ export default class InlineWidgetEditor extends Component {
     if (rect.width !== lastWidth || rect.height !== lastHeight) {
       this.props.onMeasure(rect);
     }
+
+    this._measureTimeout = null;
   };
 
   componentDidMount() {
@@ -36,12 +40,19 @@ export default class InlineWidgetEditor extends Component {
     }
 
     // We delay this to wait for aphrodite styles to resolve ;_;
-    setTimeout(this._measure, 0);
+    if (!this._measureTimeout) {
+      this._measureTimeout = setTimeout(this._measure, 0);
+    }
   }
 
   componentDidUpdate = () => {
     // We delay this to wait for aphrodite styles to resolve ;_;
-    setTimeout(this._measure, 0);
+    // TODO(aria): maybe we should synchronously measure here too in case
+    // aphrodite styles have resolved?
+    // maybe we can listen to aphrodite styles resolving?
+    if (!this._measureTimeout) {
+      this._measureTimeout = setTimeout(this._measure, 0);
+    }
   }
 
   _observer = new MutationObserver(this.componentDidUpdate)
@@ -74,5 +85,6 @@ export default class InlineWidgetEditor extends Component {
 
   componentWillUnmount() {
     this._observer.disconnect();
+    clearTimeout(this._measureTimeout);
   }
 }
