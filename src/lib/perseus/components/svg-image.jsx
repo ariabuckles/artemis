@@ -443,7 +443,7 @@ var SvgImage = React.createClass({
 
     _renderLabelsLayer: function(box, range, labels) {
         return <div style={styles.labelsLayer}>
-            {labels.map((labelData) => {
+            {labels.map((labelData, labelIndex) => {
                 if (labelData.coordinates) {
                     // Create labels from the data
                     // TODO(charlie): Some erroneous labels are being sent down
@@ -471,6 +471,7 @@ var SvgImage = React.createClass({
                     const transform = labelDirections[labelData.alignment];
 
                     return <span
+                        key={labelIndex}
                         style={Object.assign({}, labelData.style || {}, {
                             position: 'absolute',
                             left: left * 100 + '%',
