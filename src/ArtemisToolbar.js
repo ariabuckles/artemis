@@ -174,7 +174,7 @@ export default class ArtemisToolbar extends Component {
         <View style={styles.buttonCaption}>
           Number
         </View>
-      </View>,
+      </View>/*,
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
         onClick={() => this.insertWidget('multiple-choice')}
@@ -234,7 +234,7 @@ export default class ArtemisToolbar extends Component {
         <View style={styles.buttonCaption}>
           Graph
         </View>
-      </View>
+      </View>*/
     ];
   }
   render() {
@@ -278,7 +278,7 @@ export default class ArtemisToolbar extends Component {
             </View>
         </View>
 
-        <View
+        {/*<View
           style={styles.button}
           onClick={() => console.log('bold')}
         >
@@ -286,9 +286,9 @@ export default class ArtemisToolbar extends Component {
           <View style={styles.buttonCaption}>
             Bold
           </View>
-        </View>
+        </View>*/}
 
-        <View
+        {/*<View
           style={styles.button}
           onClick={() => console.log('italics')}
         >
@@ -296,7 +296,7 @@ export default class ArtemisToolbar extends Component {
           <View style={styles.buttonCaption}>
             Italics
           </View>
-        </View>
+        </View>*/}
 
         <View
           style={styles.button}
@@ -309,7 +309,7 @@ export default class ArtemisToolbar extends Component {
         </View>
 
 
-        <View
+        {/*<View
           style={styles.button}
           onClick={() => console.log('table')}
         >
@@ -317,7 +317,7 @@ export default class ArtemisToolbar extends Component {
           <View style={styles.buttonCaption}>
             Table
           </View>
-        </View>
+        </View>*/}
 
         <View
           style={styles.button}
