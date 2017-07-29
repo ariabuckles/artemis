@@ -246,6 +246,7 @@ export default class ArtemisToolbar extends Component {
         style={[
           styles.toolbar,
           this.props.debug && styles.debugContainer,
+          this.props.style,
         ]}
       >
 

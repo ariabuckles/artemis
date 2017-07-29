@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { css } from 'aphrodite';
+import * as StyleUtils from './StyleUtils';
 
 export default class View extends Component {
   render() {
@@ -16,8 +17,12 @@ export default class View extends Component {
       fullClassName += css(style);
     }
 
+    const styleInfo = StyleUtils.stylesToAphrodite(
+      this.props.className,
+      this.props.style
+    );
     return (
-      <div className={fullClassName} {...props}>
+      <div {...this.props} {...styleInfo}>
         {this.props.children}
       </div>
     );
