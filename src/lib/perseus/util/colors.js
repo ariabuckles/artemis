@@ -28,7 +28,7 @@ const KhanColors = {
     GRAY30: "#B3B3B3",
     GRAY40: "#9A9A9A",
     GRAY50: "#808080",
-    GRAY60: "#666666",
+    GRAY60: "#676767",
     GRAY70: "#4D4D4D",
     GRAY80: "#333333",
     GRAY90: "#1A1A1A",
