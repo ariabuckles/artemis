@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import asap from 'asap';
 
 import InlineWidgetNotFoundEditor from './widgets/InlineWidgetNotFoundEditor';
 
@@ -8,6 +9,10 @@ export default class InlineWidgetEditor extends Component {
   _measureTimeout = null;
 
   _measure = () => {
+    if (this._measureTimeout == null) {
+      return;
+    }
+
     const node = ReactDOM.findDOMNode(this);
 
     if (node == null) {
@@ -41,7 +46,8 @@ export default class InlineWidgetEditor extends Component {
 
     // We delay this to wait for aphrodite styles to resolve ;_;
     if (!this._measureTimeout) {
-      this._measureTimeout = setTimeout(this._measure, 0);
+      this._measureTimeout = true;
+      asap(this._measure);
     }
   }
 
@@ -51,7 +57,8 @@ export default class InlineWidgetEditor extends Component {
     // aphrodite styles have resolved?
     // maybe we can listen to aphrodite styles resolving?
     if (!this._measureTimeout) {
-      this._measureTimeout = setTimeout(this._measure, 0);
+      this._measureTimeout = true;
+      asap(this._measure);
     }
   }
 
@@ -84,7 +91,7 @@ export default class InlineWidgetEditor extends Component {
   }
 
   componentWillUnmount() {
+    this._measureTimeout = null;
     this._observer.disconnect();
-    clearTimeout(this._measureTimeout);
   }
 }

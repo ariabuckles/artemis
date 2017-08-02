@@ -5,6 +5,7 @@
   "main": "./lib/Artemis.js",
   "dependencies": {
     "aphrodite": "^1.2.0",
+    "asap": "^2.0.3",
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
