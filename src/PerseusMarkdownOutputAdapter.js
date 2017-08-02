@@ -263,6 +263,30 @@ const rules = {
   // * lists
   // * tables
   // * blockQuotes
+  list: {
+    artemis: (node, output, state) => {
+      state.error = {
+        message: "Lists are not supported yet"
+      };
+      return null;
+    },
+  },
+  table: {
+    artemis: (node, output, state) => {
+      state.error = {
+        message: "Tables are not supported yet"
+      };
+      return null;
+    },
+  },
+  blockQuote: {
+    artemis: (node, output, state) => {
+      state.error = {
+        message: "Blockquotes are not supported yet"
+      };
+      return null;
+    },
+  },
 
   widget: {
     artemis: (node, output, state) => {
