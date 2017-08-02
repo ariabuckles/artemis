@@ -23,7 +23,7 @@
     "react-addons-create-fragment": "^15.5.3",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-pure-render-mixin": "^15.5.2",
-    "react-components": "^0.4.0",
+    "react-components": "^0.5.1",
     "react-dom": "^15.5.3",
     "simple-markdown": "^0.2.1"
   },
