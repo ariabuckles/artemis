@@ -156,8 +156,8 @@ export default class ArtemisToolbar extends Component {
   state = {
     showWidgetsRibbon: false,
   }
-  insertWidget = (widget) => {
-    this.props.onAction(ArtemisActions.insertWidget(widget))
+  insertWidget = (widget, display) => {
+    this.props.onAction(ArtemisActions.insertWidget(widget, display))
     this.setState({showWidgetsRibbon: false})
   }
   toggleWidgetsRibbon = () => {
@@ -167,24 +167,24 @@ export default class ArtemisToolbar extends Component {
     return [
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
-        onClick={() => this.insertWidget('numeric-input')}
+        onClick={() => this.insertWidget('numeric-input', 'inline')}
         key='numeric-input'
       >
         <View style={styles.numberIcon} />
         <View style={styles.buttonCaption}>
           Number
         </View>
-      </View>/*,
+      </View>,
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
-        onClick={() => this.insertWidget('multiple-choice')}
+        onClick={() => this.insertWidget('radio', 'block')}
         key='multiple-choice'
       >
         <View style={styles.multipleChoiceIcon} />
         <View style={styles.buttonCaption}>
           Multiple choice
         </View>
-      </View>,
+      </View>,/*
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
         onClick={() => this.insertWidget('expression')}
@@ -300,7 +300,7 @@ export default class ArtemisToolbar extends Component {
 
         <View
           style={styles.button}
-          onClick={() => this.props.onAction(ArtemisActions.insertWidget('image'))}
+          onClick={() => this.props.onAction(ArtemisActions.insertWidget('image', 'block'))}
         >
           <View style={styles.imageIcon} />
           <View style={styles.buttonCaption}>

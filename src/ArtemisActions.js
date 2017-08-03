@@ -10,11 +10,12 @@ export const newInlineMath = () => {
   };
 };
 
-export const insertWidget = (type) => {
+export const insertWidget = (type, display) => {
   return {
     type: 'INSERT_WIDGET',
     payload: {
       type: type,
+      display: display || 'inline',
       options: { },
     },
   };

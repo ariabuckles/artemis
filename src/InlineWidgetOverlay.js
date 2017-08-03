@@ -131,17 +131,19 @@ export default class InlineWidgetOverlay extends Component {
 
     let blockOverlays = [];
     for (const [key, block] of contentState.getBlockMap().entries()) {
-      blockOverlays.push(
-        <BlockOverlay
-          key={key}
-          widgetEditors={widgetEditors}
-          editorWidth={editorWidth}
-          contentState={contentState}
-          block={block}
-          keypad={keypad}
-          onChange={onChangeElement}
-        />
-      );
+      if (block.getType() !== 'atomic') {
+        blockOverlays.push(
+          <BlockOverlay
+            key={key}
+            widgetEditors={widgetEditors}
+            editorWidth={editorWidth}
+            contentState={contentState}
+            block={block}
+            keypad={keypad}
+            onChange={onChangeElement}
+          />
+        );
+      }
     }
 
     return (

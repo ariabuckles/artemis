@@ -13,9 +13,13 @@ export const blockRenderMap = Immutable.Map({
     element: 'div',
     aliasedElements: ['p'],
   },
+  atomic: {
+    element: 'figure',
+  },
 });
 
 export const blockStyleFn = (contentBlock) => {
   const type = contentBlock.getType();
   return Aphrodite.css(styles.block);
 };
+

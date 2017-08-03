@@ -11,7 +11,7 @@ export const empty = () => {
 };
 
 
-export const insertWidget = (editorState, widgetInfo) => {
+const _insertInlineWidget = (editorState, widgetInfo) => {
   const contentState = editorState.getCurrentContent();
 
   const {
@@ -53,14 +53,42 @@ export const insertWidget = (editorState, widgetInfo) => {
   return stateWithSelection;
 };
 
+const _insertBlockWidget = (editorState, widgetInfo) => {
+  const contentState = editorState.getCurrentContent();
+
+  const {
+    contentState: contentStateWithEntity,
+    entityKey,
+  } = WidgetEntityHelper.createWidgetEntity(contentState, widgetInfo);
+
+  const stateWithContent = Draft.EditorState.set(editorState, {
+    currentContent: contentStateWithEntity,
+  });
+
+  const stateWithWidgetBlock = Draft.AtomicBlockUtils.insertAtomicBlock(
+    stateWithContent,
+    entityKey,
+    InternalConstants.WIDGET_CHAR
+  );
+
+  return stateWithWidgetBlock;
+};
+
+export const insertWidget = (editorState, widgetInfo, display) => {
+  if (display === 'block') {
+    return _insertBlockWidget(editorState, widgetInfo);
+  } else {
+    return _insertInlineWidget(editorState, widgetInfo);
+  }
+};
 
 export const applyAction = (artemisState, action) => {
   const editorState = artemisState;
   const type = action.type;
 
   if (type === 'INSERT_WIDGET') {
-    const widgetInfo = action.payload;
-    return insertWidget(editorState, widgetInfo);
+    const {display, ...widgetInfo} = action.payload;
+    return insertWidget(editorState, widgetInfo, display);
 
   } else {
     return 'could not find action: ' + JSON.stringify(action);
