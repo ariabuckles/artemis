@@ -43,7 +43,7 @@ class BlockOverlay extends Component {
   };
 
   render() {
-    const { widgetEditors, block, contentState } = this.props;
+    const { editorWidth, widgetEditors, block, contentState } = this.props;
 
     let entities = [];
     block.findEntityRanges(character => {
@@ -85,6 +85,7 @@ class BlockOverlay extends Component {
                     //backgroundColor: 'rgba(255, 0, 0, 0.4)',
                     padding: 1,
                     pointerEvents: 'none',
+                    maxWidth: editorWidth,
                   }}
                 >
                   <InlineWidgetEditor
@@ -94,6 +95,7 @@ class BlockOverlay extends Component {
                     lastWidth={entityData.width}
                     lastHeight={entityData.height}
                     keypad={this.props.keypad}
+                    maxWidth={editorWidth}
                     onChange={newOptions => {
                       const options = Object.assign(
                         {},
@@ -125,7 +127,7 @@ class BlockOverlay extends Component {
 
 export default class InlineWidgetOverlay extends Component {
   render() {
-    const { widgetEditors, contentState, keypad, onChangeElement } = this.props;
+    const { editorWidth, widgetEditors, contentState, keypad, onChangeElement } = this.props;
 
     let blockOverlays = [];
     for (const [key, block] of contentState.getBlockMap().entries()) {
@@ -133,6 +135,7 @@ export default class InlineWidgetOverlay extends Component {
         <BlockOverlay
           key={key}
           widgetEditors={widgetEditors}
+          editorWidth={editorWidth}
           contentState={contentState}
           block={block}
           keypad={keypad}

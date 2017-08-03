@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import * as Draft from 'draft-js';
+import asap from 'asap';
 
 import { View, StyleSheet } from './base-components';
 import ArtemisDecorator from './ArtemisDecorator';
@@ -35,12 +36,28 @@ const styles = StyleSheet.create({
 
 export default class ArtemisEditor extends Component {
 
+  state = {
+    editorWidth: null,
+  };
+
   componentDidMount() {
     const editorNode = ReactDOM.findDOMNode(this._editor);
+
+    // set up copy/paste
     const editableDiv = editorNode.querySelector('[contenteditable=true]');
     editableDiv.addEventListener('cut', this._handleCut);
     editableDiv.addEventListener('copy', this._handleCopy);
 
+    // figure out our width/height & pass it to our children
+    // delay to wait for aphrodite styles if necessary:
+    asap(() => {
+      const rect = editorNode.getBoundingClientRect();
+      this.setState({
+        editorWidth: rect.width,
+      });
+    });
+
+    // hacks: set up window vars :/
     if (process.env.NODE_ENV !== 'production') {
       window.artemisEditor = this;
       window.serialize = () => {
@@ -92,12 +109,13 @@ export default class ArtemisEditor extends Component {
             ref={editor => { this._editor = editor; }}
           />
         </View>
-        <InlineWidgetOverlay
+        {this.state.editorWidth && <InlineWidgetOverlay
+          editorWidth={this.state.editorWidth}
           widgetEditors={this.props.widgetEditors}
           contentState={this.props.editorState.getCurrentContent()}
           keypad={this.props.keypad}
           onChangeElement={this._handleChangeElement}
-        />
+        />}
       </View>
     );
   }

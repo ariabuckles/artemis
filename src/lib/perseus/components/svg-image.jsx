@@ -524,6 +524,7 @@ var SvgImage = React.createClass({
         var dimensions = {
             width: width,
             height: height,
+            maxWidth: this.props.maxWidth,
         };
 
         // To make an image responsive, we need to know what its width and

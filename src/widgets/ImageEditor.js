@@ -38,6 +38,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const EDITOR_PAD_WIDTH = 16;
+
 export default class ImageEditor extends Component {
 
   render() {
@@ -45,7 +47,11 @@ export default class ImageEditor extends Component {
       <View className="framework-perseus" style={styles.image}>
         {/* responsive false because we have no size info in artemis
             overlays */}
-        <PerseusImage {...this.props} responsive={false} />
+        <PerseusImage
+          {...this.props}
+          responsive={false}
+          _clampWidth={this.props._maxWidth - EDITOR_PAD_WIDTH}
+          />
       </View>
       <View className="framework-perseus" style={styles.editor}>
         <PerseusImageEditor
