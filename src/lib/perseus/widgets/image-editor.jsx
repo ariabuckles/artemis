@@ -71,6 +71,11 @@ const ImageEditor = React.createClass({
             var url = this.props.backgroundImage.url;
             this.onUrlChange(url, true);
         });
+        this._isMounted = true;
+    },
+
+    componentWillUnmount: function() {
+        this._isMounted = false;
     },
 
     getDefaultProps: function() {
@@ -230,7 +235,7 @@ const ImageEditor = React.createClass({
         //
         // Errors if you switch items before the `Image` from `onUrlChange`
         // loads.
-        if (!this.isMounted()) {
+        if (!this._isMounted) {
             return;
         }
 
