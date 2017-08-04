@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
 
   hoverContainer: {
     position: 'fixed',
+    zIndex: 1,
     right: 0,
     bottom: 0,
   },
