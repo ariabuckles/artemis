@@ -300,7 +300,7 @@ export default class ArtemisToolbar extends Component {
 
         <View
           style={styles.button}
-          onClick={() => this.props.onAction(ArtemisActions.insertWidget('image', 'block'))}
+          onClick={() => this.props.onAction(ArtemisActions.insertWidget('image', 'inline'))}
         >
           <View style={styles.imageIcon} />
           <View style={styles.buttonCaption}>
