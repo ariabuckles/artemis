@@ -1,31 +1,57 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import DraftEditorEditHandler from 'draft-js/lib/DraftEditorEditHandler';
 import asap from 'asap';
 
 import InlineWidgetNotFoundEditor from './widgets/InlineWidgetNotFoundEditor';
 
+const stopPropagation = (e) => e.stopPropagation();
+
+const stopDraftEvents = {};
+for (let draftEventKey of Object.keys(DraftEditorEditHandler)) {
+  stopDraftEvents[draftEventKey] = stopPropagation;
+}
+
 export default class BlockWidgetEditor extends Component {
-  shouldComponentUpdate(nextProps) {
+
+  _getWidgetStateFromProps(props) {
+    const entityKey = props.block.getEntityAt(0);
+    const entity = props.contentState.getEntity(entityKey);
+    return {
+      entityKey: entityKey,
+      type: entity.getType(),
+      options: entity.getData().options,
+    };
+  }
+
+  state = this._getWidgetStateFromProps(this.props);
+
+  componentWillReceiveProps(nextProps) {
+    // we need to cache these things because they are by default globals,
+    // so we can't test for changes in shouldComponentUpdate unless we
+    // cache them ourselves.
+    // It's nice to only do this work once, too.
+    this.setState(this._getWidgetStateFromProps(nextProps));
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
     return (
-      nextProps.options !== this.props.options ||
+      // TODO(aria): check for entityKey / type things?
+      nextState.options !== this.state.options ||
       // TODO(aria): check for differences in the actual keypad.getElement()
       nextProps.keypad !== this.props.keypad
     );
   }
 
   _widgetOnChange = (newOptions) => {
-    const entityKey = this.props.block.getEntityAt(0);
-    const entity = this.props.contentState.getEntity(entityKey);
-    const entityData = entity.getData();
-
     const options = Object.assign(
       {},
-      entityData.options,
+      this.state.options,
       newOptions
     );
 
     this.props.blockProps.onChangeElement(
-      entityKey,
+      this.state.entityKey,
       { options: options }
     );
   };
@@ -37,12 +63,10 @@ export default class BlockWidgetEditor extends Component {
       keypad
     } = this.props.blockProps;
 
-    const entityKey = this.props.block.getEntityAt(0);
-    const entity = this.props.contentState.getEntity(entityKey);
-    const entityData = entity.getData();
-
-    const type = entity.getType();
-    const options = entityData.options;
+    const {
+      type,
+      options,
+    } = this.state;
 
     const WidgetEditor = widgetEditors[type];
 
@@ -51,9 +75,12 @@ export default class BlockWidgetEditor extends Component {
         type={type}
       />;
     } else {
-      return <div style={{
-        maxWidth: editorWidth,
-      }}>
+      return <div
+        style={{
+          maxWidth: editorWidth,
+        }}
+        {...stopDraftEvents}
+      >
         <WidgetEditor
           {...options}
           _maxWidth={editorWidth}
