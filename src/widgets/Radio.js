@@ -11,6 +11,7 @@ import {
   widget as PerseusRadio,
   transform as PerseusRadioTransform
 } from '../lib/perseus/widgets/radio';
+const apiOptions = require("../lib/perseus/api-options-stub");
 
 const styles = StyleSheet.create({
   radio: {
@@ -31,8 +32,6 @@ const styles = StyleSheet.create({
 
   editor: {
     color: '#444444',
-    width: 360,
-    height: 360,
     backgroundColor: 'white',
     border: `2px solid #4FAED1`,
     borderRadius: 5,
@@ -45,19 +44,54 @@ const EDITOR_PAD_WIDTH = 16;
 
 export default class ImageEditor extends Component {
 
+  constructor(props) {
+    super(props);
+    const perseusEditorProps = {
+      ...PerseusRadioEditor.defaultProps,
+      ...props,
+    };
+    this.state = {
+      perseusEditorProps: perseusEditorProps,
+      widgetProps: PerseusRadioTransform(perseusEditorProps),
+    };
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const perseusEditorProps = {
+      ...PerseusRadioEditor.defaultProps,
+      ...nextProps,
+    };
+    this.setState({
+      perseusEditorProps: perseusEditorProps,
+      widgetProps: PerseusRadioTransform(perseusEditorProps),
+    });
+  }
+
+  _changeWidgetDisplay = (newOptions) => {
+    this.setState({
+      widgetProps: {...this.state.widgetProps, ...newOptions},
+    });
+  };
+
   render() {
+
     return <Popover>
       <View className="framework-perseus" style={styles.radio}>
         {/* responsive false because we have no size info in artemis
             overlays */}
         <PerseusRadio
-          {...PerseusRadioTransform(this.props)}
+          {...this.state.widgetProps}
+          apiOptions={apiOptions}
           _clampWidth={this.props._maxWidth - EDITOR_PAD_WIDTH}
+          onChange={this._changeWidgetDisplay}
+          trackInteraction={() => {}}
           />
       </View>
       <View className="framework-perseus" style={styles.editor}>
         <PerseusRadioEditor
-          {...this.props}
+          {...this.state.perseusEditorProps}
+          apiOptions={apiOptions}
           onChange={this.props.onChange}
         />
       </View>

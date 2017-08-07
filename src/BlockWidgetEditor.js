@@ -50,6 +50,16 @@ export default class BlockWidgetEditor extends Component {
       newOptions
     );
 
+    // HACK(aria): draft doesn't seem to be
+    // sending new props to this element
+    // which is bad
+    // so we have this hac
+    // which could cause problems if we like change the
+    // whole editor contents mayble?
+    this.setState({
+      options: options,
+    });
+
     this.props.blockProps.onChangeElement(
       this.state.entityKey,
       { options: options }

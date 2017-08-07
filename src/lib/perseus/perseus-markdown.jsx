@@ -252,7 +252,7 @@ var rules = _.extend({}, SimpleMarkdown.defaultRules, {
 
             // Note: if the DOM structure changes, edit the Zoomable wrapper
             // in src/renderer.jsx.
-            return <div className="perseus-titled-table" key={state.key}>
+            return <div className="paragraph perseus-titled-table" key={state.key}>
                 {contents}
             </div>;
         },
@@ -287,7 +287,7 @@ var rules = _.extend({}, SimpleMarkdown.defaultRules, {
             // The actual output is handled in the renderer, because
             // it needs to pass in an `onRender` callback prop. This
             // is just a stub for testing.
-            return <TeX key={state.key}>{node.content}</TeX>;
+            return <div className="paragraph"><TeX key={state.key}>{node.content}</TeX></div>;
         },
     },
     math: {
@@ -385,7 +385,7 @@ var rules = _.extend({}, SimpleMarkdown.defaultRules, {
             if (node.lang === "alt") {
                 return <div
                     key={state.key}
-                    className="perseus-markdown-alt perseus-sr-only"
+                    className="paragraph perseus-markdown-alt perseus-sr-only"
                 >
                     {output(node.content, state)}
                 </div>;

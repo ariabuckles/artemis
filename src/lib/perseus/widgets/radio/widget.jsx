@@ -4,7 +4,6 @@ const React = require('react');
 const _ = require("underscore");
 
 const Renderer = require("../../renderer-stub");
-const PassageRef = require("../passage-ref");
 const Util = require("../../util.js");
 
 const BaseRadio = require("./base-radio");
@@ -41,46 +40,10 @@ const Radio = React.createClass({
     _renderRenderer: function(content) {
         content = content || "";
 
-        let nextPassageRefId = 1;
-        const widgets = {};
-
-        const modContent = content.replace(
-            /\{\{passage-ref (\d+) (\d+)(?: "([^"]*)")?\}\}/g,
-            (match, passageNum, refNum, summaryText) => {
-                const widgetId = "passage-ref " + nextPassageRefId;
-                nextPassageRefId++;
-
-                widgets[widgetId] = {
-                    type: "passage-ref",
-                    graded: false,
-                    options: {
-                        passageNumber: parseInt(passageNum),
-                        referenceNumber: parseInt(refNum),
-                        summaryText: summaryText,
-                    },
-                    version: PassageRef.version,
-                };
-
-                return "[[" + Util.snowman + " " + widgetId + "]]";
-            }
-        );
-
-        // alwaysUpdate={true} so that passage-refs findWidgets
-        // get called when the outer passage updates the renderer
-        // TODO(aria): This is really hacky
-        // We pass in a key here so that we avoid a semi-spurious
-        // react warning when the ChoiceNoneAbove renders a
-        // different renderer in the same place. Note this destroys
-        // state, but since all we're doing is outputting
-        // "None of the above", that is okay.
-        // TODO(mdr): Widgets inside this Renderer are not discoverable through
-        //     the parent Renderer's `findWidgets` function.
+        // no passage-refs in artemis
         return <Renderer
             key="choiceContentRenderer"
-            content={modContent}
-            widgets={widgets}
-            findExternalWidgets={this.props.findWidgets}
-            alwaysUpdate={true}
+            content={content}
         />;
     },
 

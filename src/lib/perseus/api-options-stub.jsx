@@ -7,7 +7,7 @@ module.exports = {
   onInputError: function() { },
   onFocusChange: function() { },
   staticRender: false,
-  GroupMetadataEditor: 'no-group-editor', //StubTagEditor, // TODO(aria): hope not to use this
+  GroupMetadataEditor: () => null, //StubTagEditor, // TODO(aria): hope not to use this
   showAlignmentOptions: false,
   readOnly: false,
   groupAnnotator: function() { return null; },
