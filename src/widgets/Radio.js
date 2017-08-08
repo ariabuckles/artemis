@@ -26,13 +26,12 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     minHeight: 100,
     padding: '6px 6px 1px',
-    textAlign: 'center',
     color: 'black',
   },
 
   editor: {
     color: '#444444',
-    width: 360,
+    width: 380,
     backgroundColor: 'white',
     border: `2px solid #4FAED1`,
     borderRadius: 5,
