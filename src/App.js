@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   editor: {
     height: '100%',
     overflow: 'auto',
-    padding: 16,
   },
   title: {
     textAlign: 'center',

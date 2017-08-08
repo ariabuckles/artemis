@@ -22,6 +22,9 @@ if (process.env.NODE_ENV !== 'production') {
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
+    paddingTop: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   debugContainer: {
     border: `1px dashed #ccc`,

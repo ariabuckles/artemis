@@ -4,7 +4,13 @@ import * as Aphrodite from 'aphrodite';
 
 const styles = Aphrodite.StyleSheet.create({
   block: {
-    marginBottom: '1em',
+    paddingBottom: '1em',
+    // make a larger area text-cursor clickable
+    // especially important for deleting block widgets
+    marginLeft: -16,
+    marginRight: -16,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
 });
 
