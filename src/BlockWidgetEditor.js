@@ -16,6 +16,14 @@ export default class BlockWidgetEditor extends Component {
 
   _getWidgetStateFromProps(props) {
     const entityKey = props.block.getEntityAt(0);
+    if (!entityKey) {
+      // TODO(aria): stop using block elements cause draft has a bug
+      return {
+        entityKey: null,
+        type: null,
+        options: {},
+      };
+    }
     const entity = props.contentState.getEntity(entityKey);
     return {
       entityKey: entityKey,
@@ -77,6 +85,10 @@ export default class BlockWidgetEditor extends Component {
       type,
       options,
     } = this.state;
+
+    if (type == null) {
+      return <div />;
+    }
 
     const WidgetEditor = widgetEditors[type];
 
