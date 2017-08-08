@@ -93,12 +93,11 @@ export const processHtml = (html, contentState) => {
     return newBlock;
   });
 
-  const fragmentContentState = Draft.ContentState.createFromBlockArray(
-    contentBlocks,
-    entityMap
+  const fragmentBlockMap = Draft.BlockMapBuilder.createFromArray(
+    contentBlocks
   );
 
-  return fragmentContentState;
+  return fragmentBlockMap;
 };
 
 

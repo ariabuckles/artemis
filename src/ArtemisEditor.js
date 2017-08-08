@@ -166,7 +166,7 @@ export default class ArtemisEditor extends Component {
   _handlePastedText = (text: string, html: string, editorState: any) => {
     const newEditorState = ArtemisState.pasteHtml(editorState, html);
     this.props.onChange(newEditorState);
-    return true;
+    return 'handled';
   };
 
   _handleChangeElement = (key, data, updateSize) => {

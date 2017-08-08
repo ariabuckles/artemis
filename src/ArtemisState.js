@@ -101,10 +101,10 @@ export const applyAction = (artemisState, action) => {
 
 export const pasteHtml = (artemisState, html) => {
   const contentState = artemisState.getCurrentContent();
-  const fragmentContentState = ArtemisPasteProcessor.processHtml(html, contentState);
+  const fragmentBlockMap = ArtemisPasteProcessor.processHtml(html, contentState);
   const newEditorState = InsertionHelper.insertFragment(
     artemisState,
-    fragmentContentState
+    fragmentBlockMap
   );
   return newEditorState;
 };
