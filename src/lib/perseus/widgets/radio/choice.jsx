@@ -489,7 +489,9 @@ const Choice = React.createClass({
         // element inside, therefore we cannot use a label, which makes
         // selection of anything inside automatically select the input
         // element instead
-        const LabelOrDiv = this.props.editMode ? "div" : "label";
+        // NOTE(aria): artemis doesn't have contenteditable editor,
+        // so we can just use the label like in display mode
+        const LabelOrDiv = 'label'; // this.props.editMode ? "div" : "label";
 
         return <LabelOrDiv
             className={className}

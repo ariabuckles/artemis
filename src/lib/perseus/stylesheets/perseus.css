@@ -1,8 +1,78 @@
 /* Perseus CSS
 // commit 89ad481965483e8e2b4b0003b4834b3ee1d44b9c
 // branch placeholder_all_the_image_urls
-// @generated
 */
+
+/* TODO(oliver): this is super hacky.... */
+.mq-root-block {
+  font-size: 30px !important;
+}
+.mq-editable-field {
+  min-height: 48px !important;
+  padding: 6px 6px 1px !important;
+}
+
+/* Add letters before radio buttons */
+.perseus-widget-radio li:before {
+  float: left;
+  margin-top: 0;
+  padding: 9px;
+  background: #2C75A8; /* sharedStyles.colors.blueDarker = #2C75A8 */
+  color: #fff;
+  border-radius: 100%;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 14px;
+  margin-right: 8px;
+}
+.perseus-widget-radio li:nth-child(1):before { content: 'A'; }
+.perseus-widget-radio li:nth-child(2):before { content: 'B'; }
+.perseus-widget-radio li:nth-child(3):before { content: 'C'; }
+.perseus-widget-radio li:nth-child(4):before { content: 'D'; }
+.perseus-widget-radio li:nth-child(5):before { content: 'E'; }
+.perseus-widget-radio li:nth-child(6):before { content: 'F'; }
+.perseus-widget-radio li:nth-child(7):before { content: 'G'; }
+.perseus-widget-radio li:nth-child(8):before { content: 'H'; }
+.perseus-widget-radio li:nth-child(9):before { content: 'I'; }
+.perseus-widget-radio li:nth-child(10):before { content: 'J'; }
+
+
+.perseus-text-input {
+  background-color: white;
+  display: flex;
+  min-height: 36px;
+  min-width: 64px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 0 0 1px rgb(186, 190, 194);
+  border-radius: 3px;
+  color: rgb(33, 36, 44);
+  border-width: 1px;
+  padding: 0px 6px 4px 6px;
+  box-sizing: border-box;
+  min-height: 48px !important;
+  font-size: 30px;
+  width: 160px;
+}
+
+.perseus-text-input:focus {
+  box-shadow: 0 0 0 2px rgb(120, 192, 8);
+  border-width: 0;
+  outline: none;
+}
+
+/* Normal CSS */
+.perseus-widget-interactive-number-line,
+.perseus-widget-plotter {
+  font-size: 14px !important;
+  line-height: 19.6px !important;
+}
+
 .perseus-sr-only {
   border: 0;
   clip: rect(0, 0, 0, 0);
@@ -250,7 +320,7 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-touch-callout: none;
 }
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {*/
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph {
     max-width: none;
@@ -282,49 +352,49 @@
     font-family: inherit;
     font-size: 22px;
     line-height: 1.1;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .default-body-text,
   .framework-perseus:not(.perseus-article).perseus-mobile .default-body-text {
     font-family: inherit;
     font-size: 18px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph {
     font-family: inherit;
     font-size: 18px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph .paragraph {
     font-family: inherit;
     font-size: 18px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph ul:not(.perseus-widget-radio),
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph ul:not(.perseus-widget-radio) {
     font-family: inherit;
     font-size: 18px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph ol,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph ol {
     font-family: inherit;
     font-size: 18px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile blockquote,
   .framework-perseus:not(.perseus-article).perseus-mobile blockquote {
     font-family: inherit;
     font-size: 18px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
     color: #888d93;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile table,
@@ -332,7 +402,7 @@
     font-family: inherit;
     font-size: 18px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-image-caption .paragraph .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-image-caption .paragraph .paragraph {
@@ -380,8 +450,8 @@
     padding: 0 0 0 18px;
     border-left: 4px solid #d8d8d8;
   }
-}
-@media (min-width: 768px) and (max-width: 1199px) {
+/*}*/
+/*@media (min-width: 768px) and (max-width: 1199px) {
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph {
     max-width: 512px;
@@ -413,49 +483,49 @@
     font-family: inherit;
     font-size: 28px;
     line-height: 1.1;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .default-body-text,
   .framework-perseus:not(.perseus-article).perseus-mobile .default-body-text {
     font-family: inherit;
     font-size: 20px;
     line-height: 1.5;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph {
     font-family: inherit;
     font-size: 20px;
     line-height: 1.5;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph .paragraph {
     font-family: inherit;
-    font-size: 20px;
+    font-size: 30px;
     line-height: 1.5;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph ul:not(.perseus-widget-radio),
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph ul:not(.perseus-widget-radio) {
     font-family: inherit;
     font-size: 20px;
     line-height: 1.5;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph ol,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph ol {
     font-family: inherit;
     font-size: 20px;
     line-height: 1.5;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile blockquote,
   .framework-perseus:not(.perseus-article).perseus-mobile blockquote {
     font-family: inherit;
     font-size: 20px;
     line-height: 1.5;
-    color: #626569;
+    color: #292F33;
     color: #888d93;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile table,
@@ -463,7 +533,7 @@
     font-family: inherit;
     font-size: 20px;
     line-height: 1.5;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-image-caption .paragraph .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-image-caption .paragraph .paragraph {
@@ -478,7 +548,7 @@
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .katex,
   .framework-perseus:not(.perseus-article).perseus-mobile .katex {
-    font-size: 23px;
+    font-size: 30px;
     line-height: 1.3;
     color: #21242c;
   }
@@ -511,8 +581,8 @@
     padding: 0 0 0 20px;
     border-left: 4px solid #d8d8d8;
   }
-}
-@media (min-width: 1200px) {
+}*/
+/*@media (min-width: 1200px) {
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph {
     max-width: 688px;
@@ -544,49 +614,49 @@
     font-family: inherit;
     font-size: 30px;
     line-height: 1.1;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .default-body-text,
   .framework-perseus:not(.perseus-article).perseus-mobile .default-body-text {
     font-family: inherit;
     font-size: 22px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph {
     font-family: inherit;
     font-size: 22px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph .paragraph {
     font-family: inherit;
     font-size: 22px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph ul:not(.perseus-widget-radio),
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph ul:not(.perseus-widget-radio) {
     font-family: inherit;
     font-size: 22px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-renderer > .paragraph ol,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-renderer > .paragraph ol {
     font-family: inherit;
     font-size: 22px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile blockquote,
   .framework-perseus:not(.perseus-article).perseus-mobile blockquote {
     font-family: inherit;
     font-size: 22px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
     color: #888d93;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile table,
@@ -594,7 +664,7 @@
     font-family: inherit;
     font-size: 22px;
     line-height: 1.4;
-    color: #626569;
+    color: #292F33;
   }
   .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-image-caption .paragraph .paragraph,
   .framework-perseus:not(.perseus-article).perseus-mobile .perseus-image-caption .paragraph .paragraph {
@@ -642,11 +712,11 @@
     padding: 0 0 0 20px;
     border-left: 5px solid #d8d8d8;
   }
-}
+}*/
 .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-widget-container,
 .framework-perseus:not(.perseus-article).perseus-mobile .perseus-widget-container {
-  font-size: 14px;
-  line-height: 19.6px;
+  font-size: 30px;
+  line-height: 30px;
 }
 .bibliotron-article.framework-perseus.perseus-article.perseus-mobile .perseus-widget-container.widget-float-left,
 .framework-perseus:not(.perseus-article).perseus-mobile .perseus-widget-container.widget-float-left,
@@ -776,9 +846,6 @@ img.zoom-img {
 }
 #perseus {
   position: relative;
-}
-.framework-perseus.perseus-mobile {
-  margin-top: 48px;
 }
 .no-select {
   -moz-user-select: -moz-none;
@@ -1052,7 +1119,7 @@ img.zoom-img {
 .framework-perseus.perseus-mobile table th {
   font-weight: bold;
 }
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {*/
   .framework-perseus.perseus-mobile table {
     width: 100%;
     min-width: 480px;
@@ -1061,7 +1128,7 @@ img.zoom-img {
     border-left: 0;
     border-right: 0;
   }
-}
+/*}*/
 .framework-perseus.perseus-mobile .perseus-titled-table {
   display: inline-block;
 }
@@ -1093,7 +1160,7 @@ body.mobile .categorizer-container td.category input[type="radio"]:checked + spa
   color: #1c758a;
 }
 body.mobile .categorizer-container td.category input[type="radio"] + span:active:before {
-  color: #676767;
+  color: #666;
   content: "\f111";
 }
 .perseus-widget-dropdown {
@@ -1371,7 +1438,7 @@ body.mobile .categorizer-container td.category input[type="radio"] + span:active
   white-space: nowrap;
 }
 .perseus-matrix .matrix-bracket {
-  border-color: #676767;
+  border-color: #666666;
   border-style: solid;
   border-bottom-width: 2px;
   border-top-width: 2px;
@@ -1380,12 +1447,12 @@ body.mobile .categorizer-container td.category input[type="radio"] + span:active
   width: 6px;
 }
 .perseus-matrix .matrix-bracket.bracket-left {
-  border-color: #676767;
+  border-color: #666666;
   border-left-width: 2px;
   left: 3px;
 }
 .perseus-matrix .matrix-bracket.bracket-right {
-  border-color: #676767;
+  border-color: #666666;
   border-right-width: 2px;
   margin-left: -3px;
 }
@@ -1422,7 +1489,7 @@ body.mobile .categorizer-container td.category input[type="radio"] + span:active
 }
 .perseus-matrix.the-matrix input,
 .perseus-matrix.the-matrix .number-input {
-  background: #676767;
+  background: #666;
   color: #29F139;
   font-weight: bold;
 }
@@ -1639,7 +1706,7 @@ body.sat-section .perseus-widget-passage {
   border-radius: 4px;
 }
 .perseus-mobile .perseus-widget-plotter .graphie-label .katex {
-  color: #626569;
+  color: #292F33;
 }
 .perseus-widget-radio.perseus-rendered-radio div,
 .perseus-widget-radio.perseus-rendered-radio div > p {
@@ -1973,7 +2040,7 @@ body.mobile .framework-perseus table.perseus-widget-table-of-values.non-markdown
   cursor: pointer;
 }
 .perseus-diff .diff-row.collapsed:hover {
-  color: #676767;
+  color: #666;
 }
 .perseus-diff .diff-row.collapsed:active {
   color: #444;
@@ -2353,19 +2420,19 @@ body.mobile .framework-perseus table.perseus-widget-table-of-values.non-markdown
   padding: 20px;
   margin: 15px 0 10px;
 }
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {*/
   .perseus-renderer-responsive {
     margin: 0 16px;
   }
   .perseus-renderer-responsive .perseus-renderer-responsive {
     margin: 0;
   }
-}
-@media (max-width: 767px) {
+/*}*/
+/*@media (max-width: 767px) {*/
   .perseus-mobile .perseus-block-math {
     font-size: 18px;
   }
-}
+/*}*/
 /* math-input CSS */
 /**
  * Styles for managing the popover animations. These were generated by
@@ -2471,7 +2538,7 @@ body.mobile .framework-perseus table.perseus-widget-table-of-values.non-markdown
        cursor, which is visible whenever the cursor is not alone in its parent,
        with the exception that it's also visible when the entire input is
        empty. */
-    height: 20px !important;
+    height: 30px !important;
     vertical-align: middle !important;
     margin-top: -5px !important;
 }
@@ -2566,4 +2633,3 @@ body.mobile .framework-perseus table.perseus-widget-table-of-values.non-markdown
     color: white !important;
     border-color: white !important;
 }
-

@@ -92,7 +92,7 @@ export default class ImageEditor extends Component {
       <View className="framework-perseus" style={styles.editor}>
         <PerseusRadioEditor
           {...this.state.perseusEditorProps}
-          apiOptions={apiOptions}
+          apiOptions={{...apiOptions, isMobile: false}}
           onChange={this.props.onChange}
         />
       </View>

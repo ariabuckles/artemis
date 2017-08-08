@@ -151,6 +151,12 @@ const BaseRadio = React.createClass({
                 marginLeft: 20,
             },
 
+            nonMobileItem: {
+                ':before': {
+                  content: 'none',
+                },
+            },
+
             inlineItem: {
                 display: "inline-block",
                 paddingLeft: 20,
@@ -321,7 +327,7 @@ const BaseRadio = React.createClass({
         const instructionsClassName = 'instructions ' +
             css(styles.instructions, sharedStyles.responsiveLabel);
         const instructions = this.getInstructionsText();
-        const shouldShowInstructions = isMobile || this.props.multipleSelect;
+        const shouldShowInstructions = !this.props.editMode && (isMobile || this.props.multipleSelect);
 
         const responsiveClassName = css(styles.responsiveFieldset);
         const fieldset = <fieldset
@@ -376,6 +382,7 @@ const BaseRadio = React.createClass({
                     const aphroditeClassName = (checked, isMobile) => {
                         return css(
                             styles.item,
+                            !isMobile && styles.nonMobileItem,
                             !this.showOnePerLine() && styles.inlineItem,
                             // SAT doesn't use the "responsive styling" as it
                             // conflicts with their theming.
@@ -417,8 +424,10 @@ const BaseRadio = React.createClass({
                     // forces any clicks inside to select the input element)
                     // If its not a label, we must simulate that label behavior
                     // for items that are not the draft editor
+                    // NOTE(aria): artemis doesn't have contenteditable editor,
+                    // so we can just use the label like in display mode
                     let clickHandler = null;
-                    if (this.props.editMode) {
+                    /*if (this.props.editMode) {
                         clickHandler = (e) => {
                             const choiceRef = this.refs[`radio${i}`];
                             const viableClassNames = [
@@ -429,9 +438,11 @@ const BaseRadio = React.createClass({
                             if (viableClassNames
                                     .indexOf(e.target.className) !== -1) {
                                 this.checkOption(i, true);
+                            } else {
+                              debugger;
                             }
                         };
-                    }
+                    }*/
 
                     // TODO(mattdr): Index isn't a *good* choice of key here;
                     // is there a better one? Can we use choice content
