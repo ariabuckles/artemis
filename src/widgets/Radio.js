@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
 
   editor: {
     color: '#444444',
+    width: 360,
     backgroundColor: 'white',
     border: `2px solid #4FAED1`,
     borderRadius: 5,

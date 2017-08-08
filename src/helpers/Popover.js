@@ -4,6 +4,15 @@ import ReactDOM from 'react-dom';
 import { View, StyleSheet } from '../base-components';
 
 const styles = StyleSheet.create({
+
+  baseStackingContext: {
+    // create a new stacking context for the base of the popover
+    // so that aboveScratchpad effects from perseus
+    // can't float over the editor :o
+    position: 'relative',
+    zIndex: 0,
+  },
+
   unfocused: {
     pointerEvents: 'auto',
     color: '#ccc'
@@ -22,6 +31,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+
 });
 
 export default class Popover extends Component {
@@ -40,7 +50,9 @@ export default class Popover extends Component {
       style={focused ? styles.focused : styles.unfocused}
       onClick={this.focus}
     >
-      {baseElement}
+      <View style={styles.baseStackingContext}>
+        {baseElement}
+      </View>
       {focused &&
         <View style={styles.hoverContainer}>
           {hoverElement}
@@ -60,7 +72,7 @@ export default class Popover extends Component {
   };
 
   componentDidMount() {
-    window.addEventListener('click', this._blurOnClickElsewhere);
+    window.addEventListener('click', this._blurOnClickElsewhere, true);
   }
 
   componentWillUnmount() {

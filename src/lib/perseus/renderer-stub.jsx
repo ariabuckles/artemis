@@ -9,6 +9,10 @@ const ApiClassNames = require("./perseus-api").ClassNames;
 
 class RendererStub extends Component {
 
+  static defaultProps = {
+    content: '',
+  };
+
   shouldComponentUpdate(nextProps) {
     // we don't do anything with widgets in this fake renderer, so:
     return nextProps.content !== this.props.content;
@@ -21,7 +25,7 @@ class RendererStub extends Component {
       [ApiClassNames.TWO_COLUMN_RENDERER]: false,
     });
 
-    const parsed = PerseusMarkdown.parse(this.content || '');
+    const parsed = PerseusMarkdown.parse(this.props.content);
     const output = PerseusMarkdown.basicOutput(parsed);
 
     return <div className={className}>
