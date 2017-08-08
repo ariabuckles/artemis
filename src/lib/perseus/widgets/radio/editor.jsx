@@ -128,10 +128,11 @@ var RadioEditor = React.createClass({
                                   onChange={this.onMultipleSelectChange} />
                 </div>
                 <div className="perseus-widget-right-col">
-                    <PropCheckBox label="Randomize order"
+                    {/* Artemis doesn't need order randomization */}
+                    {/*<PropCheckBox label="Randomize order"
                                   labelAlignment="right"
                                   randomize={this.props.randomize}
-                                  onChange={this.props.onChange} />
+                                  onChange={this.props.onChange} />*/}
                 </div>
             </div>
 
@@ -176,7 +177,8 @@ var RadioEditor = React.createClass({
                     {' '}Add a choice{' '}
                 </a>
 
-                {!this.props.hasNoneOfTheAbove &&
+                {/* artemis doesn't need none of the above */}
+                {/*!this.props.hasNoneOfTheAbove &&
                     <a
                         className="simple-button"
                         href="#"
@@ -184,7 +186,7 @@ var RadioEditor = React.createClass({
                     >
                         <InlineIcon {...iconPlus} />
                         {' '}None of the above{' '}
-                    </a>}
+                    </a>*/}
             </div>
 
         </div>;

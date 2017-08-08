@@ -53,7 +53,7 @@ export default class ImageEditor extends Component {
     };
     this.state = {
       perseusEditorProps: perseusEditorProps,
-      widgetProps: PerseusRadioTransform(perseusEditorProps),
+      widgetProps: PerseusRadioTransform(perseusEditorProps, Math.round(Math.random() * 100)),
     };
 
   }
@@ -65,7 +65,7 @@ export default class ImageEditor extends Component {
     };
     this.setState({
       perseusEditorProps: perseusEditorProps,
-      widgetProps: PerseusRadioTransform(perseusEditorProps),
+      widgetProps: PerseusRadioTransform(perseusEditorProps, Math.round(Math.random() * 100)),
     });
   }
 

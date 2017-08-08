@@ -17,8 +17,9 @@ const styles = StyleSheet.create({
     border: `1px dashed #ccc`,
   },
   toolbar: {
+    // TODO(aria): remove position: relative here and fix the
+    // widgets bar to stop being left-right-top-bottom: 0
     position: 'relative',
-    zIndex: 1,
     display: 'flex',
   },
   button: {
