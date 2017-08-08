@@ -76,6 +76,6 @@ export default class Popover extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('click', this._blurOnClickElsewhere);
+    window.removeEventListener('click', this._blurOnClickElsewhere, true);
   }
 }
