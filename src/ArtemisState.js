@@ -11,7 +11,7 @@ export const empty = () => {
 };
 
 
-const _insertInlineWidget = (editorState, widgetInfo) => {
+const _insertInlineWidget = (editorState, widgetInfo, createNewLine) => {
   const contentState = editorState.getCurrentContent();
 
   const {
@@ -53,7 +53,10 @@ const _insertInlineWidget = (editorState, widgetInfo) => {
   return stateWithSelection;
 };
 
-const _insertBlockWidget = (editorState, widgetInfo) => {
+// Atomic blocks keep giving us errors in draft, so i'm going
+// with a simple inline widget again for now
+
+/*const _insertBlockWidget = (editorState, widgetInfo) => {
   const contentState = editorState.getCurrentContent();
 
   const {
@@ -72,7 +75,7 @@ const _insertBlockWidget = (editorState, widgetInfo) => {
   );
 
   return stateWithWidgetBlock;
-};
+};*/
 
 export const insertWidget = (editorState, widgetInfo, display) => {
   if (display === 'block') {

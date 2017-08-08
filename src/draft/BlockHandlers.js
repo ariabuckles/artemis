@@ -19,9 +19,6 @@ export const blockRenderMap = Immutable.Map({
     element: 'div',
     aliasedElements: ['p'],
   },
-  atomic: {
-    element: 'figure',
-  },
 });
 
 export const blockStyleFn = (contentBlock) => {

@@ -11,7 +11,6 @@ import * as ArtemisPasteProcessor from './helpers/ArtemisPasteProcessor';
 import * as PerseusAdapter from './PerseusAdapter';
 import * as InternalConstants from './InternalConstants';
 import InlineWidgetOverlay from './InlineWidgetOverlay';
-import BlockWidgetEditor from './BlockWidgetEditor';
 
 import 'draft-js/dist/Draft.css';
 
@@ -98,22 +97,6 @@ export default class ArtemisEditor extends Component {
     }
   }
 
-  _blockRendererFn = (contentBlock) => {
-    const type = contentBlock.getType();
-    if (type === 'atomic') {
-      return {
-        component: BlockWidgetEditor,
-        editable: false,
-        props: {
-          editorWidth: this.state.editorWidth,
-          widgetEditors: this.props.widgetEditors,
-          keypad: this.props.keypad,
-          onChangeElement: this._handleChangeElement,
-        },
-      };
-    }
-  };
-
   render() {
     return (
       <View style={{...styles.container, ...(this.props.debug ? styles.debugContainer : {})}}>
@@ -124,7 +107,6 @@ export default class ArtemisEditor extends Component {
             onChange={this._handleDraftChange}
             blockRenderMap={BlockHandlers.blockRenderMap}
             blockStyleFn={BlockHandlers.blockStyleFn}
-            blockRendererFn={this._blockRendererFn}
             placeholder={this.props.placeholder}
             handlePastedText={this._handlePastedText}
             ref={editor => { this._editor = editor; }}
