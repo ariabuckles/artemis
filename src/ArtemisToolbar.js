@@ -178,7 +178,7 @@ export default class ArtemisToolbar extends Component {
       </View>,
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
-        onClick={() => this.insertWidget('radio', 'block')}
+        onClick={() => this.insertWidget('radio', 'inline')}
         key='multiple-choice'
       >
         <View style={styles.multipleChoiceIcon} />

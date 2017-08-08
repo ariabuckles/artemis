@@ -78,7 +78,7 @@ export default class ImageEditor extends Component {
   render() {
 
     return <Popover>
-      <View className="framework-perseus" style={styles.radio}>
+      <View className="framework-perseus" style={[styles.radio, {width: this.props._maxWidth}]}>
         {/* responsive false because we have no size info in artemis
             overlays */}
         <PerseusRadio

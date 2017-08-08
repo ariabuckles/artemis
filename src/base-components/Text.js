@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { css } from 'aphrodite';
+import * as StyleUtils from './StyleUtils';
 
 export default class Text extends Component {
   render() {
-    const { style, ...props } = this.props;
+    const { style, className, ...props } = this.props;
+
+    const styleInfo = StyleUtils.stylesToAphrodite(
+      this.props.className,
+      this.props.style
+    );
     return (
-      <span className={css(style)} {...props}>
+      <span {...this.props} {...styleInfo}>
         {this.props.children}
       </span>
     );
