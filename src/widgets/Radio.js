@@ -77,7 +77,7 @@ export default class ImageEditor extends Component {
 
   render() {
 
-    return <Popover>
+    return <Popover autoFocus={true}>
       <View className="framework-perseus" style={styles.radio}>
         {/* responsive false because we have no size info in artemis
             overlays */}

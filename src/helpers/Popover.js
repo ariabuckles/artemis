@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 export default class Popover extends Component {
 
   state = {
-    focused: false,
+    focused: this.props.autoFocus || false,
   }
 
   render() {

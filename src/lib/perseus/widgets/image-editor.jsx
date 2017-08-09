@@ -11,7 +11,7 @@ const Util        = require("../util.js");
 const Changeable    = require("../mixins/changeable");
 const EditorJsonify = require("../mixins/editor-jsonify");
 
-const BlurInput    = require("react-components/blur-input.js");
+const UrlInput     = require("../../../components/UrlInput").default;
 const Editor       = require("../editor-stub");
 const InfoTip      = require("../components/info-tip");
 const InlineIcon   = require("../components/inline-icon");
@@ -171,7 +171,8 @@ const ImageEditor = React.createClass({
                 <InfoTip>Paste an image or graphie image URL.</InfoTip>
                 {this.state.backgroundImageError && backgroundImageErrorText}
 
-                <BlurInput
+                <UrlInput
+                    autoFocus={true}
                     value={backgroundImage.url || ''}
                     style={{width: 332}}
                     onChange={url => this.onUrlChange(url, false)} />
