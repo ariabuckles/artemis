@@ -183,9 +183,12 @@ export default class ArtemisEditor extends Component {
   };
 
   _handlePastedText = (text: string, html: string, editorState: any) => {
-    const newEditorState = ArtemisState.pasteHtml(editorState, html);
-    this.props.onChange(newEditorState);
-    return 'handled';
+    if (html) {
+      const newEditorState = ArtemisState.pasteHtml(editorState, html);
+      this.props.onChange(newEditorState);
+      return 'handled';
+    }
+    // let draft-js handle the text paste for us
   };
 
   _handleChangeElement = (key, data, updateSize) => {
