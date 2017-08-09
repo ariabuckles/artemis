@@ -46,13 +46,13 @@ var ChoiceEditor = React.createClass({
                 !this.props.choice.correct}
             onChange={this.props.onContentChange} />;
 
-        var clueEditor = <Editor
+        var clueEditor = null; /*<Editor
             ref={"clue-editor"}
             apiOptions={this.props.apiOptions}
             content={this.props.choice.clue || ""}
             widgetEnabled={false}
             placeholder={i18n._(`Why is this choice ${checkedClass}?`)}
-            onChange={this.props.onClueChange} />;
+            onChange={this.props.onClueChange} />;*/
 
         var deleteLink = <a
             className="simple-button orange delete-choice"
@@ -121,19 +121,19 @@ var RadioEditor = React.createClass({
         return <div>
             <div className="perseus-widget-row">
 
-                <div className="perseus-widget-left-col">
+                {/*<div className="perseus-widget-left-col">*/}
                     <PropCheckBox label="Multiple selections"
                                   labelAlignment="right"
                                   multipleSelect={this.props.multipleSelect}
                                   onChange={this.onMultipleSelectChange} />
-                </div>
-                <div className="perseus-widget-right-col">
+                {/*</div>*/}
+                {/* <div className="perseus-widget-right-col"> */}
                     {/* Artemis doesn't need order randomization */}
                     {/*<PropCheckBox label="Randomize order"
                                   labelAlignment="right"
                                   randomize={this.props.randomize}
                                   onChange={this.props.onChange} />*/}
-                </div>
+                {/*</div>*/}
             </div>
 
             <BaseRadio

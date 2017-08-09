@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
   editor: {
     color: '#444444',
     width: 380,
+    maxHeight: 500,
+    overflowY: 'scroll',
     backgroundColor: 'white',
     border: `2px solid #4FAED1`,
     borderRadius: 5,
