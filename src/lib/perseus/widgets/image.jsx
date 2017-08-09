@@ -106,7 +106,7 @@ var ImageWidget = React.createClass({
 
     render: function() {
         var image;
-        var {apiOptions, _clampWidth} = this.props;
+        var {apiOptions} = this.props;
 
         var backgroundImage = this.props.backgroundImage;
 
@@ -114,13 +114,6 @@ var ImageWidget = React.createClass({
             var width = backgroundImage.width;
             var height = backgroundImage.height;
             var box = this.props.box;
-
-            // the manual version of responsive :X
-            if (_clampWidth && width && _clampWidth < width) {
-              height = height * _clampWidth / width;
-              box = [box[0] * _clampWidth / width, box[1] * _clampWidth / width];
-              width = _clampWidth;
-            }
 
             image = <SvgImage
                         src={backgroundImage.url}
@@ -132,7 +125,6 @@ var ImageWidget = React.createClass({
                         }
                         width={width}
                         height={height}
-                        maxWidth={_clampWidth}
                         preloader={apiOptions.imagePreloader}
                         extraGraphie={{
                             box: box,

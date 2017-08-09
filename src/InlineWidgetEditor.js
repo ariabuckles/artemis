@@ -73,7 +73,7 @@ export default class InlineWidgetEditor extends Component {
   }
 
   render() {
-    const { type, maxWidth, widgetEditors, options, onChange, keypad } = this.props;
+    const { type, widgetEditors, options, onChange, keypad } = this.props;
 
     const WidgetEditor = widgetEditors[type];
 
@@ -84,7 +84,6 @@ export default class InlineWidgetEditor extends Component {
     } else {
       return <WidgetEditor
         {...options}
-        _maxWidth={maxWidth}
         onChange={onChange}
         keypad={keypad}
       />;

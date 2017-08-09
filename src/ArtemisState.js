@@ -131,7 +131,9 @@ const _insertBlockWidget = (editorState, widgetInfo) => {
 };*/
 
 export const insertWidget = (editorState, widgetInfo) => {
-  if (widgetInfo.display === 'block') {
+  // TODO(aria): develop a better system for managing widget display
+  // preferences, and for inserting newlines around them if need be
+  if (widgetInfo.display === 'block' || widgetInfo.type === 'image') {
     return _insertBlockWidget(editorState, widgetInfo);
   } else {
     return _insertInlineWidget(editorState, widgetInfo);

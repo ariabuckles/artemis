@@ -14,11 +14,15 @@ const styles = StyleSheet.create({
   },
 
   unfocused: {
+    display: 'inline-block',
+    maxWidth: '100%',
     pointerEvents: 'auto',
     color: '#ccc'
   },
 
   focused: {
+    display: 'inline-block',
+    maxWidth: '100%',
     boxShadow: `0 0 0 2px #4FAED1`,
     color: '#4FAED1',
     borderRadius: 4,

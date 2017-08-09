@@ -85,7 +85,7 @@ class BlockOverlay extends Component {
                     //backgroundColor: 'rgba(255, 0, 0, 0.4)',
                     padding: 1,
                     pointerEvents: 'none',
-                    maxWidth: editorWidth,
+                    width: editorWidth,
                   }}
                 >
                   <InlineWidgetEditor
@@ -95,7 +95,6 @@ class BlockOverlay extends Component {
                     lastWidth={entityData.width}
                     lastHeight={entityData.height}
                     keypad={this.props.keypad}
-                    maxWidth={editorWidth}
                     onChange={newOptions => {
                       const options = Object.assign(
                         {},

@@ -11,8 +11,8 @@ import { widget as PerseusImage } from '../lib/perseus/widgets/image';
 
 const styles = StyleSheet.create({
   image: {
-    display: 'flex',
     minWidth: 100,
+    maxWidth: '100%',
     boxSizing: 'border-box',
     position: 'relative',
     overflow: 'hidden',
@@ -50,8 +50,7 @@ export default class ImageEditor extends Component {
         <PerseusImage
           {...this.props}
           responsive={false}
-          _clampWidth={this.props._maxWidth - EDITOR_PAD_WIDTH}
-          />
+        />
       </View>
       <View className="framework-perseus" style={styles.editor}>
         <PerseusImageEditor

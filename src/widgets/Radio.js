@@ -16,7 +16,8 @@ const apiOptions = require("../lib/perseus/api-options-stub");
 const styles = StyleSheet.create({
   radio: {
     display: 'flex',
-    minWidth: 100,
+    minWidth: 380,
+    width: '100%',
     boxSizing: 'border-box',
     position: 'relative',
     overflow: 'hidden',
@@ -77,13 +78,12 @@ export default class ImageEditor extends Component {
   render() {
 
     return <Popover>
-      <View className="framework-perseus" style={[styles.radio, {width: this.props._maxWidth}]}>
+      <View className="framework-perseus" style={styles.radio}>
         {/* responsive false because we have no size info in artemis
             overlays */}
         <PerseusRadio
           {...this.state.widgetProps}
           apiOptions={apiOptions}
-          _clampWidth={this.props._maxWidth - EDITOR_PAD_WIDTH}
           onChange={this._changeWidgetDisplay}
           trackInteraction={() => {}}
           />
