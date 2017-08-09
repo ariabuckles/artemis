@@ -8,6 +8,7 @@ import ArtemisDecorator from './ArtemisDecorator';
 import * as ArtemisState from './ArtemisState';
 import * as BlockHandlers from './draft/BlockHandlers';
 import * as ArtemisPasteProcessor from './helpers/ArtemisPasteProcessor';
+import * as WidgetBlockHelper from './helpers/WidgetBlockHelper';
 import * as PerseusAdapter from './PerseusAdapter';
 import * as InternalConstants from './InternalConstants';
 import InlineWidgetOverlay from './InlineWidgetOverlay';
@@ -108,6 +109,7 @@ export default class ArtemisEditor extends Component {
             blockRenderMap={BlockHandlers.blockRenderMap}
             blockStyleFn={BlockHandlers.blockStyleFn}
             placeholder={this.props.placeholder}
+            handleBeforeInput={this._handleBeforeInput}
             handlePastedText={this._handlePastedText}
             ref={editor => { this._editor = editor; }}
           />
@@ -122,6 +124,23 @@ export default class ArtemisEditor extends Component {
       </View>
     );
   }
+
+  _handleBeforeInput = (chars: string) => {
+    // TODO(aria): Make this work
+    const editorState = this.props.editorState;
+    const contentState = editorState.getCurrentContent();
+    const selection = editorState.getSelection();
+    if (!selection.isCollapsed()) {
+      return; // if they're replacing text, they're welcome to replace this block
+    }
+    const startBlockKey = selection.getStartKey();
+    const startBlock = contentState.getBlockForKey(startBlockKey);
+    if (WidgetBlockHelper.isBlockAWidgetBlock(contentState, startBlock)) {
+      // TODO(aria): instead of just rejecting this change, we should make a
+      // new block and add the text there
+      return 'handled';
+    }
+  };
 
   _handleCut = e => {
     const { editorState } = this.props;

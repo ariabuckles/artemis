@@ -5,13 +5,14 @@ import * as InternalConstants from './InternalConstants';
 import * as ArtemisPasteProcessor from './helpers/ArtemisPasteProcessor';
 import * as InsertionHelper from './helpers/InsertionHelper';
 import * as WidgetEntityHelper from './helpers/WidgetEntityHelper';
+import * as Immutable from 'immutable';
 
 export const empty = () => {
   return Draft.EditorState.createEmpty(new ArtemisDecorator());
 };
 
 
-const _insertInlineWidget = (editorState, widgetInfo, createNewLine) => {
+const _insertInlineWidget = (editorState, widgetInfo) => {
   const contentState = editorState.getCurrentContent();
 
   const {
@@ -56,6 +57,58 @@ const _insertInlineWidget = (editorState, widgetInfo, createNewLine) => {
 // Atomic blocks keep giving us errors in draft, so i'm going
 // with a simple inline widget again for now
 
+const _insertBlockWidget = (editorState, widgetInfo) => {
+  const contentState = editorState.getCurrentContent();
+
+  const {
+    contentState: contentStateWithEntity,
+    entityKey,
+  } = WidgetEntityHelper.createWidgetEntity(contentState, widgetInfo);
+
+  const currSelection = editorState.getSelection();
+  const newContentState = Draft.Modifier.replaceWithFragment(
+    contentStateWithEntity,
+    currSelection,
+    Draft.BlockMapBuilder.createFromArray([
+      new Draft.ContentBlock({
+        key: Draft.genKey(),
+        type: 'unstyled',
+        text: '',
+        characterList: Immutable.List(),
+      }),
+      new Draft.ContentBlock({
+        key: Draft.genKey(),
+        type: 'unstyled',
+        text: InternalConstants.WIDGET_CHAR,
+        characterList: Immutable.List.of(Draft.CharacterMetadata.create({
+          entity: entityKey,
+        })),
+        // TODO(aria): we shouldn't need this anymore, since we test
+        // for a block being a widget block based on its entity info
+        /*data: Immutable.Map({
+          widget: true,
+        }),*/
+      }),
+      // put in an empty block afterwards?
+      // TODO(aria): only do this if it's the last block.
+      new Draft.ContentBlock({
+        key: Draft.genKey(),
+        type: 'unstyled',
+        text: '',
+        characterList: Immutable.List(),
+      })
+    ])
+  );
+
+  const stateWithChange = Draft.EditorState.push(
+    editorState,
+    newContentState,
+    'insert-fragment'
+  );
+
+  return stateWithChange;
+
+};
 /*const _insertBlockWidget = (editorState, widgetInfo) => {
   const contentState = editorState.getCurrentContent();
 
@@ -77,8 +130,8 @@ const _insertInlineWidget = (editorState, widgetInfo, createNewLine) => {
   return stateWithWidgetBlock;
 };*/
 
-export const insertWidget = (editorState, widgetInfo, display) => {
-  if (display === 'block') {
+export const insertWidget = (editorState, widgetInfo) => {
+  if (widgetInfo.display === 'block') {
     return _insertBlockWidget(editorState, widgetInfo);
   } else {
     return _insertInlineWidget(editorState, widgetInfo);
@@ -90,8 +143,8 @@ export const applyAction = (artemisState, action) => {
   const type = action.type;
 
   if (type === 'INSERT_WIDGET') {
-    const {display, ...widgetInfo} = action.payload;
-    return insertWidget(editorState, widgetInfo, display);
+    const widgetInfo = action.payload;
+    return insertWidget(editorState, widgetInfo);
 
   } else {
     return 'could not find action: ' + JSON.stringify(action);

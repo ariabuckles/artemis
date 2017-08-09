@@ -1,22 +1,16 @@
+import * as WidgetEntityHelper from './helpers/WidgetEntityHelper';
+
 export const newInlineMath = () => {
   return {
     type: 'INSERT_WIDGET',
-    payload: {
-      type: 'inline-math',
-      options: {
-        value: '',
-      },
-    },
+    payload: WidgetEntityHelper.createEmptyWidgetInfo('inline-math'),
   };
 };
 
-export const insertWidget = (type, display) => {
+export const insertWidget = (type) => {
   return {
     type: 'INSERT_WIDGET',
-    payload: {
-      type: type,
-      display: display || 'inline',
-      options: { },
-    },
+    payload: WidgetEntityHelper.createEmptyWidgetInfo(type),
   };
 };
+

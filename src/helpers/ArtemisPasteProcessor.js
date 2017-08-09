@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import * as Draft from 'draft-js';
-import Immutable from 'immutable';
 
 // importing private draft things ;_;
 const convertFromHTMLToContentBlocks = Draft.convertFromHTML;

@@ -168,7 +168,7 @@ export default class ArtemisToolbar extends Component {
     return [
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
-        onClick={() => this.insertWidget('numeric-input', 'inline')}
+        onClick={() => this.insertWidget('numeric-input')}
         key='numeric-input'
       >
         <View style={styles.numberIcon} />
@@ -178,7 +178,7 @@ export default class ArtemisToolbar extends Component {
       </View>,
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
-        onClick={() => this.insertWidget('radio', 'inline')}
+        onClick={() => this.insertWidget('radio')}
         key='multiple-choice'
       >
         <View style={styles.multipleChoiceIcon} />
@@ -301,7 +301,7 @@ export default class ArtemisToolbar extends Component {
 
         <View
           style={styles.button}
-          onClick={() => this.props.onAction(ArtemisActions.insertWidget('image', 'inline'))}
+          onClick={() => this.props.onAction(ArtemisActions.insertWidget('image'))}
         >
           <View style={styles.imageIcon} />
           <View style={styles.buttonCaption}>
