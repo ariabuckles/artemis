@@ -22,6 +22,23 @@ export const createEmptyWidgetInfo = (type) => {
   };
 };
 
+
+export const upgradeWidgetInfo = (widgetConfigs, widgetInfo) => {
+  if (widgetConfigs == null) {
+    return widgetInfo;
+  }
+
+  const config = widgetConfigs[widgetInfo.type];
+
+  // TODO(aria): write a more general widgetInfo upgrade here.
+  if (config.upgrade) {
+    // extend so that we can't lose a type or something unintentionally
+    widgetInfo = {...widgetInfo, ...config.upgrade(widgetInfo)};
+  }
+  return widgetInfo;
+};
+
+
 export const widgetInfoFromEntity = (entity) => {
   // we don't use immutable record getters here because we
   // might be getting json, and so we need to access the raw

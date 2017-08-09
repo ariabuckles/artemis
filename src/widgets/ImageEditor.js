@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 
 const EDITOR_PAD_WIDTH = 16;
 
-export default class ImageEditor extends Component {
+class ImageEditor extends Component {
 
   render() {
     return <Popover autoFocus={true}>
@@ -61,3 +61,7 @@ export default class ImageEditor extends Component {
     </Popover>;
   }
 }
+
+export default {
+  editor: ImageEditor,
+};

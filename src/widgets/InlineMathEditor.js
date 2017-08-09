@@ -8,7 +8,7 @@ const keypadInputStyle = {
   pointerEvents: 'auto',
 };
 
-export default class InlineMathEditor extends Component {
+class InlineMathEditor extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
@@ -35,3 +35,7 @@ export default class InlineMathEditor extends Component {
     });
   };
 }
+
+export default {
+  editor: InlineMathEditor,
+};

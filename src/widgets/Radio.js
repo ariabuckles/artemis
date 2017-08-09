@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 
 const EDITOR_PAD_WIDTH = 16;
 
-export default class ImageEditor extends Component {
+class RadioEditor extends Component {
 
   constructor(props) {
     super(props);
@@ -101,3 +101,7 @@ export default class ImageEditor extends Component {
   }
 }
 
+
+export default {
+  editor: RadioEditor,
+};

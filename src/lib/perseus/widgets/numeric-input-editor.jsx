@@ -242,7 +242,7 @@ const NumericInputEditor = React.createClass({
                     {answer.simplify !== "required" &&
                      answer.status === "correct" &&
                       <div className={"simplify-indicator " + answer.simplify}
-                        title="accepts unsimplified answers">&permil;</div>}
+                        title="accepts unsimplified answers?">&permil;</div>}
                     {answer.maxError ? <div className="max-error-container">
                         <div className="max-error-plusmn">&plusmn;</div>
                         <NumberInput placeholder={0}

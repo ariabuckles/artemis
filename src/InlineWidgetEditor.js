@@ -75,13 +75,14 @@ export default class InlineWidgetEditor extends Component {
   render() {
     const { type, widgetEditors, options, onChange, keypad } = this.props;
 
-    const WidgetEditor = widgetEditors[type];
+    const widgetEditorConfig = widgetEditors[type];
 
-    if (WidgetEditor == null) {
+    if (widgetEditorConfig == null || widgetEditorConfig.editor ==  null) {
       return <InlineWidgetNotFoundEditor
         type={type}
       />;
     } else {
+      const WidgetEditor = widgetEditorConfig.editor;
       return <WidgetEditor
         {...options}
         onChange={onChange}

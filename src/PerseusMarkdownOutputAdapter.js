@@ -6,6 +6,7 @@
  * "Everything is just simple-markdown on the inside" ~ Oliver
  */
 import SimpleMarkdown from 'simple-markdown';
+import * as WidgetEntityHelper from './helpers/WidgetEntityHelper';
 
 export const preprocess = (source) => {
   const mdSource = SimpleMarkdown.preprocess(source);
@@ -61,9 +62,7 @@ const artemisDataFor = (outputFunc) => {
 
 
 const importWidgetInfo = (widgetInfo, widgetId, outputState) => {
-  const type = widgetInfo.type;
-
-  if (outputState.supportedWidgets && !outputState.supportedWidgets[type]) {
+  if (outputState.supportedWidgets && !outputState.supportedWidgets[widgetInfo.type]) {
     outputState.error = {
       message: "Widget type not supported",
       widgetId: widgetId,
@@ -71,8 +70,10 @@ const importWidgetInfo = (widgetInfo, widgetId, outputState) => {
     return null;
   }
 
+  widgetInfo = WidgetEntityHelper.upgradeWidgetInfo(outputState.supportedWidgets, widgetInfo);
+
   const isStatic = widgetInfo.static || widgetInfo.graded == false;
-  if (isStatic && type !== 'image') {
+  if (isStatic && widgetInfo.type !== 'image') {
     outputState.error = {
       message: "Static or ungraded non-images are not supported",
       widgetId: widgetId,

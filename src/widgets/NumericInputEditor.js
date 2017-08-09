@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class NumericInputEditor extends Component {
+class NumericInputEditor extends Component {
 
   render() {
     return <Popover autoFocus={true}>
@@ -60,3 +60,7 @@ export default class NumericInputEditor extends Component {
     </Popover>;
   }
 }
+
+export default {
+  editor: NumericInputEditor,
+};
