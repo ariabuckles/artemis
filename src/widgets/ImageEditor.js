@@ -43,7 +43,7 @@ const EDITOR_PAD_WIDTH = 16;
 class ImageEditor extends Component {
 
   render() {
-    return <Popover autoFocus={true}>
+    return <Popover>
       <View className="framework-perseus" style={styles.image}>
         {/* responsive false because we have no size info in artemis
             overlays */}

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 class NumericInputEditor extends Component {
 
   render() {
-    return <Popover autoFocus={true}>
+    return <Popover>
       <View style={styles.input} />
       <View className="framework-perseus" style={styles.editor}>
         <PerseusNumericInputEditor

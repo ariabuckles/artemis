@@ -79,7 +79,7 @@ class RadioEditor extends Component {
 
   render() {
 
-    return <Popover autoFocus={true}>
+    return <Popover>
       <View className="framework-perseus" style={styles.radio}>
         {/* responsive false because we have no size info in artemis
             overlays */}
