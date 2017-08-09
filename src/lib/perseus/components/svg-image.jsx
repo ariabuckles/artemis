@@ -298,9 +298,14 @@ var SvgImage = React.createClass({
     },
 
     componentDidMount: function() {
+        this._isMounted = true;
         if (isLabeledSVG(this.props.src)) {
             this.loadResources();
         }
+    },
+
+    componentWillUnmount: function() {
+        this._isMounted = false;
     },
 
     componentWillReceiveProps: function(nextProps) {
@@ -408,7 +413,7 @@ var SvgImage = React.createClass({
     },
 
     onDataLoaded: function(data) {
-        if (this.isMounted() && data.labels && data.range) {
+        if (this._isMounted && data.labels && data.range) {
             this.setState({
                 dataLoaded: true,
                 labels: data.labels,
@@ -431,7 +436,7 @@ var SvgImage = React.createClass({
             });
         } else {
             Util.getImageSize(this.props.src, (width, height) => {
-                if (this.isMounted()) {
+                if (this._isMounted) {
                     this.setState({
                         imageLoaded: true,
                         imageDimensions: [width, height],
