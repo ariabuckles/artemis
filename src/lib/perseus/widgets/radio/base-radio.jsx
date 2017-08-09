@@ -21,7 +21,7 @@ const captureScratchpadTouchStart =
         require("../../util.js").captureScratchpadTouchStart;
 
 
-const Choice = require("./choice.jsx");
+const Choice = require("./choice");
 
 const ChoiceNoneAbove = React.createClass({
     propTypes: {

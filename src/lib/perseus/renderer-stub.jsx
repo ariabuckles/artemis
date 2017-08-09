@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 const classNames = require('classnames');
 
-const PerseusMarkdown = require("./perseus-markdown.jsx");
+const PerseusMarkdown = require("./perseus-markdown");
 const ApiClassNames = require("./perseus-api").ClassNames;
 
 // TODO(aria): support all the div.paragraph and katex hacks in the actual
