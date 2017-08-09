@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingLeft: 16,
     paddingRight: 16,
+    overflowX: 'hidden',
   },
   debugContainer: {
     border: `1px dashed #ccc`,
