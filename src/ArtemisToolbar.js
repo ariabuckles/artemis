@@ -185,7 +185,7 @@ export default class ArtemisToolbar extends Component {
         <View style={styles.buttonCaption}>
           Multiple choice
         </View>
-      </View>,/*
+      </View>,
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
         onClick={() => this.insertWidget('expression')}
@@ -195,7 +195,7 @@ export default class ArtemisToolbar extends Component {
         <View style={styles.buttonCaption}>
           Math Expression
         </View>
-      </View>,
+      </View>,/*
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
         onClick={() => this.insertWidget('text-input')}
