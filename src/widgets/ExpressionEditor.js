@@ -37,12 +37,16 @@ const styles = StyleSheet.create({
   editor: {
     color: '#444444',
     width: 360,
-    height: 360,
+    maxHeight: 500,
+    overflowY: 'scroll',
     backgroundColor: 'white',
     border: `2px solid #4FAED1`,
     borderRadius: 5,
     margin: 8,
-    padding: 10,
+    paddingTop: 0, // our header has a 16px top margin anyways
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
   },
 });
 

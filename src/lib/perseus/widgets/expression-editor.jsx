@@ -28,6 +28,17 @@ var answerFormType = React.PropTypes.shape({
     simplify: React.PropTypes.bool.isRequired
 });
 
+var _makeNewKey = (answerForms) => {
+  var usedKeys = [];
+  answerForms.forEach((ans) => { usedKeys[ans.key] = true; });
+  for (var i = 0; i < usedKeys.length; i++) {
+    if (!usedKeys[i]) {
+      return i;
+    }
+  }
+  return usedKeys.length;
+};
+
 var ExpressionEditor = React.createClass({
     propTypes: {
         ...Changeable.propTypes,
@@ -263,7 +274,7 @@ var ExpressionEditor = React.createClass({
 
             // note: the key means "n-th form created" - not "form in
             // position n" and will stay the same for the life of this form
-            key: this.props.answerForms.length,
+            key: _makeNewKey(this.props.answerForms),
 
             simplify: false,
             value: "",
@@ -277,7 +288,8 @@ var ExpressionEditor = React.createClass({
     },
 
     handleRemoveForm: function(i) {
-        var answerForms = this.props.answerForms.slice(0, -1);
+        var answerForms = this.props.answerForms.slice();
+        answerForms.splice(i, 1);
         this.change({ answerForms });
     },
 

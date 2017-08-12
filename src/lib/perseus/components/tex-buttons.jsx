@@ -147,7 +147,7 @@ var TexButtons = React.createClass({
         }));
 
         var buttonPopup = _(buttonRows).map((row, i) => {
-            return <div className="clearfix tex-button-row"
+            return <div className="perseus-clearfix tex-button-row"
                         key={this.props.sets[i]}>
                 {row}
             </div>;

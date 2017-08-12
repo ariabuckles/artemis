@@ -423,7 +423,8 @@
   background-color: #d9edf7;
 }
 .perseus-widget-expression-editor .expression-editor-h3 {
-  margin: 10px 0 4px;
+  font-size: 1.4em;
+  margin: 16px 0 8px;
 }
 .perseus-widget-dropdown input[type=text] {
   border: 1px solid #ccc;
