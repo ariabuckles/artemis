@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
 
 export default class ArtemisEditor extends Component {
 
+  static defaultProps = {
+    onContentChange: () => {},
+  };
+
   state = {
     editorWidth: null,
   };
@@ -101,7 +105,12 @@ export default class ArtemisEditor extends Component {
 
   render() {
     return (
-      <View style={{...styles.container, ...(this.props.debug ? styles.debugContainer : {})}}>
+      <View
+        style={{...styles.container, ...(this.props.debug ? styles.debugContainer : {})}}
+        onKeyDown={this.props.onContentChange}
+        onCut={this.props.onContentChange}
+        onPaste={this.props.onContentChange}
+      >
         <View style={styles.editorStackingContext}>
           <Draft.Editor
             spellCheck={true}
@@ -156,7 +165,7 @@ export default class ArtemisEditor extends Component {
         editorState.getSelection(),
         'backward' // TODO(aria): Not sure if we need anything specific here
       );
-      return this.props.onChange(
+      this.props.onChange(
         Draft.EditorState.push(editorState, newContentState, 'remove-range')
       );
     }
@@ -176,7 +185,7 @@ export default class ArtemisEditor extends Component {
     // NOTE: This disables native optimizations so we can remeasure
     // equation/widget overlays on every keystroke
     // NOTE: We're also doing this on every cursor change. SORRY.
-    return this.props.onChange(
+    this.props.onChange(
       Draft.EditorState.set(newEditorState, {
         nativelyRenderedContent: null,
       })
@@ -210,7 +219,8 @@ export default class ArtemisEditor extends Component {
     }
 
     // TODO(aria): undo stack stuff here?
-    return this.props.onChange(Draft.EditorState.set(editorState, updates));
+    this.props.onChange(Draft.EditorState.set(editorState, updates));
+    this.props.onContentChange();
   };
 
 }
