@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   },
 
   editor: {
+    fontSize: 16,
     color: '#444444',
     width: 360,
     maxHeight: 500,
