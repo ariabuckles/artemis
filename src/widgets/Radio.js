@@ -104,4 +104,12 @@ class RadioEditor extends Component {
 
 export default {
   editor: RadioEditor,
+  upgrade: (widgetInfo) => {
+    // disable randomization
+    return {...widgetInfo,
+      options: {...widgetInfo.options,
+        randomize: false,
+      },
+    };
+  },
 };
