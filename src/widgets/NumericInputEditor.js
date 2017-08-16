@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import '../FontAwesome';
-import { View, StyleSheet } from '../base-components';
+import { Text, View, StyleSheet } from '../base-components';
 
 import Popover from '../helpers/Popover';
 
@@ -36,13 +36,20 @@ const styles = StyleSheet.create({
 
   editor: {
     color: '#444444',
-    width: 360,
+    width: 280,
     height: 360,
+    overflowY: 'scroll',
     backgroundColor: 'white',
     border: `2px solid #4FAED1`,
     borderRadius: 5,
     margin: 8,
     padding: 10,
+  },
+
+  header: {
+    display: 'block',
+    fontSize: '1.4em',
+    marginBottom: 8,
   },
 });
 
@@ -52,6 +59,9 @@ class NumericInputEditor extends Component {
     return <Popover>
       <View style={styles.input} />
       <View className="framework-perseus" style={styles.editor}>
+        <Text style={styles.header}>
+          Solution:
+        </Text>
         <PerseusNumericInputEditor
           {...this.props}
           onChange={this.props.onChange}

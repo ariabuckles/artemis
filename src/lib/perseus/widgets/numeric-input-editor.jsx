@@ -190,20 +190,24 @@ const NumericInputEditor = React.createClass({
         };
 
         var generateInputAnswerEditors = () => answers.map((answer, i) => {
-            var editor = <div className="perseus-single-editor">
-                <textarea
-                    style={{width: '100%'}}
-                    className="perseus-textarea-pair"
-                    value={answer.message || ""}
-                    placeholder={"Why is this answer " + answer.status + "?\t" +
-                        instructions[answer.status]}
-                    onChange={(e) => {
-                        this.updateAnswer(i, {message: e.target.value});
-                    }} />
-            </div>
+            var editor = null; // artemis doesn't have clues
+                /*<div className="perseus-single-editor">
+                    <textarea
+                        style={{width: '100%'}}
+                        className="perseus-textarea-pair"
+                        value={answer.message || ""}
+                        placeholder={"Why is this answer " + answer.status + "?\t" +
+                            instructions[answer.status]}
+                        onChange={(e) => {
+                            this.updateAnswer(i, {message: e.target.value});
+                        }} />
+                </div>*/
             return <div className="perseus-widget-row" key={i}>
-                <div className={"input-answer-editor-value-container" +
-                    (answer.maxError ? " with-max-error" : "")}>
+                <div
+                    className={"input-answer-editor-value-container" +
+                        (answer.maxError ? " with-max-error" : "")}
+                    style={{float: 'none'}}
+                >
                     <NumberInput value={answer.value}
                         className="numeric-input-value"
                         placeholder="answer"
@@ -287,8 +291,8 @@ const NumericInputEditor = React.createClass({
         });
 
         return <div className="perseus-input-number-editor">
-            <div className="ui-title">User input</div>
-            <div className="msg-title">Message shown to user on attempt</div>
+            {/*<div className="ui-title">User input</div>*/}
+            {/*<div className="msg-title">Message shown to user on attempt</div>*/}
             {generateInputAnswerEditors()}
             {addAnswerButton}
             {inputSize}
