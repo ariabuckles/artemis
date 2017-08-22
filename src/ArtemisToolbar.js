@@ -168,22 +168,22 @@ export default class ArtemisToolbar extends Component {
     return [
       <View
         style={[styles.button, styles.widgetsRibbonButton]}
-        onClick={() => this.insertWidget('numeric-input')}
-        key='numeric-input'
-      >
-        <View style={styles.numberIcon} />
-        <View style={styles.buttonCaption}>
-          Number
-        </View>
-      </View>,
-      <View
-        style={[styles.button, styles.widgetsRibbonButton]}
         onClick={() => this.insertWidget('radio')}
         key='multiple-choice'
       >
         <View style={styles.multipleChoiceIcon} />
         <View style={styles.buttonCaption}>
           Multiple choice
+        </View>
+      </View>,
+      <View
+        style={[styles.button, styles.widgetsRibbonButton]}
+        onClick={() => this.insertWidget('numeric-input')}
+        key='numeric-input'
+      >
+        <View style={styles.numberIcon} />
+        <View style={styles.buttonCaption}>
+          Number
         </View>
       </View>,
       <View
