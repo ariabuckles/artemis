@@ -295,9 +295,6 @@ const NumericInputEditor = React.createClass({
             {/*<div className="msg-title">Message shown to user on attempt</div>*/}
             {generateInputAnswerEditors()}
             {addAnswerButton}
-            {inputSize}
-            {coefficientCheck}
-            {labelText}
         </div>;
 
     },
