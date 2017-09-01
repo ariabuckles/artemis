@@ -35,10 +35,6 @@ const styles = StyleSheet.create({
     }
   },
 
-  inputError: {
-    borderColor: '#ea933e',
-    color: '#ea933e',
-  },
 
   editor: {
     color: '#444444',
@@ -58,6 +54,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 
+  inputError: {
+    borderColor: '#ea933e',
+    color: '#ea933e',
+  },
   error: {
     background: '#ea933e',
     padding: 8,
@@ -78,7 +78,7 @@ class NumericInputEditor extends Component {
       <View className="framework-perseus" style={styles.editor}>
         {hasError && <View style={styles.error}>
           <Text style={styles.errorText}>
-            No answer specified!
+            No correct answer specified!
           </Text>
         </View>}
         <Text style={styles.header}>
@@ -93,8 +93,17 @@ class NumericInputEditor extends Component {
   }
 
   _hasError = () => {
-    return !this.props.answers || this.props.answers.length === 0 ||
-      this.props.answers[0].value == null;
+    const answers = this.props.answers;
+    if (!answers || answers.length === 0) {
+      return true;
+    }
+    let hasCorrect = false;
+    answers.forEach(answer => {
+      hasCorrect = hasCorrect ||
+        (answer && answer.status === 'correct' && answer.value != null &&
+          answer.value != "");
+    });
+    return !hasCorrect;
   }
 }
 

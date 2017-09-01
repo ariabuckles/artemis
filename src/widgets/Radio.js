@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import '../FontAwesome';
-import { View, StyleSheet } from '../base-components';
+import { Text, View, StyleSheet } from '../base-components';
 
 import Popover from '../helpers/Popover';
 
@@ -41,6 +41,20 @@ const styles = StyleSheet.create({
     margin: 8,
     padding: 10,
   },
+
+  inputError: {
+    borderColor: '#ea933e',
+    color: '#ea933e',
+  },
+  error: {
+    background: '#ea933e',
+    padding: 8,
+    marginBottom: 16,
+    marginTop: 16,
+  },
+  errorText: {
+    color: 'white'
+  }
 });
 
 const EDITOR_PAD_WIDTH = 16;
@@ -78,9 +92,9 @@ class RadioEditor extends Component {
   };
 
   render() {
-
+    const hasError = this._hasError();
     return <Popover>
-      <View className="framework-perseus" style={styles.radio}>
+      <View className="framework-perseus" style={[styles.radio, hasError && styles.inputError]}>
         {/* responsive false because we have no size info in artemis
             overlays */}
         <PerseusRadio
@@ -91,6 +105,11 @@ class RadioEditor extends Component {
           />
       </View>
       <View className="framework-perseus" style={styles.editor}>
+        {hasError && <View style={styles.error}>
+          <Text style={styles.errorText}>
+            No correct answer specified!
+          </Text>
+        </View>}
         <PerseusRadioEditor
           {...this.state.perseusEditorProps}
           apiOptions={{...apiOptions, isMobile: false}}
@@ -98,6 +117,18 @@ class RadioEditor extends Component {
         />
       </View>
     </Popover>;
+  }
+  _hasError = () => {
+    const answers = this.props.choices;
+    if (!answers || answers.length === 0) {
+      return true;
+    }
+    let hasCorrect = false;
+    answers.forEach(answer => {
+      hasCorrect = hasCorrect || (answer && answer.correct &&
+        answer.content != null && answer.content != "");
+    });
+    return !hasCorrect;
   }
 }
 

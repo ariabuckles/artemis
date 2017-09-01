@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import '../FontAwesome';
-import { View, StyleSheet } from '../base-components';
+import { Text, View, StyleSheet } from '../base-components';
 
 import Popover from '../helpers/Popover';
 
@@ -49,20 +49,54 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 10,
   },
+
+  inputError: {
+    borderColor: '#ea933e',
+    color: '#ea933e',
+  },
+  error: {
+    background: '#ea933e',
+    padding: 8,
+    marginBottom: 16,
+    marginTop: 16,
+  },
+  errorText: {
+    color: 'white'
+  }
+
 });
 
 class ExpressionEditor extends Component {
 
   render() {
+    const hasError = this._hasError();
     return <Popover>
-      <View style={styles.input} />
+      <View style={[styles.input, hasError && styles.inputError]} />
       <View className="framework-perseus" style={styles.editor}>
+        {hasError && <View style={styles.error}>
+          <Text style={styles.errorText}>
+            No correct answer specified!
+          </Text>
+        </View>}
         <PerseusExpressionEditor
           {...this.props}
           onChange={this.props.onChange}
         />
       </View>
     </Popover>;
+  }
+  _hasError = () => {
+    const answers = this.props.answerForms;
+    if (!answers || answers.length === 0) {
+      return true;
+    }
+    let hasCorrect = false;
+    answers.forEach(answer => {
+      hasCorrect = hasCorrect ||
+        (answer && answer.considered === 'correct' && answer.value != null &&
+          answer.value != "");
+    });
+    return !hasCorrect;
   }
 }
 
