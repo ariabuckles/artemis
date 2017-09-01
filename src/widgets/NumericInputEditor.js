@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     padding: '6px 6px 1px',
     color: 'inherit',
     textAlign: 'center',
+
     ':after': {
       fontFamily: 'FontAwesome',
       content: '"\\f040"',
@@ -32,6 +33,11 @@ const styles = StyleSheet.create({
       color: 'inherit',
       lineHeight: 1.1,
     }
+  },
+
+  inputError: {
+    borderColor: '#ea933e',
+    color: '#ea933e',
   },
 
   editor: {
@@ -51,14 +57,30 @@ const styles = StyleSheet.create({
     fontSize: '1.4em',
     marginBottom: 8,
   },
+
+  error: {
+    background: '#ea933e',
+    padding: 8,
+    marginBottom: 16,
+  },
+  errorText: {
+    color: 'white'
+  }
+
 });
 
 class NumericInputEditor extends Component {
 
   render() {
+    const hasError = this._hasError();
     return <Popover>
-      <View style={styles.input} />
+      <View style={[styles.input, hasError && styles.inputError]} />
       <View className="framework-perseus" style={styles.editor}>
+        {hasError && <View style={styles.error}>
+          <Text style={styles.errorText}>
+            No answer specified!
+          </Text>
+        </View>}
         <Text style={styles.header}>
           Solution:
         </Text>
@@ -68,6 +90,11 @@ class NumericInputEditor extends Component {
         />
       </View>
     </Popover>;
+  }
+
+  _hasError = () => {
+    return !this.props.answers || this.props.answers.length === 0 ||
+      this.props.answers[0].value == null;
   }
 }
 
