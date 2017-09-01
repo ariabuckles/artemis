@@ -148,6 +148,23 @@ var ExpressionEditor = React.createClass({
         </label>);
 
         return <div className="perseus-widget-expression-editor">
+            <h3 className="expression-editor-h3">Answers</h3>
+
+            <p style={{margin: "4px 0"}}>
+                student responses area matched against these from top to bottom
+            </p>
+
+            {sortable}
+
+            <div>
+                <button className="simple-button orange"
+                        style={{fontSize: 13}}
+                        onClick={this.newAnswer}
+                        type="button">
+                    Add new answer
+                </button>
+            </div>
+
             <h3 className="expression-editor-h3">Global Options</h3>
 
             <div>
@@ -188,23 +205,6 @@ var ExpressionEditor = React.createClass({
                 sets={this.props.buttonSets}
                 convertDotToTimes={this.props.times}
                 onInsert={this.handleTexInsert} />}
-
-            <h3 className="expression-editor-h3">Answers</h3>
-
-            <p style={{margin: "4px 0"}}>
-                student responses area matched against these from top to bottom
-            </p>
-
-            {sortable}
-
-            <div>
-                <button className="simple-button orange"
-                        style={{fontSize: 13}}
-                        onClick={this.newAnswer}
-                        type="button">
-                    Add new answer
-                </button>
-            </div>
 
         </div>;
     },
