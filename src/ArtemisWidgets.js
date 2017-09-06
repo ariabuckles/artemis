@@ -7,7 +7,7 @@ export const defaultEditors = () => {
     'inline-math': require('./widgets/InlineMathEditor').default,
     'input-number': require('./widgets/InputNumberEditor').default,
     'numeric-input': require('./widgets/NumericInputEditor').default,
-    'radio': require('./widgets/Radio').default,
+    'radio': require('./widgets/RadioEditor').default,
   };
   return defaultEditorCache;
 };
