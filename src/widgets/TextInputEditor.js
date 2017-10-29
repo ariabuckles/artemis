@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 class TextInputEditor extends Component {
 
   static defaultProps = {
-    value: "",
+    answer: "",
     editDistance: 0,
   };
 
@@ -82,7 +82,7 @@ class TextInputEditor extends Component {
         </View>}
         <View>
           <input
-            value={this.props.value || ""}
+            value={this.props.answer || ""}
             onChange={this._onInputChange}
           />
         </View>
@@ -92,13 +92,13 @@ class TextInputEditor extends Component {
 
   _onInputChange = (e) => {
     this.props.onChange({
-      value: e.target.value,
+      answer: e.target.value,
       editDistance: 0,
     });
   };
 
   _hasError = () => {
-    return !this.props.value;
+    return !this.props.answer;
   }
 }
 
