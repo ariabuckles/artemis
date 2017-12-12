@@ -6,22 +6,6 @@
  */
 import SimpleMarkdown from 'simple-markdown';
 
-const perseusDataFor = (outputFunc) => {
-  const nestedOutput = (ast, state) => {
-    state = state || {};
-    state.usedWidgetIds = state.usedWidgetIds || {};
-
-    if (Array.isArray(ast)) {
-      return ast.map(function(node) {
-        return nestedOutput(node, state);
-      }).join("");
-    } else {
-      return outputFunc(ast, nestedOutput, state);
-    }
-  };
-  return nestedOutput;
-};
-
 
 // Stolen from part of simple-markdown's text rule
 const ESCAPE_CHAR_REGEX = /[^0-9A-Za-z\s\u00c0-\uffff]/g;
@@ -53,6 +37,15 @@ const encodeMarkdownEntity = (entityStr: ?string) => {
 
 // artemis node rules, converting to perseus ast nodes
 const rules = {
+  // specify how to join the array
+  Array: {
+    perseus: (array, output, state) => {
+      return array.map(function(node) {
+        return output(node, state);
+      }).join("");
+    },
+  },
+
   paragraph: {
     perseus: (node, output, state) => {
       return output(node.content, Object.assign({}, state, { siblings: node.content })) + '\n\n';
@@ -100,6 +93,6 @@ const rules = {
 };
 
 
-export const perseusItemOutput = perseusDataFor(
-  SimpleMarkdown.ruleOutput(rules, 'perseus')
-);
+export const perseusItemOutput = SimpleMarkdown.outputFor(rules, 'perseus', {
+  usedWidgetIds: {},
+});

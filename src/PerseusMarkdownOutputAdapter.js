@@ -38,28 +38,6 @@ const addToResult = (result, prevResult, nodeResult) => {
   }
 };
 
-const artemisDataFor = (outputFunc) => {
-  const nestedOutput = (ast, state) => {
-    state = state || {};
-    state.style = state.style || null;
-
-    if (Array.isArray(ast)) {
-      let result = [];
-
-      let prevNodeResult = {};
-      ast.forEach((node) => {
-        let nodeResult = nestedOutput(node, state);
-        prevNodeResult = addToResult(result, prevNodeResult, nodeResult);
-      });
-
-      return result;
-    } else {
-      return outputFunc(ast, nestedOutput, state);
-    }
-  };
-  return nestedOutput;
-};
-
 
 const importWidgetInfo = (widgetInfo, widgetId, outputState) => {
   if (outputState.supportedWidgets && !outputState.supportedWidgets[widgetInfo.type]) {
@@ -90,6 +68,22 @@ const importWidgetInfo = (widgetInfo, widgetId, outputState) => {
 
 // perseus-markdown ast rules, converting to artemis nodes
 const rules = {
+
+  // Specify how to join nodes
+  Array: {
+    artemis: (array, output, state) => {
+      let result = [];
+
+      let prevNodeResult = {};
+      array.forEach((node) => {
+        let nodeResult = output(node, state);
+        prevNodeResult = addToResult(result, prevNodeResult, nodeResult);
+      });
+
+      return result;
+    },
+  },
+
   paragraph: {
     artemis: (node, output, state) => {
       return {
@@ -303,7 +297,7 @@ const rules = {
 };
 
 
-export const artemisDataOutput = artemisDataFor(
-  SimpleMarkdown.ruleOutput(rules, 'artemis')
-);
+export const artemisDataOutput = SimpleMarkdown.outputFor(rules, 'artemis', {
+  style: null,
+});
 
