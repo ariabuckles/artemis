@@ -26,7 +26,7 @@
     "react-addons-pure-render-mixin": "^15.5.2",
     "react-components": "^0.4.0",
     "react-dom": "^15.5.3",
-    "simple-markdown": "^0.2.1"
+    "simple-markdown": "^0.4.0"
   },
   "devDependencies": {
     "babel-jest": "^20.0.3",
@@ -42,6 +42,7 @@
     "pretty": "make pretty",
     "postinstall": "BABEL_ENV=production babel src --out-dir lib --copy-files"
   },
+  "license": "UNLICENSED",
   "babel": {
     "presets": [
       "react-app"
