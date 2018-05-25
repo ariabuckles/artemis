@@ -6,7 +6,7 @@ var React = require("react");
 var _ = require("underscore");
 
 var lens = require("../../hubble/index.js");
-import KAS from '../../kas';
+var KAS = require('../../kas-module');
 
 var Changeable = require("../mixins/changeable");
 

@@ -1,7 +1,6 @@
 {
-  "name": "artemis",
-  "version": "0.1.0",
-  "private": true,
+  "name": "artemis-editor",
+  "version": "0.2.0",
   "main": "./lib/Artemis.js",
   "dependencies": {
     "aphrodite": "^1.2.0",
